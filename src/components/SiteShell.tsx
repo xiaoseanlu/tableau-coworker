@@ -27,7 +27,7 @@ export default function SiteShell({ children }: Props) {
               <span className="w-7 h-7 rounded-md bg-accent text-white grid place-items-center text-sm font-semibold shadow-card" aria-hidden="true">T</span>
               <span className="text-sm">
                 <span className="font-semibold text-ink-900">Tableau Coworker</span>
-                <span className="text-ink-400 ml-2 hidden sm:inline">a take-home by Sean Lu</span>
+                <span className="text-ink-400 ml-2 hidden sm:inline">Sean Lu</span>
               </span>
             </Link>
             <nav className="flex items-center gap-0.5">
@@ -59,7 +59,7 @@ export default function SiteShell({ children }: Props) {
             <div>
               <span className="font-semibold text-ink-700">Tableau Coworker</span>
               <span className="mx-2">·</span>
-              <span>Take-home exercise for Faros AI · Head of Design</span>
+              <span>Design exploration · not a Salesforce or Tableau product</span>
             </div>
             <div className="flex items-center gap-4">
               <span>Submitted May&nbsp;2026</span>

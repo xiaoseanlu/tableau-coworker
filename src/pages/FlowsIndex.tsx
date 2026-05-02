@@ -56,7 +56,7 @@ export default function FlowsIndex() {
         <p className="prose-body text-base">
           These are <em>storyboarded interactive prototypes.</em> The state is scripted: clicking
           through advances a capture-backed narrative rather than mutating real data. That is
-          deliberate for a take-home — the review is interaction model and evidence, not production
+          deliberate for a time-boxed exploration — the review is interaction model and evidence, not production
           hardening. With more time: branching paths, local state persistence, and a timeline scrubber
           for walkthroughs.
         </p>

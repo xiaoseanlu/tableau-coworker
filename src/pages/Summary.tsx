@@ -8,8 +8,8 @@ export default function Summary() {
         <div className="h-eyebrow mb-4">04 · One-page summary</div>
         <h1 className="h-display mb-6">Five-day take. One-page sum-up.</h1>
         <p className="text-lg text-ink-600">
-          Approach, assumptions, tradeoffs, and what I&apos;d explore further — Tableau Coworker
-          take-home for Faros AI.
+          Approach, assumptions, tradeoffs, and what I&apos;d explore further — a short sprint on
+          Tableau Coworker.
         </p>
       </header>
 

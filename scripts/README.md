@@ -1,6 +1,6 @@
 # scripts/
 
-Working scripts for the take-home build.
+Working scripts for capture and maintenance.
 
 ## capture-evidence.mjs
 

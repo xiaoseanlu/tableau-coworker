@@ -91,7 +91,7 @@ const competitors: CompRow[] = [
     strengths:
       'Fast time-to-first-dashboard; beloved for simple questions; low friction for departmental analytics.',
     gap: 'Different enterprise motion; often adjacent to — not replacing — global BI standards.',
-    notes: 'Faros-relevant as Metabase embeds appear across engineering orgs; not a Tableau clone strategically.',
+    notes: 'Often embedded in engineering-facing stacks; useful comparison for “good enough” operational BI.',
   },
 ]
 
@@ -104,7 +104,7 @@ export default function Competitive() {
           The fight is narration + trust at scale — not who has the most chart types.
         </h1>
         <p className="text-lg text-ink-600 max-w-3xl">
-          Qualitative read — April 2026 framing for this take-home. X-axis: AI and narration integrated
+          Qualitative read — April 2026 framing for this prototype. X-axis: AI and narration integrated
           into the primary workflow. Y-axis: craft of the default consumption experience (briefing vs
           wall-of-widgets).{' '}
           <strong className="text-ink-800">Not market share data.</strong>

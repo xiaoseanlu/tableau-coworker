@@ -1,10 +1,11 @@
 # Tableau Coworker
 
-Head of Design take-home for **Faros AI** — a React prototype that argues Tableau’s **next default** should be a **generated, narrated surface** (briefings, curation queue, mobile exceptions), with **real trial captures** as the “today” evidence.
+Personal **design exploration** — a React prototype that argues Tableau’s **next default** could be a **generated, narrated surface** (briefings, curation queue, mobile exceptions), with **real trial captures** as the “today” evidence.
 
 **Author:** Sean Lu  
 **Stack:** Vite, React 18, TypeScript, Tailwind v3, react-router-dom (HashRouter).  
-**Spec:** This repo is the prototype only. During the take-home, Markdown specs lived alongside it (`plan/`, `CONTEXT.md`); they are not published in this repository.
+
+Not affiliated with Salesforce or Tableau. For discussion and critique only.
 
 ## Quick start
 
@@ -42,12 +43,12 @@ Real screenshots from a Tableau Cloud trial live in `public/captures/`. See `pub
 
 `vite.config.ts` sets `base: './'` for Pages.
 
-**Option A — GitHub Actions (recommended):** enable **Pages → GitHub Actions** on the repo, then push to `main`. Workflow: `.github/workflows/deploy-pages.yml` builds `tableau-coworker/` and sets `VITE_GITHUB_URL` to this repository so the footer link resolves.
+**Option A — GitHub Actions (recommended):** enable **Pages → GitHub Actions** on the repo, then push to `main`. Workflow: `.github/workflows/deploy-pages.yml` builds from the repo root and sets `VITE_GITHUB_URL` so the footer link resolves.
 
-**Option B — Local / `gh-pages` branch:** `npm run build` then `npm run deploy` from `tableau-coworker/` (configure `git remote` first).
+**Option B — Local / `gh-pages` branch:** `npm run build` then `npm run deploy` (configure `git remote` first).
 
 For local builds only: optional `.env.local` with `VITE_GITHUB_URL=https://github.com/your-org/your-repo` adds the footer link. If unset locally, the footer omits that anchor.
 
 ## License
 
-Prototype for evaluation; not a Salesforce/Tableau product.
+For discussion and critique only. Not a Salesforce/Tableau product.

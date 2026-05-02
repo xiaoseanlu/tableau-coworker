@@ -9,7 +9,7 @@ export default function Home() {
         <div className="grid-backdrop absolute inset-0 opacity-60 pointer-events-none" />
         <div className="max-w-6xl mx-auto px-6 pt-20 pb-24 relative">
           <div className="max-w-3xl">
-            <div className="h-eyebrow mb-5">Take-home exercise · Faros AI · Head of Design</div>
+            <div className="h-eyebrow mb-5">Design exploration · Tableau</div>
             <h1 className="h-display mb-6">
               Tableau dashboards are static artifacts<br/>
               in a world where data is alive.<br/>

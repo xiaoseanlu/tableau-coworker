@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "Head of Design take-home — reimagining Tableau as a living, adaptive surface",
+  "description": "Concept prototype — Tableau as a living, narrated surface (React)",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

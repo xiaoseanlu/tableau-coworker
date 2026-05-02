@@ -24,7 +24,7 @@ export default function WhatsBroken() {
 
       <section className="prose-body">
         <p>
-          Below is the diagnosis I&apos;d bring to week one as Head of Design. It isn&apos;t a bug
+          Below is the diagnosis I&apos;d bring to an early design review on this problem. It isn&apos;t a bug
           list. It&apos;s six structural gaps verified in screenshots — not reconstructed from
           memory of what BI tools are &quot;usually like.&quot;
         </p>
@@ -217,7 +217,7 @@ export default function WhatsBroken() {
 
       <section className="prose-body mt-16">
         <h3 id="impact">What this costs an org</h3>
-        <p>Three downstream effects worth naming for a hiring conversation — not as universal laws for every tenant, but as predictable failure modes once Tableau is mission-critical:</p>
+        <p>Three downstream effects worth naming in a stakeholder review — not as universal laws for every tenant, but as predictable failure modes once Tableau is mission-critical:</p>
 
         <h4>1. Executive attention is the scarcest asset</h4>
         <p>
