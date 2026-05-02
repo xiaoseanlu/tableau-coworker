@@ -25,6 +25,7 @@
 
 import FlowChrome, { Note, Surface, type FlowStep } from '../components/FlowChrome'
 import { Sparkle, Layers, Clock } from '../components/Icons'
+import { PortfolioMixBar } from '../components/viz/DataViz'
 
 const CAP = `${import.meta.env.BASE_URL}captures/`
 
@@ -101,6 +102,11 @@ const steps: FlowStep[] = [
                 <div className="editorial text-xl text-ink-900">17 items · this week</div>
               </div>
               <div className="text-xs text-ink-500 font-mono">Updated 8m ago</div>
+            </div>
+
+            <div className="mb-6">
+              <div className="text-2xs uppercase tracking-wider text-ink-500 font-mono mb-2">Tenant portfolio · observed health</div>
+              <PortfolioMixBar />
             </div>
 
             <div className="grid grid-cols-3 gap-3 mb-6">

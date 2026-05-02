@@ -1,5 +1,11 @@
+import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Sparkle } from '../components/Icons'
+import { MiniStackedHealth, Sparkline } from '../components/viz/DataViz'
+
+const DESIGN_DOC_HREF = import.meta.env.VITE_GITHUB_URL
+  ? `${String(import.meta.env.VITE_GITHUB_URL).replace(/\/$/, '')}/blob/main/DESIGN.md`
+  : null
 
 export default function Home() {
   return (
@@ -17,8 +23,9 @@ export default function Home() {
             </h1>
             <p className="text-lg text-ink-600 max-w-2xl mb-8">
               A strategic and interactive reimagining of Tableau Cloud for the AI era — grounded in
-              real trial captures, shipped as a React prototype. Same thesis three personas
-              (Acme SaaS): Maya, Jordan, Sam.
+              real trial captures, shipped as a React prototype with{' '}
+              <strong className="text-ink-800">interactive charts</strong> in each persona flow. Same thesis,
+              three personas (Acme SaaS): Maya, Jordan, Sam.
             </p>
             <div className="flex flex-wrap gap-3">
               <Link to="/whats-broken" className="btn-primary">
@@ -82,12 +89,44 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Design system + craft (reviewer-facing) */}
+      <section className="border-t border-ink-100 bg-canvas-raised">
+        <div className="max-w-6xl mx-auto px-6 py-16">
+          <div className="h-eyebrow mb-3">Redesign deliverable</div>
+          <h2 className="h-section max-w-3xl mb-4">
+            Interactive surfaces — captures for &quot;today,&quot; designed UI + data viz for &quot;tomorrow&quot;
+          </h2>
+          <p className="text-ink-600 max-w-3xl mb-6 leading-relaxed">
+            The flows are the redesign: each opens with <strong className="text-ink-800">real Tableau screenshots</strong>,
+            then moves to <strong className="text-ink-800">new layouts</strong> with hoverable trend charts, portfolio
+            composition, and mobile spark trends. Tokens, type, color rationale, and pain → design mapping are written in{' '}
+            {DESIGN_DOC_HREF ? (
+              <a href={DESIGN_DOC_HREF} className="text-accent font-medium hover:underline" target="_blank" rel="noreferrer">
+                DESIGN.md
+              </a>
+            ) : (
+              <span className="font-mono text-sm">DESIGN.md</span>
+            )}
+            {' '}in this repo.
+          </p>
+          <div className="flex flex-wrap gap-3">
+            <Link to="/flows/maya" className="btn-accent text-sm">
+              See Maya flow (hover chart) <ArrowRight size={14} />
+            </Link>
+            {DESIGN_DOC_HREF ? (
+              <a href={DESIGN_DOC_HREF} className="btn-secondary text-sm" target="_blank" rel="noreferrer">
+                Open design system doc
+              </a>
+            ) : null}
+          </div>
+        </div>
+      </section>
+
       {/* Flow trailers */}
       <section className="max-w-6xl mx-auto px-6 py-20">
         <div className="h-eyebrow mb-3">Three flows, brought to life</div>
         <h2 className="h-section max-w-3xl mb-10">
-          Each flow is a complete, clickable demonstration of the thesis. They share
-          a design system, a voice, and an opinion.
+          Each flow is a complete, clickable demonstration: real product capture → redesigned surface with live charts.
         </h2>
 
         <div className="grid md:grid-cols-3 gap-6">
@@ -95,22 +134,38 @@ export default function Home() {
             to="/flows/maya"
             number="Flow 01"
             title="Maya — Monday before staff"
-            blurb="CRO lands on a generated briefing: narrative, three metric cards, drill-to-evidence — not the executive wall of widgets. Charts come forward on demand."
+            blurb="CRO lands on a generated briefing: narrative, KPI cards, hoverable coverage trend, drill-to-evidence — not the executive wall of widgets."
             tag="Maya Chen · CRO"
+            preview={
+              <Sparkline
+                values={[2.95, 2.92, 2.9, 2.88, 2.86, 2.84, 2.82, 2.6]}
+                className="text-accent"
+                height={36}
+              />
+            }
           />
           <FlowCard
             to="/flows/jordan"
             number="Flow 02"
             title="Jordan — the curator queue"
-            blurb="VP Sales Ops triages sprawl: stale workbooks, duplicates, data-quality flags from observed usage — then resolves the item tied to canonical metrics."
+            blurb="VP Sales Ops triages sprawl: portfolio mix visualization, stale workbooks, duplicates, data-quality flags from observed usage."
             tag="Jordan Patel · Sales Ops"
+            preview={<MiniStackedHealth />}
           />
           <FlowCard
             to="/flows/sam"
             number="Flow 03"
             title="Sam — mobile, between meetings"
-            blurb="Regional director gets a region-scoped briefing and exception cards on the phone — not the squished Superstore desktop sheet."
+            blurb="Regional director gets region-scoped briefing cards with inline spark trends — not the squished Superstore desktop sheet."
             tag="Sam Reyes · West RSD"
+            preview={
+              <Sparkline
+                values={[2.95, 2.92, 2.9, 2.88, 2.86, 2.84, 2.82, 2.6]}
+                className="text-danger"
+                stroke="#B0263A"
+                height={32}
+              />
+            }
           />
         </div>
       </section>
@@ -154,13 +209,28 @@ function Pillar({ num, title, body }: { num: string; title: string; body: string
   )
 }
 
-function FlowCard({ to, number, title, blurb, tag }: { to: string; number: string; title: string; blurb: string; tag: string }) {
+function FlowCard({
+  to,
+  number,
+  title,
+  blurb,
+  tag,
+  preview,
+}: {
+  to: string
+  number: string
+  title: string
+  blurb: string
+  tag: string
+  preview?: ReactNode
+}) {
   return (
     <Link to={to} className="card hover:shadow-raised transition-shadow p-6 group block">
       <div className="flex items-center justify-between mb-4">
         <span className="text-2xs font-mono text-ink-400">{number}</span>
         <span className="pill bg-accent-soft text-accent-ink">{tag}</span>
       </div>
+      {preview ? <div className="mb-4 -mx-1">{preview}</div> : null}
       <h3 className="text-lg font-semibold text-ink-900 mb-2 group-hover:text-accent transition-colors">{title}</h3>
       <p className="text-sm text-ink-600 leading-relaxed mb-5">{blurb}</p>
       <div className="text-sm text-accent flex items-center gap-1.5">

@@ -14,14 +14,15 @@
  *   02 — Every chart explains itself (charts are evidence; narrative is the surface).
  *
  * CAPTURE EVIDENCE WIRED:
- *   Scene 1 (today)   — key/04-exec-wall-of-widgets.png  · what Tableau ships now
- *   Scene 2 (briefing) — placeholder, awaiting plan/08
- *   Scene 3 (drilldown) — key/10-tableau-agent-with-insights.png · proof the agent's analysis is good
- *   Scene 4 (send)    — placeholder, awaiting plan/08
+ *   Scene 1 — key/04 · wall of widgets today
+ *   Scene 2 — redesigned briefing + CoverageTrendChart (interactive)
+ *   Scene 3 — ConcentrationBars + key/10 · agent quality proof
+ *   Scene 4 — share / provenance (designed UI)
  */
 
 import FlowChrome, { Note, Surface, type FlowStep } from '../components/FlowChrome'
 import { TrendDown, Trend } from '../components/Icons'
+import { ConcentrationBars, CoverageTrendChart } from '../components/viz/DataViz'
 
 const CAP = `${import.meta.env.BASE_URL}captures/`
 
@@ -119,10 +120,21 @@ const steps: FlowStep[] = [
                 I&apos;d want a manager to know this. <strong>Confidence: moderate</strong> on the West read; <strong>low</strong> on the EMEA-Germany call. Sources: Acme SaaS CRM (HubSpot, last sync 8:38 AM PT) · Q2 plan (v3, locked Apr 2) · Jordan&apos;s pipeline-coverage definition (v2, Apr 30).
               </div>
 
-              <div className="grid grid-cols-3 gap-3 mb-8">
+              <div className="grid grid-cols-3 gap-3 mb-6">
                 <MetricCard label="ARR pacing" value="$87.4M" delta="−$2.1M vs plan · ↓ narrowing" tone="neutral" />
                 <MetricCard label="West coverage" value="2.6×" delta="−0.2 WoW" tone="down" />
                 <MetricCard label="Q-end coverage" value="3.4×" delta="+0.1 WoW" tone="up" />
+              </div>
+
+              <div className="card p-4 mb-8">
+                <div className="text-2xs uppercase tracking-wider text-ink-500 font-mono mb-1">
+                  West pipeline coverage · trailing 8 weeks (Jordan&apos;s v2 definition)
+                </div>
+                <p className="text-xs text-ink-600 mb-4 leading-relaxed">
+                  Interactive: hover the week markers. Same metric class as the wall-of-widgets — recomposed as one trajectory
+                  instead of a KPI tile without history.
+                </p>
+                <CoverageTrendChart />
               </div>
 
               <div className="border-t border-ink-100 pt-5">
@@ -209,6 +221,22 @@ const steps: FlowStep[] = [
               not systemic — three reps account for 78% of the move, all in the manufacturing vertical, and all against
               deals that originated in February. <strong>Confidence: moderate.</strong> I&apos;d want a manager to know
               this before staff at 9.
+            </div>
+
+            <div className="card p-4">
+              <div className="text-2xs uppercase tracking-wider text-ink-500 font-mono mb-3">
+                Concentration · share of WoW move (West)
+              </div>
+              <ConcentrationBars
+                rows={[
+                  { name: 'A. Morales', pct: 34, color: '#5B2E91' },
+                  { name: 'J. Okonkwo', pct: 28, color: '#7A4D9A' },
+                  { name: 'T. Brennan', pct: 16, color: '#9B7AB8' },
+                ]}
+              />
+              <p className="text-2xs text-ink-500 mt-3 leading-relaxed">
+                Illustrative bars for the agent&apos;s “concentrated, not systemic” read — paired with CRM opportunity attribution.
+              </p>
             </div>
 
             <div>

@@ -11,7 +11,8 @@ export default function FlowsIndex() {
         </h1>
         <p className="text-lg text-ink-600 max-w-3xl">
           Acme SaaS Inc. — same CRM + revenue data, three roles. Each flow uses real Tableau
-          captures for the &quot;before&quot; and native UI for the proposed surface. Scripted steps,
+          captures for the &quot;before&quot; and designed UI — including <strong className="text-ink-800">SVG charts you can hover</strong> (Maya),
+          portfolio composition (Jordan), and spark trends (Sam) — for the proposed surface. Scripted steps,
           not live warehouse queries.
         </p>
       </header>

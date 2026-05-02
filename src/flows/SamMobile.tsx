@@ -6,6 +6,7 @@
 
 import FlowChrome, { Note, Surface, type FlowStep } from '../components/FlowChrome'
 import { Phone, Send } from '../components/Icons'
+import { Sparkline } from '../components/viz/DataViz'
 
 const CAP = `${import.meta.env.BASE_URL}captures/`
 
@@ -100,6 +101,15 @@ const steps: FlowStep[] = [
                 <p className="mt-2 text-xs text-ink-800 leading-relaxed">
                   West coverage dipped <strong>−0.2 WoW</strong> (v2). Not staff-level yet — watch. Same model as Maya&apos;s cards.
                 </p>
+                <div className="mt-3 flex items-center gap-2">
+                  <span className="text-2xs font-mono text-ink-500 shrink-0">8 wk</span>
+                  <Sparkline
+                    values={[2.95, 2.92, 2.9, 2.88, 2.86, 2.84, 2.82, 2.6]}
+                    stroke="#B0263A"
+                    className="flex-1 min-w-0 text-danger"
+                    height={28}
+                  />
+                </div>
               </MobileCard>
             </div>
           </div>
