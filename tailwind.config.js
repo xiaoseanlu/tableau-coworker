@@ -75,6 +75,35 @@ export default {
       transitionTimingFunction: {
         'smooth': 'cubic-bezier(0.16, 1, 0.3, 1)',
       },
+      keyframes: {
+        'mesh-breathe': {
+          '0%, 100%': { transform: 'scale(1) translate(0, 0)' },
+          '50%': { transform: 'scale(1.04) translate(1%, -1%)' },
+        },
+        'fade-slide-up': {
+          '0%': { opacity: '0', transform: 'translateY(20px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        'shimmer-border': {
+          '0%': { backgroundPosition: '0% 50%' },
+          '100%': { backgroundPosition: '200% 50%' },
+        },
+        'pulse-ring': {
+          '0%, 100%': { boxShadow: '0 0 0 0 rgba(199, 132, 28, 0.25)' },
+          '50%': { boxShadow: '0 0 0 8px rgba(199, 132, 28, 0)' },
+        },
+        'pulse-soft': {
+          '0%, 100%': { opacity: '0.45', transform: 'scale(1)' },
+          '50%': { opacity: '1', transform: 'scale(1.12)' },
+        },
+      },
+      animation: {
+        'mesh-breathe': 'mesh-breathe 14s ease-in-out infinite',
+        'fade-slide-up': 'fade-slide-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) both',
+        'shimmer-border': 'shimmer-border 4s linear infinite',
+        'pulse-ring': 'pulse-ring 2.2s ease-in-out infinite',
+        'pulse-soft': 'pulse-soft 2.8s ease-in-out infinite',
+      },
     },
   },
   plugins: [],

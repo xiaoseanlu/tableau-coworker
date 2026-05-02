@@ -13,9 +13,63 @@ const toc = [
   { id: 'foundation', label: 'Foundation' },
   { id: 'captures', label: 'Capture roots' },
   { id: 'layers', label: 'Atoms → organisms' },
+  { id: 'viz-ai', label: 'Viz + AI' },
+  { id: 'ft-vocab', label: 'FT vocabulary' },
   { id: 'layout', label: 'Dynamic layout' },
   { id: 'source', label: 'Source files' },
 ] as const
+
+const FT_VOCAB_URL = 'https://ft-interactive.github.io/visual-vocabulary/'
+
+const vizCatalog: Array<{ type: string; ft: string; primitive: string; shell: string; aiHook: string }> = [
+  { type: 'kpiScalar', ft: 'Magnitude · Δ time', primitive: 'ScalarPrimitive', shell: 'KpiTile', aiHook: 'Focus metric scopes AgentDock.' },
+  { type: 'sparkInline', ft: 'Change over time', primitive: 'SparkPrimitive', shell: 'KpiTile, BriefCard', aiHook: 'Hover teaser → InsightBlock.' },
+  { type: 'line', ft: 'Change · deviation', primitive: 'LineChartPrimitive', shell: 'TrendBlock', aiHook: 'Nearest point → drivers / ruled out + chips.' },
+  { type: 'area', ft: 'Change · part-to-whole', primitive: 'AreaChartPrimitive', shell: 'TrendBlock', aiHook: 'Stacked segments; warn if many slices.' },
+  { type: 'bar', ft: 'Magnitude · ranking · time', primitive: 'BarChartPrimitive', shell: 'TrendBlock', aiHook: 'Baseline zero; category scope + filters.' },
+  { type: 'divergingBar', ft: 'Deviation', primitive: 'DivergingBarPrimitive', shell: 'TrendBlock', aiHook: 'States baseline (zero · target · avg).' },
+  { type: 'lineColumnCombo', ft: 'Change · correlation', primitive: 'ComboLineColumnPrimitive', shell: 'TrendBlock', aiHook: 'Dual measure; name which axis is which.' },
+  { type: 'histogram', ft: 'Distribution', primitive: 'HistogramPrimitive', shell: 'TrendBlock', aiHook: 'Spread / skew; bins from spec or default.' },
+  { type: 'slope', ft: 'Ranking', primitive: 'SlopeChartPrimitive', shell: 'TrendBlock', aiHook: 'Rank change across two periods.' },
+  { type: 'waterfall', ft: 'Flow · deviation', primitive: 'WaterfallPrimitive', shell: 'TrendBlock', aiHook: 'Bridge +/− stages narrative.' },
+  { type: 'smallMultiples', ft: 'Change · magnitude', primitive: 'MultiplesFrame + child', shell: 'TrendBlock', aiHook: 'Facet outliers → InsightList.' },
+  { type: 'scatter', ft: 'Correlation', primitive: 'ScatterPrimitive', shell: 'TrendBlock', aiHook: 'Default: no implied causation.' },
+  { type: 'map', ft: 'Spatial', primitive: 'GeoPrimitive', shell: 'GeoWidget', aiHook: 'Prefer rate/ratio framing for choropleth-style.' },
+  { type: 'bullet', ft: 'Magnitude · part-to-whole', primitive: 'BulletPrimitive', shell: 'KpiTile variant', aiHook: 'Band breach + threshold source.' },
+  { type: 'heatmapGrid', ft: 'Correlation · distribution', primitive: 'HeatmapPrimitive', shell: 'DataTable pattern', aiHook: '2D intensity; cell → lineage.' },
+  { type: 'tableBars', ft: 'Magnitude · ranking', primitive: 'RankedBarCellPrimitive', shell: 'Queue inset', aiHook: 'Magnitude beside machine reason.' },
+  { type: 'sankey', ft: 'Flow', primitive: 'SankeyPrimitive (ph.2)', shell: 'TrendBlock', aiHook: 'Summarize dominant paths first.' },
+]
+
+const ftPickerRows: Array<{ category: string; readerPriority: string; specTypes: string; policy: string }> = [
+  { category: 'Change over time', readerPriority: 'Trend, period context', specTypes: 'line, area, bar (time), lineColumnCombo, spark, smallMultiples', policy: 'Single series often clearest; stacked time = hard to read components.' },
+  { category: 'Magnitude', readerPriority: 'Size of things', specTypes: 'bar, kpiScalar, tableBars, bullet', policy: 'Bars baseline at zero; lollipop = bar + variant.' },
+  { category: 'Deviation', readerPriority: '± vs reference', specTypes: 'divergingBar, signed line/area', policy: 'Agent labels the reference explicitly.' },
+  { category: 'Ranking', readerPriority: 'Order > exact value', specTypes: 'sorted bar, tableBars, slope', policy: 'Sort order is part of the spec.' },
+  { category: 'Correlation', readerPriority: 'Variables move together', specTypes: 'scatter, heatmapGrid, lineColumnCombo', policy: 'Do not imply causation in copy.' },
+  { category: 'Distribution', readerPriority: 'Frequency, spread', specTypes: 'histogram, heatmapGrid', policy: 'Histogram bins documented when it matters.' },
+  { category: 'Part-to-whole', readerPriority: 'Components of one whole', specTypes: 'stacked area/bar, bullet', policy: 'Few segments; caution when many small slices.' },
+  { category: 'Spatial', readerPriority: 'Geography is the story', specTypes: 'map', policy: 'Choropleth-style: prefer rates/ratios over raw counts.' },
+  { category: 'Flow', readerPriority: 'Volume between states', specTypes: 'waterfall; sankey phase 2', policy: 'Waterfall for staged bridges; Sankey = high burden.' },
+]
+
+const aiBinders: Array<{ molecule: string; binds: string; role: string }> = [
+  { molecule: 'AgentDock', binds: 'Region + selection', role: 'Default-read narrative; primary AI surface.' },
+  { molecule: 'InsightBlock', binds: 'Selection + VizSpec', role: 'Title, body, confidence, field + time evidence.' },
+  { molecule: 'AskNextChips', binds: 'Chart type + selection', role: 'Max 3 drills; no chat thread.' },
+  { molecule: 'SelectionReceipt', binds: 'Send / publish', role: 'Frozen snapshot of viz state in generated message.' },
+  { molecule: 'AgentSidePanel', binds: 'User-expanded', role: 'Freeform follow-up; secondary to dock.' },
+  { molecule: 'AgentTooltip', binds: 'Hover point', role: 'Dense mode; defers to dock on comfortable.' },
+]
+
+const interactionRows: Array<{ name: string; desktop: string; compact: string; mobile: string; motion: string; ai: string }> = [
+  { name: 'Hover / track', desktop: 'Tooltip + optional crosshair', compact: 'Thinner chrome', mobile: 'Long-press → BottomSheet', motion: 'snap / read', ai: 'Cites hovered datum; optional chip refresh.' },
+  { name: 'Click / tap', desktop: 'Select series or point', compact: 'Same', mobile: 'Tap toggles; second opens dock', motion: 'snap', ai: 'AgentDock scopes to selection.' },
+  { name: 'Legend toggle', desktop: 'Isolate series', compact: 'Same', mobile: 'Overflow / sheet', motion: 'instant', ai: 'Narrative respects visible series only.' },
+  { name: 'Brush / range', desktop: 'Off default (Maya)', compact: 'On in analyst', mobile: 'Off', motion: 'read', ai: 'Time-scoped insight + compare chip.' },
+  { name: 'Keyboard', desktop: 'Arrow between points', compact: 'Full', mobile: 'OS focus', motion: 'instant', ai: 'Same events as click.' },
+  { name: 'Escape', desktop: 'Clear selection', compact: 'Clear', mobile: 'Clear + dismiss sheet', motion: 'snap', ai: 'Returns to route-level brief.' },
+]
 
 const captureRoots: Array<{ folder: string; proves: string; yields: string }> = [
   { folder: 'flow-a-onboarding + key/08', proves: 'Cloud home, trial', yields: 'HomeShell, TrialBanner, content grid' },
@@ -51,9 +105,11 @@ export default function DesignSystem() {
           <span className="italic text-accent">role-adaptive layout</span>
         </h1>
         <p className="text-lg text-ink-600 max-w-3xl">
-          This page is the readable surface for reviewers: tokens, hierarchy discipline, and how each layer maps to
-          real captures in <span className="font-mono text-2xs text-ink-500">public/captures/</span>. The canonical spec
-          lives in markdown so it versions with the repo.
+          This page is the readable surface for reviewers: tokens, a full <strong className="text-ink-800">chart-type catalog</strong>,{' '}
+          <strong className="text-ink-800">interaction matrix</strong>, and how <strong className="text-ink-800">AI molecules</strong> bind to
+          dynamic <span className="font-mono text-2xs text-ink-500">VizSpec</span> output — grounded in capture roots under{' '}
+          <span className="font-mono text-2xs text-ink-500">public/captures/</span>. Canonical detail lives in{' '}
+          <span className="font-mono text-2xs">plan/14-design-system-architecture.md</span> (§6.3a–6.7, FT Visual Vocabulary alignment).
         </p>
         <div className="mt-6 flex flex-wrap gap-2 text-sm">
           {toc.map(item => (
@@ -242,6 +298,147 @@ export default function DesignSystem() {
         </div>
       </section>
 
+      <section id="viz-ai" className="mb-20 scroll-mt-24">
+        <h2 className="h-section mb-2">Dynamic visualization + AI</h2>
+        <p className="prose-body text-ink-600 mb-4 max-w-prose">
+          Coworker treats charts as <strong className="text-ink-800">data-driven slots</strong>: the model emits a discriminated{' '}
+          <span className="font-mono text-2xs">VizSpec</span> plus optional <span className="font-mono text-2xs">VizStoryMeta</span>{' '}
+          (FT Visual Vocabulary category — what relationship the reader should take away). Primitives render; shared selection state drives{' '}
+          <span className="font-mono text-2xs">AgentDock</span>. Pages do not import chart libraries directly — only the primitive for{' '}
+          <span className="font-mono text-2xs">spec.type</span>.
+        </p>
+        <p className="text-sm text-ink-500 mb-8 max-w-prose">
+          <strong className="text-ink-600">Shared selection contract:</strong>{' '}
+          <span className="font-mono text-2xs">VizSelectionState</span> —{' '}
+          <span className="font-mono text-2xs">vizId, spec, activeSeriesKeys?, activePoint?, brushedRange?, source: user | agent</span>.
+          Agent-driven highlights use <span className="font-mono text-2xs">source: &apos;agent&apos;</span> so emphasis stays contestable.
+        </p>
+
+        <h3 id="ft-vocab" className="text-lg font-semibold text-ink-900 mb-3 scroll-mt-28">
+          Story intent: FT Visual Vocabulary
+        </h3>
+        <p className="text-sm text-ink-600 mb-4 max-w-prose">
+          Same method as the{' '}
+          <a href={FT_VOCAB_URL} className="text-accent font-medium hover:underline" target="_blank" rel="noreferrer">
+            Financial Times Visual Vocabulary
+          </a>
+          : choose the <strong className="text-ink-800">dominant data relationship</strong> first, then a <span className="font-mono text-2xs">VizSpec.type</span>{' '}
+          inside that column. Local reference: <span className="font-mono text-2xs">context/Visual-vocabulary.pdf</span>. Not an exhaustive chart encyclopedia — a
+          story-first constraint for layout and agent disclosure.
+        </p>
+        <div className="overflow-x-auto rounded-lg border border-ink-100 mb-6">
+          <table className="w-full text-sm min-w-[800px]">
+            <thead>
+              <tr className="bg-canvas-sunken text-left text-2xs uppercase tracking-wide text-ink-500">
+                <th className="p-3 font-medium">FT category</th>
+                <th className="p-3 font-medium">Reader priority</th>
+                <th className="p-3 font-medium">Typical VizSpec types</th>
+                <th className="p-3 font-medium">Coworker / agent policy</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-ink-100">
+              {ftPickerRows.map(row => (
+                <tr key={row.category} className="bg-canvas-raised">
+                  <td className="p-3 font-medium text-ink-800 whitespace-nowrap">{row.category}</td>
+                  <td className="p-3 text-ink-600">{row.readerPriority}</td>
+                  <td className="p-3 font-mono text-2xs text-ink-700">{row.specTypes}</td>
+                  <td className="p-3 text-ink-700">{row.policy}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <ul className="text-sm text-ink-600 list-disc pl-5 space-y-1 mb-10 max-w-prose">
+          <li><strong className="text-ink-800">Correlation</strong> charts: agent uses association language unless evidence supports causation.</li>
+          <li><strong className="text-ink-800">Spatial</strong> (choropleth-style): prefer rate/ratio measures; raw counts need explicit framing.</li>
+          <li><strong className="text-ink-800">Magnitude</strong> bars: length encoding baseline at zero (lollipop inherits).</li>
+          <li><strong className="text-ink-800">Part-to-whole</strong> over time: call out when component trends are hard to read.</li>
+        </ul>
+
+        <h3 className="text-sm font-semibold uppercase tracking-wide text-ink-500 mb-4">VizSpec types → FT lens → primitives → AI hook</h3>
+        <div className="overflow-x-auto rounded-lg border border-ink-100 mb-10">
+          <table className="w-full text-sm min-w-[860px]">
+            <thead>
+              <tr className="bg-canvas-sunken text-left text-2xs uppercase tracking-wide text-ink-500">
+                <th className="p-3 font-medium">type</th>
+                <th className="p-3 font-medium">FT story (typical)</th>
+                <th className="p-3 font-medium">Primitive</th>
+                <th className="p-3 font-medium">Molecule shell</th>
+                <th className="p-3 font-medium">AI hook</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-ink-100">
+              {vizCatalog.map(row => (
+                <tr key={row.type} className="bg-canvas-raised">
+                  <td className="p-3 font-mono text-2xs text-accent-ink whitespace-nowrap">{row.type}</td>
+                  <td className="p-3 text-ink-600 text-2xs">{row.ft}</td>
+                  <td className="p-3 font-mono text-2xs text-ink-800">{row.primitive}</td>
+                  <td className="p-3 text-ink-600">{row.shell}</td>
+                  <td className="p-3 text-ink-700">{row.aiHook}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <h3 className="text-sm font-semibold uppercase tracking-wide text-ink-500 mb-4">AI molecules (not renderers)</h3>
+        <div className="overflow-x-auto rounded-lg border border-ink-100 mb-10">
+          <table className="w-full text-sm min-w-[640px]">
+            <thead>
+              <tr className="bg-canvas-sunken text-left text-2xs uppercase tracking-wide text-ink-500">
+                <th className="p-3 font-medium">Molecule</th>
+                <th className="p-3 font-medium">Binds to</th>
+                <th className="p-3 font-medium">Role</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-ink-100">
+              {aiBinders.map(row => (
+                <tr key={row.molecule} className="bg-canvas-raised">
+                  <td className="p-3 font-mono text-2xs text-accent-ink">{row.molecule}</td>
+                  <td className="p-3 text-ink-600">{row.binds}</td>
+                  <td className="p-3 text-ink-700">{row.role}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <h3 className="text-sm font-semibold uppercase tracking-wide text-ink-500 mb-4">Interactions (cross-chart)</h3>
+        <div className="overflow-x-auto rounded-lg border border-ink-100 mb-6">
+          <table className="w-full text-sm min-w-[900px]">
+            <thead>
+              <tr className="bg-canvas-sunken text-left text-2xs uppercase tracking-wide text-ink-500">
+                <th className="p-3 font-medium">Interaction</th>
+                <th className="p-3 font-medium">Comfortable</th>
+                <th className="p-3 font-medium">Compact</th>
+                <th className="p-3 font-medium">Mobile</th>
+                <th className="p-3 font-medium">Motion</th>
+                <th className="p-3 font-medium">AI</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-ink-100">
+              {interactionRows.map(row => (
+                <tr key={row.name} className="bg-canvas-raised">
+                  <td className="p-3 font-medium text-ink-800 whitespace-nowrap">{row.name}</td>
+                  <td className="p-3 text-ink-600">{row.desktop}</td>
+                  <td className="p-3 text-ink-600">{row.compact}</td>
+                  <td className="p-3 text-ink-600">{row.mobile}</td>
+                  <td className="p-3 font-mono text-2xs text-ink-500">{row.motion}</td>
+                  <td className="p-3 text-ink-700">{row.ai}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="text-sm text-ink-600 max-w-prose">
+          End-to-end (spec §6.7): model emits <span className="font-mono text-2xs">Region[]</span> +{' '}
+          <span className="font-mono text-2xs">VizSpec</span> (with <span className="font-mono text-2xs">story</span> / FT category) →{' '}
+          <span className="font-mono text-2xs">AdaptiveGrid</span> mounts primitives → events update <span className="font-mono text-2xs">VizSelectionState</span> →{' '}
+          <span className="font-mono text-2xs">AgentDock</span> loads <span className="font-mono text-2xs">InsightBlock</span> +{' '}
+          <span className="font-mono text-2xs">AskNextChips</span> using category policy. Density and motion gates control tooltip vs sheet and brush availability.
+        </p>
+      </section>
+
       <section id="layout" className="mb-20 scroll-mt-24">
         <h2 className="h-section mb-4">Dynamic layout</h2>
         <p className="prose-body text-ink-600 mb-6 max-w-prose">
@@ -276,9 +473,11 @@ interface Region {
               </ul>
             </div>
             <div className="card-raised p-5">
-              <div className="text-2xs font-mono text-ink-400 mb-2">VizSpec (primaryViz slot)</div>
+              <div className="text-2xs font-mono text-ink-400 mb-2">VizSpec → primaryViz</div>
               <p className="text-sm text-ink-600">
-                Typed chart bindings — line, bar, map, kpiOnly — so molecules swap primitives without duplicating page chrome.
+                Discriminated union in plan §6.4 (includes <span className="font-mono text-2xs">VizStoryMeta</span> §6.3a):{' '}
+                line, area, bar, divergingBar, combo, histogram, slope, waterfall, maps, heatmaps, sankey (phase 2), etc. See{' '}
+                <strong className="text-ink-800">Viz + AI</strong> for the FT-mapped catalog.
               </p>
             </div>
           </div>

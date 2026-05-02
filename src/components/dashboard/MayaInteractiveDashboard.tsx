@@ -13,7 +13,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts'
-import { Sparkle } from '../Icons'
+import AgentDock from './AgentDock'
 
 const WEEKLY = [
   { week: 'Mar 10', coverage: 2.95, label: 'Mar 10' },
@@ -432,52 +432,13 @@ export default function MayaInteractiveDashboard() {
           </p>
         </div>
 
-        {/* Agent dock */}
-        <aside className="w-full xl:w-[360px] shrink-0 bg-canvas-sunken/80 xl:min-h-[520px] border-t xl:border-t-0 xl:border-l border-ink-100 p-5 flex flex-col">
-          <div className="flex items-center gap-2 mb-4 pb-3 border-b border-ink-100">
-            <div className="w-9 h-9 rounded-lg bg-signal-soft border border-signal/30 grid place-items-center text-signal">
-              <Sparkle size={18} aria-hidden />
-            </div>
-            <div>
-              <div className="text-xs font-semibold text-ink-900">Tableau Coworker</div>
-              <div className="text-2xs text-ink-500 font-mono">Read · not a side panel</div>
-            </div>
-          </div>
-
-          <div className="rounded-lg border border-signal/25 bg-signal-soft/40 p-4 flex-1 shadow-agent min-h-[200px]">
-            <div className="text-2xs uppercase tracking-wider font-mono text-signal mb-2">{agent.title}</div>
-            <p className="text-sm text-ink-800 leading-relaxed">{agent.body}</p>
-            <p className="text-2xs text-ink-600 mt-4 font-mono">
-              Confidence: <span className="text-signal-ink font-medium">{agent.confidence}</span>
-            </p>
-          </div>
-
-          <div className="mt-4">
-            <div className="text-2xs uppercase tracking-wider text-ink-500 font-mono mb-2">Ask next</div>
-            <div className="flex flex-wrap gap-2">
-              {['Why did West drop?', 'Which deals moved?', 'Compare regions'].map(q => (
-                <button
-                  key={q}
-                  type="button"
-                  onClick={() => setSel({ kind: 'followup', q })}
-                  className="text-xs px-2.5 py-1.5 rounded-md bg-canvas-raised border border-ink-200 text-ink-700 hover:border-accent/40 hover:text-accent transition-colors text-left"
-                >
-                  {q}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {sel && (
-            <button
-              type="button"
-              onClick={() => setSel(null)}
-              className="mt-4 text-2xs text-ink-500 hover:text-ink-900 underline underline-offset-2"
-            >
-              Clear selection
-            </button>
-          )}
-        </aside>
+        <AgentDock
+          insight={agent}
+          followups={['Why did West drop?', 'Which deals moved?', 'Compare regions']}
+          onFollowup={q => setSel({ kind: 'followup', q })}
+          onClear={() => setSel(null)}
+          selectionActive={!!sel}
+        />
       </div>
     </div>
   )

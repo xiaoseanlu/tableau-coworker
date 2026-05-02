@@ -2,7 +2,7 @@
 
 This document is meant for **design and product review**: how the visual language works, why it diverges from default Tableau chrome, and how each **interactive flow** maps customer pain to a redesigned surface.
 
-**Interactive design-system overview:** `#/design-system` — scannable summary of tokens, typography, capture roots, atoms → organisms, and dynamic layout (`Region` / `AdaptiveGrid`), with links to `plan/03-design-system.md` and `plan/14-design-system-architecture.md` when the deploy sets `VITE_GITHUB_URL`.
+**Interactive design-system overview:** `#/design-system` — tokens, **FT Visual Vocabulary** story intent (`VizStoryMeta`) mapped to `VizSpec`, capture roots, layers, and dynamic layout, with links to `plan/03-design-system.md` and `plan/14-design-system-architecture.md` when the deploy sets `VITE_GITHUB_URL`.
 
 **Live prototype (after `npm run dev` or the hosted site):**
 
@@ -40,6 +40,8 @@ The **“today”** states use **real Tableau Cloud trial captures** (`public/ca
 **Typography:** Inter (UI), Source Serif 4 (headlines), JetBrains Mono (numbers, labels).
 
 **Elevation:** Soft shadow (`shadow-card`, `shadow-raised`) — paper-like, not glassmorphism.
+
+**Chart picking (FT-aligned):** Model-driven charts SHOULD set `story.category` per the Financial Times Visual Vocabulary (relationship first, then `VizSpec.type`). See `plan/14-design-system-architecture.md` §6.3a — correlation language, spatial rates, bar baselines, part-to-whole legibility.
 
 ---
 
