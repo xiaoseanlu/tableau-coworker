@@ -7,6 +7,8 @@ export interface FlowStep {
   surface?: string  // e.g., "Web · Manager view" or "Slack · DM"
   body: ReactNode
   notes: ReactNode  // annotations: what we did and why
+  /** Full-width body (dense dashboards); design notes move into a collapsible below */
+  immersive?: boolean
 }
 
 interface Props {
@@ -73,13 +75,25 @@ export default function FlowChrome({ flowNumber, title, thesis, steps }: Props) 
 
       {/* Body */}
       <div className="flex-1">
-        <div className="max-w-7xl mx-auto px-6 py-8 grid lg:grid-cols-[1fr_320px] gap-8">
-          <div className="min-w-0">{step.body}</div>
-          <aside className="space-y-4">
-            <div className="text-2xs uppercase tracking-wider text-ink-500 mb-1">Design notes</div>
-            {step.notes}
-          </aside>
-        </div>
+        {step.immersive ? (
+          <div className="max-w-[min(100vw,1480px)] mx-auto px-4 sm:px-6 py-6">
+            {step.body}
+            <details className="mt-10 card p-5 open:shadow-raised">
+              <summary className="text-sm font-medium text-ink-700 cursor-pointer select-none">
+                Design notes
+              </summary>
+              <div className="mt-4 space-y-4 border-t border-ink-100 pt-4">{step.notes}</div>
+            </details>
+          </div>
+        ) : (
+          <div className="max-w-7xl mx-auto px-6 py-8 grid lg:grid-cols-[1fr_320px] gap-8">
+            <div className="min-w-0">{step.body}</div>
+            <aside className="space-y-4">
+              <div className="text-2xs uppercase tracking-wider text-ink-500 mb-1">Design notes</div>
+              {step.notes}
+            </aside>
+          </div>
+        )}
       </div>
 
       {/* Footer nav */}
