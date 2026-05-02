@@ -13,11 +13,12 @@ Not affiliated with Salesforce or Tableau. For discussion and critique only.
 2. Go straight to **`#/flows/maya`** → step **Brief** — hover the **West coverage** trend (interactive chart).
 3. **`#/flows/jordan`** → **Queue** — **portfolio mix** bar + triage list.
 4. **`#/flows/sam`** → **Brief** — mobile cards with **sparkline** on risk.
-5. Read **`DESIGN.md`** in this repo for **tokens, typography, principles, and pain → redesign mapping**.
+5. Skim **`#/design-system`** for a **live overview** of tokens, capture roots, layers, and layout primitives (links to `plan/03`, `plan/14`, and **`DESIGN.md`** on GitHub when `VITE_GITHUB_URL` is set).
 
 | Path | What you’ll see |
 |------|-----------------|
 | `#/` | Thesis + **preview sparklines** on flow cards + link to design doc |
+| `#/design-system` | **Design system** — quality bar, tokens, type, capture→component map, organisms, `Region` / grid contract |
 | `#/whats-broken` | Capture-backed critique |
 | `#/strategy` | Bets, sequencing, risks |
 | `#/flows` | Index for three personas |

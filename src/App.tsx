@@ -5,6 +5,7 @@ import WhatsBroken from './pages/WhatsBroken'
 import Strategy from './pages/Strategy'
 import Summary from './pages/Summary'
 import Competitive from './pages/Competitive'
+import DesignSystem from './pages/DesignSystem'
 import FlowsIndex from './pages/FlowsIndex'
 import MayaCroMonday from './flows/MayaCroMonday'
 import JordanCuration from './flows/JordanCuration'
@@ -23,6 +24,7 @@ export default function App() {
         <Route path="/flows/sam" element={<SamMobile />} />
         <Route path="/summary" element={<Summary />} />
         <Route path="/competitive" element={<Competitive />} />
+        <Route path="/design-system" element={<DesignSystem />} />
         <Route path="*" element={<Home />} />
       </Routes>
     </SiteShell>

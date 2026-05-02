@@ -2,6 +2,8 @@
 
 This document is meant for **design and product review**: how the visual language works, why it diverges from default Tableau chrome, and how each **interactive flow** maps customer pain to a redesigned surface.
 
+**Interactive design-system overview:** `#/design-system` — scannable summary of tokens, typography, capture roots, atoms → organisms, and dynamic layout (`Region` / `AdaptiveGrid`), with links to `plan/03-design-system.md` and `plan/14-design-system-architecture.md` when the deploy sets `VITE_GITHUB_URL`.
+
 **Live prototype (after `npm run dev` or the hosted site):**
 
 | Route | Persona | What to click |

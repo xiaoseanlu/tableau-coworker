@@ -7,6 +7,7 @@ const navItems: Array<{ to: string; label: string }> = [
   { to: '/whats-broken', label: "What's broken" },
   { to: '/strategy',     label: 'Strategy' },
   { to: '/flows',        label: 'Flows' },
+  { to: '/design-system',     label: 'Design system' },
   { to: '/summary',      label: 'Summary' },
   { to: '/competitive',  label: 'Competitive scan' },
 ]

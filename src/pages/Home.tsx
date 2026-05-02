@@ -110,12 +110,15 @@ export default function Home() {
             {' '}in this repo.
           </p>
           <div className="flex flex-wrap gap-3">
-            <Link to="/flows/maya" className="btn-accent text-sm">
+            <Link to="/design-system" className="btn-accent text-sm">
+              Design system (live overview) <ArrowRight size={14} />
+            </Link>
+            <Link to="/flows/maya" className="btn-secondary text-sm">
               See Maya flow (hover chart) <ArrowRight size={14} />
             </Link>
             {DESIGN_DOC_HREF ? (
               <a href={DESIGN_DOC_HREF} className="btn-secondary text-sm" target="_blank" rel="noreferrer">
-                Open design system doc
+                DESIGN.md on GitHub
               </a>
             ) : null}
           </div>
@@ -190,7 +193,8 @@ export default function Home() {
               <ReadCard num="2" to="/strategy"     title="Strategy for the future" mins="7 min" />
               <ReadCard num="3" to="/flows"        title="The three flows"          mins="10 min · interactive" />
               <ReadCard num="4" to="/summary"      title="Summary &amp; next steps" mins="2 min" />
-              <ReadCard num="5" to="/competitive"  title="Competitive scan (appendix)" mins="4 min" />
+              <ReadCard num="5" to="/design-system" title="Design system architecture" mins="5 min" />
+              <ReadCard num="6" to="/competitive"  title="Competitive scan (appendix)" mins="4 min" />
             </div>
           </div>
         </div>
