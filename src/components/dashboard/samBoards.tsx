@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import type { KeyboardEvent, ReactNode } from 'react'
 import { useMemo, useState } from 'react'
 import {
   Area,
@@ -17,9 +17,9 @@ import {
 import { Phone, Send } from '../Icons'
 import { Sparkline } from '../viz/DataViz'
 import AgentDock, { type AgentInsight } from './AgentDock'
-import { CHART, CHART_AXIS } from './chartTokens'
+import { CHART, CHART_AXIS, chartTooltip } from './chartTokens'
 import { SAM_MOBILE } from './samDemoContext'
-import { JumpPresetButton, JumpStateStrip } from './JumpStateStrip'
+import { JumpPresetButton, JumpStateStrip, DEMO_PRESET_STRIP_HELP } from './JumpStateStrip'
 import { SAM_AGENT_DATA_SURFACE } from '../../data/personaFlowMeta'
 
 const CAP = `${import.meta.env.BASE_URL}captures/`
@@ -126,23 +126,23 @@ export function SamTodayBoard({ presetStrip = false, squishOnly = false }: { pre
 
   if (squishOnly) {
     return (
-      <div className="bg-canvas h-full min-h-[520px] flex flex-col">
-        <div className="px-4 pt-4 pb-2">
+      <div className="bg-canvas h-full min-h-0 flex flex-col overflow-y-auto overflow-x-hidden overscroll-y-contain scroll-smooth">
+        <div className="px-4 pt-4 pb-2 shrink-0">
           <div className="text-2xs font-mono text-ink-500">
             Capture: <span className="text-ink-700">key/05-mobile-squished.png</span>
           </div>
-          <div className="editorial text-base text-ink-900 leading-tight mt-2">Executive Overview on a phone — before Coworker</div>
+          <div className="editorial text-base text-ink-900 leading-snug mt-2">Executive Overview on a phone — before Coworker</div>
         </div>
-        <div className="flex-1 flex justify-center px-3 pb-8">
-          <div className="relative w-full max-w-[390px]">
+        <div className="flex-1 flex flex-col items-center px-3 pb-6 pt-1 min-h-0">
+          <div className="relative w-full max-w-[340px] shrink-0">
             <img
               src={`${CAP}key/05-mobile-squished.png`}
               alt="Tableau Superstore Executive Overview on iPhone — squished desktop layout"
-              className="block w-full rounded-xl border border-ink-200 shadow-sm"
+              className="block w-full rounded-xl border border-ink-200/90 shadow-lift-sm"
             />
-            <div className="absolute left-1/2 top-[42%] -translate-x-1/2 w-[min(92%,280px)]">
-              <div className="rounded-lg border border-signal/40 bg-canvas-raised/95 px-3 py-2.5 shadow-lg text-center">
-                <p className="text-sm text-ink-800 leading-snug m-0">
+            <div className="mt-4 px-1">
+              <div className="rounded-xl border border-signal/35 bg-canvas-raised/98 px-3 py-2.5 shadow-lift-sm ring-1 ring-signal/15">
+                <p className="text-sm text-ink-800 leading-snug m-0 text-center">
                   Built for a wide desktop. Forced into phone width. Sam closes the tab.
                 </p>
               </div>
@@ -154,8 +154,8 @@ export function SamTodayBoard({ presetStrip = false, squishOnly = false }: { pre
   }
 
   return (
-    <div className="bg-canvas h-full min-h-[560px] flex flex-col overflow-hidden">
-      <div className="flex-1 min-h-0 overflow-y-auto">
+    <div className="bg-canvas h-full min-h-0 flex flex-col overflow-hidden">
+      <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden overscroll-y-contain scroll-smooth">
         <div className="px-5 pt-9 pb-4 border-b border-ink-100 bg-gradient-to-br from-accent-soft/35 via-canvas to-canvas flex gap-3">
           <Phone size={22} className="text-accent shrink-0 mt-0.5" aria-hidden />
           <div>
@@ -167,7 +167,11 @@ export function SamTodayBoard({ presetStrip = false, squishOnly = false }: { pre
           </div>
         </div>
         {presetStrip ? (
-          <JumpStateStrip label="Jump today state" className="px-5 py-3">
+          <JumpStateStrip
+            label="Jump today state"
+            description={DEMO_PRESET_STRIP_HELP}
+            className="px-5 py-3"
+          >
             <JumpPresetButton tone="neutral" active={sel === null} onClick={() => setSel(null)}>
               Idle
             </JumpPresetButton>
@@ -191,7 +195,7 @@ export function SamTodayBoard({ presetStrip = false, squishOnly = false }: { pre
             </JumpPresetButton>
           </JumpStateStrip>
         ) : null}
-        <div className="p-3 border-b border-ink-100 bg-canvas-sunken/30">
+        <div className="p-4 border-b border-ink-100 bg-canvas-sunken/30">
           <img
             src={`${CAP}key/05-mobile-squished.png`}
             alt="Tableau Superstore Executive Overview on iPhone — squished desktop dashboard"
@@ -204,7 +208,7 @@ export function SamTodayBoard({ presetStrip = false, squishOnly = false }: { pre
               <div className="text-2xs font-mono uppercase tracking-[0.14em] text-ink-500 mb-2">Read efficiency · prototype index</div>
               <div className="h-[200px] w-full">
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={LEGIBILITY} margin={{ top: 8, right: 8, left: -8, bottom: 52 }}>
+                  <BarChart data={LEGIBILITY} margin={{ top: 8, right: 12, left: 4, bottom: 52 }}>
                     <CartesianGrid strokeDasharray="3 6" stroke={CHART.grid} vertical={false} />
                     <XAxis
                       dataKey="label"
@@ -220,7 +224,11 @@ export function SamTodayBoard({ presetStrip = false, squishOnly = false }: { pre
                     <Tooltip
                       cursor={{ fill: 'rgba(199, 132, 28, 0.07)' }}
                       formatter={(v: number) => [`${v}`, 'Index']}
-                      contentStyle={{ fontSize: 12, borderRadius: 10, border: `1px solid ${CHART.grid}`, boxShadow: '0 6px 20px rgba(14,15,18,0.07)' }}
+                      contentStyle={chartTooltip({
+                        borderRadius: 10,
+                        border: `1px solid ${CHART.grid}`,
+                        boxShadow: '0 6px 20px rgba(14,15,18,0.07)',
+                      })}
                     />
                     <Bar
                       dataKey="score"
@@ -269,7 +277,7 @@ export function SamTodayBoard({ presetStrip = false, squishOnly = false }: { pre
                         <Cell key={entry.segment} fill={entry.segment === 'coworker' ? CHART.accent : CHART.signal} fillOpacity={pieActive >= 0 && i !== pieActive ? 0.3 : 1} />
                       ))}
                     </Pie>
-                    <Tooltip contentStyle={{ borderRadius: 10, fontSize: 12, border: `1px solid ${CHART.grid}` }} />
+                    <Tooltip contentStyle={chartTooltip({ borderRadius: 10, border: `1px solid ${CHART.grid}` })} />
                   </PieChart>
                 </ResponsiveContainer>
                 <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
@@ -357,7 +365,7 @@ function agentBrief(sel: BriefSel): AgentInsight {
   const m = {
     stuck: {
       title: `Stuck · ${nStuck}`,
-      body: 'Legal and deal-desk stalls — actionable nudges inline. Acme Co is the staff name Maya cares about.',
+      body: 'Legal and deal-desk stalls — actionable nudges inline. Acme Co is the deal Maya tables at exec staff this morning.',
       confidence: 'high',
     },
     wins: {
@@ -389,17 +397,26 @@ function BriefCard({
 }) {
   const border =
     tone === 'warning' ? 'border-warning/30' : tone === 'success' ? 'border-success/30' : 'border-danger/30'
+  const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault()
+      onSelect()
+    }
+  }
   return (
-    <button
-      type="button"
+    <div
+      role="button"
+      tabIndex={0}
       onClick={onSelect}
-      className={`rounded-xl border ${border} bg-canvas-raised p-3.5 text-left w-full transition-all duration-200 ease-smooth ${
+      onKeyDown={onKeyDown}
+      aria-pressed={active}
+      className={`rounded-xl border ${border} bg-canvas-raised p-4 pb-5 text-left w-full min-w-0 cursor-pointer transition-all duration-200 ease-smooth outline-none focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-canvas-raised ${
         active ? 'ring-2 ring-signal/40 shadow-sm' : 'hover:shadow-md'
       }`}
     >
-      <div className="text-2xs uppercase tracking-[0.14em] font-mono font-semibold text-ink-700">{title}</div>
-      {children}
-    </button>
+      <div className="text-2xs uppercase tracking-[0.14em] font-mono font-semibold text-ink-700 break-words">{title}</div>
+      <div className="mt-0 min-w-0">{children}</div>
+    </div>
   )
 }
 
@@ -410,8 +427,8 @@ export function SamBriefBoard({ presetStrip = false }: { presetStrip?: boolean }
   const winsCount = SAM_MOBILE.wins.length
 
   return (
-    <div className="bg-canvas h-full min-h-[580px] flex flex-col overflow-hidden">
-      <div className="flex-1 min-h-0 overflow-y-auto">
+    <div className="bg-canvas h-full min-h-0 flex flex-col overflow-hidden">
+      <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden overscroll-y-contain scroll-smooth">
         <div className="px-5 pt-9 pb-4 border-b border-ink-100 bg-gradient-to-br from-accent-soft/30 via-canvas to-canvas flex gap-3">
           <Phone size={22} className="text-accent shrink-0 mt-0.5" aria-hidden />
           <div className="min-w-0">
@@ -422,7 +439,11 @@ export function SamBriefBoard({ presetStrip = false }: { presetStrip?: boolean }
           </div>
         </div>
         {presetStrip ? (
-          <JumpStateStrip label="Jump brief state" className="px-5 py-3">
+          <JumpStateStrip
+            label="Jump brief state"
+            description={DEMO_PRESET_STRIP_HELP}
+            className="px-5 py-3"
+          >
             <JumpPresetButton tone="neutral" active={sel === null} onClick={() => setSel(null)}>
               Idle
             </JumpPresetButton>
@@ -484,7 +505,7 @@ export function SamBriefBoard({ presetStrip = false }: { presetStrip?: boolean }
             <div className="text-[10px] text-success">w/w pulse</div>
           </button>
         </div>
-        <div className="px-5 py-4 space-y-3">
+        <div className="px-5 pt-4 pb-6 space-y-3">
           <BriefCard
             tone="warning"
             title={`Stuck · ${stuckCount}`}
@@ -493,10 +514,10 @@ export function SamBriefBoard({ presetStrip = false }: { presetStrip?: boolean }
           >
             <ul className="mt-2 space-y-2 text-xs text-ink-800">
               {SAM_MOBILE.stuck.map(d => (
-                <li key={d.id}>
+                <li key={d.id} className="min-w-0">
                   <button
                     type="button"
-                    className="text-left w-full rounded-md px-0.5 py-0.5 hover:bg-warning-soft/30 transition-colors"
+                    className="text-left w-full min-w-0 rounded-md px-1 py-1 hover:bg-warning-soft/30 transition-colors break-words [overflow-wrap:anywhere]"
                     onClick={e => {
                       e.stopPropagation()
                       setSel({ kind: 'deal', name: d.name })
@@ -515,43 +536,51 @@ export function SamBriefBoard({ presetStrip = false }: { presetStrip?: boolean }
             active={sel?.kind === 'card' && sel.id === 'wins'}
             onSelect={() => setSel({ kind: 'card', id: 'wins' })}
           >
-            <ul className="mt-2 space-y-1.5 text-xs text-ink-800">
+            <ul className="mt-2 space-y-1.5 text-xs text-ink-800 break-words [overflow-wrap:anywhere]">
               {SAM_MOBILE.wins.map((w, i) => (
-                <li key={i}>{w.label}</li>
+                <li key={i} className="min-w-0">
+                  {w.label}
+                </li>
               ))}
             </ul>
-            <div
-              className="mt-3 h-[76px] w-full -mx-0.5"
-              role="presentation"
-              onClick={e => {
-                e.stopPropagation()
-                setSel({ kind: 'kpi', id: 'wins' })
-              }}
-            >
-              <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={WINS_SALES_CURVE} margin={{ top: 4, right: 4, left: -32, bottom: 0 }}>
-                  <defs>
-                    <linearGradient id="winsGradSam" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor={CHART.success} stopOpacity={0.25} />
-                      <stop offset="100%" stopColor={CHART.success} stopOpacity={0} />
-                    </linearGradient>
-                  </defs>
-                  <XAxis dataKey="w" tick={{ fontSize: 9 }} axisLine={false} tickLine={false} />
-                  <Tooltip
-                    contentStyle={{ borderRadius: 8, fontSize: 11, border: `1px solid ${CHART.grid}` }}
-                    formatter={(v: number) => [`${v}`, 'Pulse']}
-                  />
-                  <Area
-                    type="monotone"
-                    dataKey="pulse"
-                    stroke={CHART.success}
-                    strokeWidth={2}
-                    fill="url(#winsGradSam)"
-                    dot={{ r: 3, fill: CHART.success, stroke: CHART.canvas, strokeWidth: 1 }}
-                  />
-                </AreaChart>
-              </ResponsiveContainer>
-              <div className="text-[10px] font-mono text-ink-500 mt-1">Tap curve · rep momentum read</div>
+            <div className="mt-3 w-full min-w-0">
+              <div
+                className="rounded-lg border border-ink-100/80 bg-canvas-sunken/20 overflow-hidden"
+                role="presentation"
+                onClick={e => {
+                  e.stopPropagation()
+                  setSel({ kind: 'kpi', id: 'wins' })
+                }}
+              >
+                <div className="h-[96px] w-full px-2 pt-2">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <AreaChart data={WINS_SALES_CURVE} margin={{ top: 4, right: 6, left: 4, bottom: 22 }}>
+                      <defs>
+                        <linearGradient id="winsGradSam" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stopColor={CHART.success} stopOpacity={0.25} />
+                          <stop offset="100%" stopColor={CHART.success} stopOpacity={0} />
+                        </linearGradient>
+                      </defs>
+                      <XAxis dataKey="w" tick={{ fontSize: 9 }} axisLine={false} tickLine={false} height={20} />
+                      <Tooltip
+                        contentStyle={chartTooltip({ borderRadius: 8, fontSize: 11, border: `1px solid ${CHART.grid}` })}
+                        formatter={(v: number) => [`${v}`, 'Pulse']}
+                      />
+                      <Area
+                        type="monotone"
+                        dataKey="pulse"
+                        stroke={CHART.success}
+                        strokeWidth={2}
+                        fill="url(#winsGradSam)"
+                        dot={{ r: 3, fill: CHART.success, stroke: CHART.canvas, strokeWidth: 1 }}
+                      />
+                    </AreaChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
+              <p className="m-0 mt-2 px-0.5 text-[10px] font-mono text-ink-500 leading-snug">
+                Tap curve · rep momentum read
+              </p>
             </div>
           </BriefCard>
           <BriefCard
@@ -560,12 +589,12 @@ export function SamBriefBoard({ presetStrip = false }: { presetStrip?: boolean }
             active={sel?.kind === 'card' && sel.id === 'risk'}
             onSelect={() => setSel({ kind: 'card', id: 'risk' })}
           >
-            <p className="mt-2 text-xs text-ink-800 leading-relaxed">
+            <p className="mt-2 text-xs text-ink-800 leading-relaxed m-0 break-words [overflow-wrap:anywhere]">
               West coverage dipped <strong>{SAM_MOBILE.coverageWoW}</strong> (v2 · {SAM_MOBILE.coverageLabel}). Not staff-level yet —
               watch. Same model as Maya&apos;s cards.
             </p>
             <div
-              className="mt-3 flex items-center gap-2"
+              className="mt-3 flex items-center gap-2 min-w-0"
               onClick={e => e.stopPropagation()}
               onKeyDown={e => e.stopPropagation()}
               role="presentation"
@@ -623,9 +652,21 @@ function agentDrill(sel: DrillSel): AgentInsight {
   if (sel.kind === 'check') {
     const stuckDays = SAM_MOBILE.stuck[0]!.days
     const m = {
-      risk: { title: 'Closed-won risk', body: 'Flag cleared for finance sign-off path — not a pricing exception.', confidence: 'moderate' },
-      legal: { title: 'Legal duration', body: `${stuckDays} in legal vs 6d team median — tail risk for Q-end if GC review slows.`, confidence: 'high' },
-      dup: { title: 'Duplicate opps', body: 'Ruled out — single opportunity hierarchy on the account.', confidence: 'high' },
+      risk: {
+        title: 'Finance check',
+        body: 'Closed-won risk flag is cleared for this path—stage and pricing line up for finance sign-off, not a pricing exception.',
+        confidence: 'moderate',
+      },
+      legal: {
+        title: 'Legal timing',
+        body: `${stuckDays} days in legal versus about six days for a typical West deal. That gap is what Sam cites when nudging counsel in the pre-draft.`,
+        confidence: 'high',
+      },
+      dup: {
+        title: 'Account hygiene',
+        body: 'We checked for duplicate opportunities on the account. CRM shows one hierarchy—no double-counted pipe on this customer.',
+        confidence: 'high',
+      },
     }
     return m[sel.id]
   }
@@ -673,10 +714,11 @@ export function SamDrillBoard({ presetStrip = false }: { presetStrip?: boolean }
   const acme = SAM_MOBILE.stuck[0]!
   const d = SAM_MOBILE.drill
   const barSel = sel?.kind === 'legalbar' ? (sel.which === 'deal' ? 1 : 0) : -1
+  const legalDays = acme.days
 
   return (
-    <div className="bg-canvas min-h-[560px] flex flex-col">
-      <div className="flex-1 min-h-0 overflow-y-auto">
+    <div className="bg-canvas h-full min-h-0 flex flex-col overflow-hidden">
+      <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden overscroll-y-contain scroll-smooth">
         <div className="px-5 pt-8 pb-4 border-b border-ink-100 bg-gradient-to-r from-signal-soft/35 to-canvas">
           <div className="text-2xs font-mono text-signal-ink mb-1">
             {acme.name} · {acme.acv}
@@ -686,7 +728,11 @@ export function SamDrillBoard({ presetStrip = false }: { presetStrip?: boolean }
           </div>
         </div>
         {presetStrip ? (
-          <JumpStateStrip label="Jump drill state" className="px-5 py-3">
+          <JumpStateStrip
+            label="Jump drill state"
+            description={DEMO_PRESET_STRIP_HELP}
+            className="px-5 py-3"
+          >
             <JumpPresetButton tone="neutral" active={sel === null} onClick={() => setSel(null)}>
               Idle
             </JumpPresetButton>
@@ -707,7 +753,7 @@ export function SamDrillBoard({ presetStrip = false }: { presetStrip?: boolean }
             </JumpPresetButton>
           </JumpStateStrip>
         ) : null}
-        <div className="px-5 py-4 space-y-4">
+        <div className="px-4 py-4 space-y-4">
           <button
             type="button"
             onClick={() => setSel({ kind: 'agent' })}
@@ -720,15 +766,15 @@ export function SamDrillBoard({ presetStrip = false }: { presetStrip?: boolean }
             index.
           </button>
 
-          <div className="rounded-xl border border-ink-200 bg-canvas-raised p-3 shadow-sm">
-            <div className="text-2xs font-mono uppercase tracking-wide text-ink-500 mb-2">Legal duration · vs median</div>
-            <div className="h-[108px] w-full">
+          <div className="rounded-xl border border-ink-200/90 bg-canvas-raised p-4 shadow-lift-sm ring-1 ring-ink-900/[0.03]">
+            <div className="text-2xs font-mono uppercase tracking-wide text-ink-500 mb-3">Legal duration · vs team median</div>
+            <div className="h-[120px] w-full">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={LEGAL_DURATION} layout="vertical" margin={{ top: 2, right: 12, left: 4, bottom: 0 }}>
+                <BarChart data={LEGAL_DURATION} layout="vertical" margin={{ top: 8, right: 16, left: 8, bottom: 8 }}>
                   <CartesianGrid strokeDasharray="3 6" stroke={CHART.grid} horizontal={false} />
                   <XAxis type="number" domain={[0, 14]} hide />
                   <YAxis type="category" dataKey="label" width={96} tick={{ fontSize: 10 }} axisLine={false} tickLine={false} />
-                  <Tooltip formatter={(v: number) => [`${v}d`, 'In stage']} contentStyle={{ borderRadius: 10, fontSize: 12 }} />
+                  <Tooltip formatter={(v: number) => [`${v}d`, 'In stage']} contentStyle={chartTooltip({ borderRadius: 10 })} />
                   <Bar
                     dataKey="days"
                     radius={[0, 8, 8, 0]}
@@ -749,8 +795,8 @@ export function SamDrillBoard({ presetStrip = false }: { presetStrip?: boolean }
             </div>
           </div>
 
-          <div className="rounded-xl border border-ink-200 bg-canvas-sunken/25 px-3 py-3 shadow-sm">
-            <div className="text-2xs font-mono uppercase tracking-wide text-ink-500 mb-2">Touchpoints · tap a pill</div>
+          <div className="rounded-xl border border-ink-200/90 bg-canvas-sunken/30 p-4 ring-1 ring-ink-900/[0.02]">
+            <div className="text-2xs font-mono uppercase tracking-wide text-ink-500 mb-2">Touchpoints · tap a milestone</div>
             <div className="flex flex-wrap gap-2">
               {TIMELINE_EDGE.map((t, i) => (
                 <button
@@ -770,22 +816,31 @@ export function SamDrillBoard({ presetStrip = false }: { presetStrip?: boolean }
             </div>
           </div>
 
-          <div className="text-xs text-ink-600">
-            <span className="font-mono text-2xs uppercase text-ink-500">What I checked</span>
-            <ul className="mt-1 space-y-1">
+          <div className="rounded-xl border border-ink-200/90 bg-canvas-raised p-4 space-y-3 shadow-lift-sm ring-1 ring-ink-900/[0.03]">
+            <div>
+              <div className="font-mono text-2xs uppercase tracking-wide text-ink-500">Checks Coworker logged</div>
+              <p className="text-2xs text-ink-600 mt-1.5 mb-0 leading-relaxed">
+                Each line is a diligence item on this deal. Tap it—the story opens in the Coworker dock below (scroll if you don&apos;t
+                see it).
+              </p>
+            </div>
+            <ul className="m-0 p-0 list-none space-y-1.5">
               {(
                 [
-                  ['risk', 'Closed-won risk flag'],
-                  ['legal', 'Legal stage duration'],
-                  ['dup', 'Duplicate opps on account — ruled out'],
+                  ['risk', 'Finance: closed-won risk flag — cleared on this path'],
+                  ['legal', `Legal desk: ${legalDays} days in stage vs ~6d team median`],
+                  ['dup', 'CRM: duplicate opps on this account — ruled out'],
                 ] as const
               ).map(([id, label]) => (
                 <li key={id}>
                   <button
                     type="button"
-                    className={`text-left w-full rounded-lg px-2 py-1 transition-colors ${
-                      sel?.kind === 'check' && sel.id === id ? 'bg-accent-soft/50 ring-1 ring-accent/20' : 'hover:bg-ink-100/80'
+                    className={`text-left w-full rounded-lg px-3 py-2.5 text-sm text-ink-800 border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 ${
+                      sel?.kind === 'check' && sel.id === id
+                        ? 'border-accent/40 bg-accent-soft/45 ring-1 ring-accent/25'
+                        : 'border-ink-200/80 bg-canvas-sunken/25 hover:bg-ink-50'
                     }`}
+                    aria-pressed={sel?.kind === 'check' && sel.id === id}
                     onClick={() => setSel({ kind: 'check', id })}
                   >
                     {label}
@@ -872,10 +927,14 @@ export function SamActBoard({ presetStrip = false }: { presetStrip?: boolean }) 
   const a = SAM_MOBILE.act
 
   return (
-    <div className="bg-canvas min-h-[360px] flex flex-col">
-      <div className="flex-1 px-5 py-8 space-y-4 overflow-y-auto">
+    <div className="bg-canvas h-full min-h-0 flex flex-col overflow-hidden">
+      <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden overscroll-y-contain scroll-smooth px-4 py-6 space-y-4">
         {presetStrip ? (
-          <JumpStateStrip label="Jump receipt state" className="py-2.5 -mt-2 mb-2 -mx-5 px-5">
+          <JumpStateStrip
+            label="Jump receipt state"
+            description={DEMO_PRESET_STRIP_HELP}
+            className="py-2.5 -mt-2 mb-2 -mx-4 px-4"
+          >
             <JumpPresetButton tone="neutral" active={sel === null} onClick={() => setSel(null)}>
               Idle
             </JumpPresetButton>

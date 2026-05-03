@@ -360,7 +360,7 @@ function Voice({ src, body }: { src: string; body: string }) {
 function Stat({ big, label, sub }: { big: string; label: string; sub: string }) {
   return (
     <div>
-      <div className="editorial text-4xl text-ink-900 mb-1">{big}</div>
+      <div className="font-mono font-semibold tabular-nums text-4xl text-ink-900 tracking-tight mb-1">{big}</div>
       <div className="text-sm font-semibold text-ink-800 mb-1">{label}</div>
       <div className="text-xs text-ink-500 leading-relaxed font-mono">{sub}</div>
     </div>

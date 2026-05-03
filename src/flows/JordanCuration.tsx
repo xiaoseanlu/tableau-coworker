@@ -35,7 +35,8 @@ const steps: FlowStep[] = [
           </h2>
           <p className="text-sm text-ink-600 leading-relaxed">
             One workbook, nine views on the sample — use <strong className="font-semibold text-ink-800">Jump sprawl state</strong> or
-            tap the workbook, bars, or follow-ups. The capture stays the receipt; the chart is prototype load-share.
+            tap the workbook, bars, or follow-ups. The capture stays the receipt; the bars are a scripted share-of-views mix for this
+            walkthrough, not a live usage roll-up.
           </p>
         </div>
         <JordanSprawlBoard presetStrip />

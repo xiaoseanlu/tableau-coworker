@@ -24,3 +24,17 @@ export const CHART_AXIS = {
   muted: '#858B9C',
   gridSubtle: '#EEF0F4',
 } as const
+
+/** JetBrains Mono for chart tooltips and numeric ticks (plan/03 — numerals in mono). */
+export const CHART_FONT_MONO = '"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace'
+
+/** Consistent Recharts tooltip shell; pass overrides (e.g. border color). */
+export function chartTooltip(overrides?: Record<string, string | number>): Record<string, string | number> {
+  return {
+    fontSize: 12,
+    borderRadius: 8,
+    fontFamily: CHART_FONT_MONO,
+    border: `1px solid ${CHART_AXIS.gridSubtle}`,
+    ...overrides,
+  }
+}

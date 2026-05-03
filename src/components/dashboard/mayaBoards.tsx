@@ -13,7 +13,7 @@ import {
 } from 'recharts'
 import { Surface } from '../FlowChrome'
 import AgentDock, { type AgentInsight } from './AgentDock'
-import { CHART } from './chartTokens'
+import { CHART, chartTooltip } from './chartTokens'
 import { MAYA_AGENT_DATA_SURFACE } from '../../data/personaFlowMeta'
 
 const CAP = `${import.meta.env.BASE_URL}captures/`
@@ -257,7 +257,7 @@ export function MayaDrillBoard() {
                     <CartesianGrid strokeDasharray="3 6" stroke={CHART.grid} horizontal={false} />
                     <XAxis type="number" domain={[-25, 0]} tickFormatter={v => `${v}%`} tick={{ fontSize: 10 }} />
                     <YAxis type="category" dataKey="state" width={58} tick={{ fontSize: 11 }} axisLine={false} tickLine={false} />
-                    <Tooltip formatter={(v: number) => [`${v}%`, 'Profit']} contentStyle={{ fontSize: 12, borderRadius: 8 }} />
+                    <Tooltip formatter={(v: number) => [`${v}%`, 'Profit']} contentStyle={chartTooltip({ borderRadius: 8 })} />
                     <Bar
                       dataKey="profit"
                       radius={[0, 6, 6, 0]}
@@ -289,7 +289,7 @@ export function MayaDrillBoard() {
                     <CartesianGrid strokeDasharray="3 6" stroke={CHART.grid} horizontal={false} />
                     <XAxis type="number" domain={[0, 40]} tickFormatter={v => `${v}%`} tick={{ fontSize: 10 }} />
                     <YAxis type="category" dataKey="name" width={68} tick={{ fontSize: 11 }} axisLine={false} tickLine={false} />
-                    <Tooltip formatter={(v: number) => [`${v}%`, 'Share']} contentStyle={{ fontSize: 12, borderRadius: 8 }} />
+                    <Tooltip formatter={(v: number) => [`${v}%`, 'Share']} contentStyle={chartTooltip({ borderRadius: 8 })} />
                     <Bar
                       dataKey="share"
                       radius={[0, 6, 6, 0]}
@@ -483,7 +483,7 @@ export function MayaSendBoard() {
                   <CartesianGrid strokeDasharray="3 6" stroke={CHART.grid} vertical={false} />
                   <XAxis dataKey="label" tick={{ fontSize: 9 }} axisLine={false} tickLine={false} interval={0} />
                   <YAxis domain={[0, 14]} tick={{ fontSize: 10, fontFamily: 'JetBrains Mono' }} width={28} axisLine={false} tickLine={false} />
-                  <Tooltip contentStyle={{ fontSize: 12, borderRadius: 8 }} />
+                  <Tooltip contentStyle={chartTooltip({ borderRadius: 8 })} />
                   <Line
                     type="monotone"
                     dataKey="subs"

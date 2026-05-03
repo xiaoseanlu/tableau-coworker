@@ -276,6 +276,14 @@ export default function DesignSystem() {
           <div>
             <div className="text-2xs font-mono text-ink-400 mb-1">JetBrains Mono — metric</div>
             <p className="font-mono text-xl text-ink-900 tabular-nums">$2.84M · <span className="text-danger">−6.2%</span> WoW · 94% conf.</p>
+            <p className="text-sm text-ink-600 max-w-prose mt-3 m-0 leading-relaxed">
+              Flows use the same rule: KPI magnitudes and deltas in mono with{' '}
+              <code className="font-mono text-2xs bg-ink-50 px-1 rounded">tabular-nums</code>. Shared helpers live in CSS as{' '}
+              <code className="font-mono text-2xs bg-ink-50 px-1 rounded">.metric-value</code>,{' '}
+              <code className="font-mono text-2xs bg-ink-50 px-1 rounded">.metric-value-lg</code>, and{' '}
+              <code className="font-mono text-2xs bg-ink-50 px-1 rounded">.metric-delta</code> (see{' '}
+              <code className="font-mono text-2xs bg-ink-50 px-1 rounded">styles/index.css</code>).
+            </p>
           </div>
         </div>
 

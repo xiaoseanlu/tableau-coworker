@@ -14,71 +14,70 @@ const DESIGN_DOC_HREF = import.meta.env.VITE_GITHUB_URL
 export default function Home() {
   return (
     <div>
-      {/* Hero */}
-      <section className="relative overflow-hidden">
-        <div className="grid-backdrop absolute inset-0 opacity-60 pointer-events-none" />
-        <div className="ds-page pt-20 pb-24 relative">
+      {/* Thesis + proof — first scroll is the build, not the process */}
+      <section className="relative overflow-hidden bg-canvas-raised border-b border-ink-100">
+        <div className="surface-hero absolute inset-0 pointer-events-none opacity-[0.92]" aria-hidden />
+        <div className="grid-backdrop absolute inset-0 opacity-40 pointer-events-none" aria-hidden />
+        <div className="ds-page pt-12 md:pt-16 pb-14 md:pb-16 relative">
           <div className="max-w-3xl">
-            <div className="h-eyebrow mb-5">Design exploration · Tableau</div>
-            <h1 className="h-display mb-6">
-              Tableau dashboards are static artifacts<br/>
-              in a world where data is alive.<br/>
+            <div className="h-eyebrow mb-4">Tableau Coworker · Acme SaaS</div>
+            <h1 className="h-display mb-5">
+              Tableau dashboards are static artifacts<br />
+              in a world where data is alive.<br />
               <span className="text-accent italic">The next Tableau is a living surface.</span>
             </h1>
-            <p className="text-lg text-ink-600 max-w-2xl mb-8">
-              A strategic and interactive reimagining of Tableau Cloud for the AI era — grounded in
-              real trial captures, shipped as a React prototype with{' '}
-              <strong className="text-ink-800">interactive charts</strong> in each persona flow. Same thesis,
-              three personas (Acme SaaS): Maya, Jordan, Sam.
+            <p className="text-base md:text-lg text-ink-600 max-w-2xl mb-6 leading-relaxed">
+              Real trial capture on the left; the same Monday brief as an interactive Coworker canvas on the right —{' '}
+              <strong className="text-ink-800">Maya, Jordan, Sam</strong> flows carry one v18 narrative through handoff and mobile.
             </p>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-3 mb-10">
               <Link to="/whats-broken" className="btn-primary">
-                Start with what's broken <ArrowRight size={14} />
+                Start with what&apos;s broken <ArrowRight size={14} />
               </Link>
-              <Link to="/flows" className="btn-secondary">
-                Or jump to the flows
+              <Link to="/flows/maya" className="btn-secondary">
+                Open Maya flow <ArrowRight size={14} />
               </Link>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* Thesis proof — product before framework */}
-      <section className="border-t border-ink-100 bg-canvas-raised">
-        <div className="ds-page py-14 md:py-16">
-          <div className="h-eyebrow mb-3">Thesis, rendered</div>
-          <h2 className="h-section max-w-3xl mb-2">Tableau today vs Coworker — same numbers, different first paint</h2>
-          <p className="text-ink-600 max-w-3xl mb-8 leading-relaxed">
-            Left: wall of widgets from the trial (
-            <span className="font-mono text-2xs">key/04-exec-wall-of-widgets.png</span>). Right: narrative-first Monday canvas (Maya
-            flow — interactive walkthrough).
-          </p>
-          <div className="grid lg:grid-cols-2 gap-6 items-start">
-            <div>
-              <div className="text-2xs font-mono uppercase tracking-wide text-ink-500 mb-2">Today · capture</div>
-              <img
-                src={`${CAP}key/04-exec-wall-of-widgets.png`}
-                alt="Tableau Executive Overview — dense widget wall"
-                className="w-full rounded-xl border border-ink-200 shadow-sm"
-              />
-            </div>
-            <div className="min-w-0">
-              <div className="text-2xs font-mono uppercase tracking-wide text-ink-500 mb-2">Coworker · thesis layout</div>
-              <div className="max-h-[min(70vh,560px)] overflow-y-auto overflow-x-hidden rounded-xl border border-ink-200 shadow-sm">
-                <MayaInteractiveDashboard initialLayout="narrativeLeads" compactHero />
+          <div className="border-t border-ink-200 pt-10 md:pt-12">
+            <div className="h-eyebrow mb-3">Thesis, rendered</div>
+            <h2 className="h-section max-w-3xl mb-2">Same Executive Overview numbers — different first paint</h2>
+            <p className="text-ink-600 max-w-3xl mb-8 leading-relaxed text-sm md:text-base">
+              Left: wall of widgets from the trial (
+              <span className="font-mono text-2xs">key/04-exec-wall-of-widgets.png</span>). Right: narrative-first canvas (hover charts;
+              full step-by-step in the Maya flow).
+            </p>
+            <div className="grid lg:grid-cols-2 gap-6 items-start">
+              <div>
+                <div className="text-2xs font-mono uppercase tracking-wide text-ink-500 mb-2">Today · capture</div>
+                <img
+                  src={`${CAP}key/04-exec-wall-of-widgets.png`}
+                  alt="Tableau Executive Overview — dense widget wall"
+                  className="w-full rounded-xl border border-ink-200/90 shadow-lift-sm ring-1 ring-ink-900/[0.04]"
+                />
+              </div>
+              <div className="min-w-0">
+                <div className="text-2xs font-mono uppercase tracking-wide text-ink-500 mb-2">Coworker · thesis layout</div>
+                <div className="max-h-[min(70vh,560px)] overflow-y-auto overflow-x-hidden rounded-xl border border-ink-200/90 shadow-lift ring-1 ring-ink-900/[0.045] bg-canvas">
+                  <MayaInteractiveDashboard initialLayout="narrativeLeads" compactHero />
+                </div>
               </div>
             </div>
-          </div>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Link to="/flows/maya" className="btn-primary text-sm">
-              Open Maya flow <ArrowRight size={14} />
-            </Link>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link to="/flows/maya" className="btn-primary text-sm">
+                Full Maya walkthrough <ArrowRight size={14} />
+              </Link>
+              <Link to="/flows" className="btn-secondary text-sm">
+                All three flows
+              </Link>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Three pillars TL;DR */}
-      <section className="border-t border-ink-100 bg-canvas-raised">
+      <section className="border-t border-ink-100/90 bg-canvas-sunken/35">
         <div className="ds-page py-16">
           <div className="h-eyebrow mb-3">Four strategic bets</div>
           <h2 className="h-section max-w-3xl mb-12">
@@ -127,39 +126,28 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Tokens, captures, interactive flows */}
-      <section className="border-t border-ink-100 bg-canvas-raised">
-        <div className="ds-page py-16">
-          <div className="h-eyebrow mb-3">Redesign deliverable</div>
-          <h2 className="h-section max-w-3xl mb-4">
-            Interactive surfaces — captures for &quot;today,&quot; designed UI + data viz for &quot;tomorrow&quot;
+      {/* Depth — same priority as footer Process & depth */}
+      <section className="border-t border-ink-100 bg-canvas">
+        <div className="ds-page py-12 md:py-14">
+          <h2 className="text-lg font-semibold text-ink-900 max-w-3xl mb-3">
+            Tokens, captures, and written rationale
           </h2>
-          <p className="text-ink-600 max-w-3xl mb-6 leading-relaxed">
-            The flows are the redesign: each opens with <strong className="text-ink-800">real Tableau screenshots</strong>,
-            then moves to <strong className="text-ink-800">new layouts</strong> with hoverable trend charts, portfolio
-            composition, and mobile spark trends. Tokens, type, color rationale, and pain → design mapping are written in{' '}
+          <p className="text-sm text-ink-600 max-w-3xl mb-5 leading-relaxed">
+            Each flow opens on <strong className="text-ink-800">screenshots from the trial</strong>, then transitions to designed surfaces
+            with working charts. Type, color, and pain-to-pattern mapping:{' '}
             {DESIGN_DOC_HREF ? (
-              <a href={DESIGN_DOC_HREF} className="text-accent font-medium hover:underline" target="_blank" rel="noreferrer">
+              <a href={DESIGN_DOC_HREF} className="text-accent-ink font-medium hover:underline" target="_blank" rel="noreferrer">
                 DESIGN.md
               </a>
             ) : (
-              <span className="font-mono text-sm">DESIGN.md</span>
+              <span className="font-mono text-2xs">DESIGN.md</span>
             )}
-            {' '}in this repo.
+            . Live token reference:{' '}
+            <Link to="/design-system" className="text-accent-ink font-medium hover:underline">
+              Design system
+            </Link>
+            .
           </p>
-          <div className="flex flex-wrap gap-3">
-            <Link to="/design-system" className="btn-accent text-sm">
-              Design system (live overview) <ArrowRight size={14} />
-            </Link>
-            <Link to="/flows/maya" className="btn-secondary text-sm">
-              See Maya flow (hover chart) <ArrowRight size={14} />
-            </Link>
-            {DESIGN_DOC_HREF ? (
-              <a href={DESIGN_DOC_HREF} className="btn-secondary text-sm" target="_blank" rel="noreferrer">
-                DESIGN.md on GitHub
-              </a>
-            ) : null}
-          </div>
         </div>
       </section>
 
@@ -197,7 +185,7 @@ export default function Home() {
             to="/flows/sam"
             number="Flow 03"
             title="Sam — mobile, between meetings"
-            blurb="Regional director gets region-scoped briefing cards with inline spark trends — not the squished Superstore desktop sheet."
+            blurb="Open on real mobile squish (key/05), then Coworker brief, drill, and legal handoff — same draft object as the desktop flows."
             tag="Sam Reyes · West RSD"
             preview={
               <Sparkline
@@ -221,9 +209,8 @@ export default function Home() {
                 If you have 5 minutes, read the summary. If you have 25, read everything.
               </h3>
               <p className="prose-body text-base">
-                The deliverable is laid out in the order it was thought through.
-                The strategy stands on what&apos;s broken; the flows stand on the strategy.
-                Design system, authoring deep-dive, and competitive appendix live under <strong className="font-medium text-ink-800">Process & depth</strong> in the footer.
+                Read in order: diagnosis, bet, proof.
+                Design system, authoring deep-dive, and competitive appendix sit under <strong className="font-medium text-ink-800">Process & depth</strong> in the footer.
               </p>
             </div>
             <div className="space-y-3">
@@ -241,7 +228,7 @@ export default function Home() {
 
 function Pillar({ num, title, body }: { num: string; title: string; body: string }) {
   return (
-    <div>
+    <div className="rounded-2xl border border-ink-200/85 bg-canvas-raised p-6 md:p-7 shadow-lift-sm ring-1 ring-ink-900/[0.03] motion-safe:transition-shadow motion-safe:duration-200 hover:shadow-lift">
       <div className="text-2xs font-mono text-accent mb-2">{num}</div>
       <h3 className="text-lg font-semibold text-ink-900 mb-3 leading-snug">{title}</h3>
       <p className="text-sm text-ink-600 leading-relaxed">{body}</p>
@@ -265,7 +252,7 @@ function FlowCard({
   preview?: ReactNode
 }) {
   return (
-    <Link to={to} className="card hover:border-ink-400 transition-colors p-6 group block">
+    <Link to={to} className="card hover:border-accent/35 hover:shadow-lift hover:ring-accent/10 p-6 md:p-7 group block">
       <div className="flex items-center justify-between mb-4">
         <span className="text-2xs font-mono text-ink-400">{number}</span>
         <span className="pill bg-accent-soft text-accent-ink">{tag}</span>
@@ -282,7 +269,10 @@ function FlowCard({
 
 function ReadCard({ num, to, title, mins }: { num: string; to: string; title: string; mins: string }) {
   return (
-    <Link to={to} className="flex items-center gap-4 p-4 bg-canvas-raised border border-ink-200 rounded-md hover:border-accent/40 transition-colors group">
+    <Link
+      to={to}
+      className="flex items-center gap-4 p-4 md:p-5 bg-canvas-raised border border-ink-200/90 rounded-xl shadow-lift-sm ring-1 ring-ink-900/[0.025] hover:border-accent/40 hover:shadow-lift motion-safe:transition-all motion-safe:duration-200 group"
+    >
       <div className="w-7 h-7 rounded-full bg-ink-100 text-ink-500 grid place-items-center text-xs font-mono shrink-0 group-hover:bg-accent-soft group-hover:text-accent-ink transition-colors">
         {num}
       </div>

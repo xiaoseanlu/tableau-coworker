@@ -9,9 +9,10 @@ export const MAYA_BRIEF = {
   dateLabel: 'Monday, May 4, 2026',
   url: 'https://acme.cloud.tableau.com/coworker/brief/monday/MY-2026-05-04-v18',
   /** One-line scan — unfurl title / push title */
-  headline: 'West softened. Acme Co is the staff name.',
+  headline: 'West coverage slipped week over week; Acme Co leads 9:00 exec staff.',
   /** Subline for cards — “why open” */
-  subline: 'ARR gap narrowing; West coverage steepest WoW move of quarter.',
+  subline:
+    'ARR still under plan but the gap tightened overnight; West posted the sharpest week-over-week coverage step-down of the quarter.',
   kpis: [
     {
       id: 'arr',

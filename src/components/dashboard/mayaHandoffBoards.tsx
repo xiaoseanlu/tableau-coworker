@@ -23,7 +23,7 @@ function KpiChipsRow({ dense = false }: { dense?: boolean }) {
         >
           <span className="font-mono uppercase tracking-wide text-ink-500 text-2xs block">{k.label}</span>
           <span className="font-mono font-semibold tabular-nums text-ink-900">{k.value}</span>
-          <span className="text-ink-600 block text-2xs">{k.delta}</span>
+          <span className="metric-delta text-ink-600 block text-2xs">{k.delta}</span>
         </div>
       ))}
     </div>
@@ -520,7 +520,7 @@ export function MayaRecipientBriefBoard() {
                   </span>
                 ))}
               </div>
-              <p className="text-2xs text-ink-500 mt-3 m-0 font-mono">Tap chips are illustrative in prototype.</p>
+              <p className="text-2xs text-ink-500 mt-3 m-0 font-mono">Chips are sample prompts — static in this walkthrough.</p>
             </div>
           </aside>
         </div>
@@ -554,7 +554,7 @@ export function MayaGoogleCalendarHandoffBoard() {
                   <div key={k.id} className="rounded-md border border-ink-100 bg-canvas-raised px-2 py-1.5">
                     <div className="text-2xs text-ink-500 font-mono truncate">{k.label}</div>
                     <div className="font-mono text-sm font-semibold tabular-nums">{k.value}</div>
-                    <div className="text-2xs text-ink-600">{k.delta}</div>
+                    <div className="font-mono text-2xs tabular-nums font-medium text-ink-600">{k.delta}</div>
                   </div>
                 ))}
               </div>

@@ -71,6 +71,12 @@ const steps: FlowStep[] = [
             <strong className="font-semibold text-ink-800">Jump UI state</strong> to compare classic grid, selections, and dock reads.
             Scroll for the drill layer and the real Agent capture as receipt.
           </p>
+          <p className="text-sm text-ink-600 leading-relaxed mt-3 border-l-2 border-signal/30 pl-3">
+            <strong className="text-ink-800">In this slice:</strong> narrative-first shell, frozen handoffs, and RLS-scoped recipient
+            read — enough to argue hierarchy and trust in-days. <strong className="text-ink-800">A bolder vNext</strong> would let generation
+            precede chart scaffolding, choreograph permissions inside the same beats, and branch mobile without a linear tour.{' '}
+            <span className="text-ink-500">Not claiming live Agent routing or warehouse fidelity here.</span>
+          </p>
         </div>
         <MayaInteractiveDashboard presetStrip initialLayout="narrativeLeads" />
         <div className="max-w-3xl pt-6 border-t border-ink-200 space-y-3">
@@ -89,8 +95,8 @@ const steps: FlowStep[] = [
         <Note title="Same surface, multiple states">
           Presets rehearse how one Monday canvas behaves before and after selection — no linear “click next.”
         </Note>
-        <Note title="Tech">
-          Recharts + shared dock contract — same pattern as the design system demos.
+        <Note title="Build">
+          Recharts + shared dock contract — repeated wherever the agent narrates selection.
         </Note>
       </>
     ),

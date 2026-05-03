@@ -7,12 +7,17 @@ export default function FlowsIndex() {
       <header className="mb-12">
         <div className="h-eyebrow mb-4">03 · Bring it to life</div>
         <h1 className="h-display mb-6">
-          Three flows. One substrate. <span className="italic text-accent">Real React.</span>
+          Three flows. One substrate. <span className="italic text-accent">Running in the browser.</span>
         </h1>
         <p className="text-lg text-ink-600 max-w-3xl">
           Acme SaaS Inc. — same CRM + revenue data, three roles. Each flow uses real Tableau
           captures for the &quot;before&quot; and designed UI — including <strong className="text-ink-800">SVG charts you can hover</strong> (Maya),
           portfolio composition (Jordan), and spark trends (Sam) — for the proposed surface. States are scripted, not live warehouse queries.
+        </p>
+        <p className="mt-6 text-sm text-ink-700 max-w-3xl leading-relaxed border-l-2 border-accent/35 pl-4">
+          <strong className="text-ink-900">Depth strategy:</strong> sharpen the flagship beats by merging redundant steps (hand-off as one
+          surface with split views; Jordan &quot;Out&quot; as notify + Finance read) instead of padding every flow with extra scenes — Sam
+          still gets a distinct squish-first open so mobile pain isn&apos;t a third wallpaper.
         </p>
       </header>
 
@@ -52,17 +57,15 @@ export default function FlowsIndex() {
       </section>
 
       <section className="mt-20 card-raised p-8">
-        <div className="h-eyebrow mb-3">A note on what these are — and aren&apos;t</div>
+        <div className="h-eyebrow mb-3">Interaction model</div>
         <p className="prose-body text-base">
-          These are <em>storyboarded interactive prototypes.</em> The state is scripted: clicking
-          through advances a capture-backed narrative rather than mutating real data. That is
-          deliberate for a time-boxed exploration — the review is interaction model and evidence, not production
-          hardening. With more time: branching paths, local state persistence, and a timeline scrubber
-          for walkthroughs.
+          State advances through a fixed script: the goal is to pressure-test layout, dock behavior, and capture-to-UI
+          continuity — not to impersonate a signed-in warehouse session. Pilot-grade next steps would add branching, persisted
+          local state, and a scrubber for replay.
         </p>
         <p className="text-sm text-ink-600 mt-4 m-0">
-          Authoring captures (chronological walkthrough) live on the separate{' '}
-          <Link to="/authoring" className="text-accent-ink font-semibold hover:underline">Authoring</Link> page.
+          Evidence trail (how captures were collected):{' '}
+          <Link to="/authoring" className="text-accent-ink font-semibold hover:underline">Authoring</Link>.
         </p>
       </section>
     </article>

@@ -66,11 +66,22 @@ export default {
         '2xl': '20px',
       },
       boxShadow: {
-        /* Flat system (Robinhood-adjacent): separation = borders + space, not drop shadow. */
+        /* Default cards stay flat; use lift-* sparingly for focal surfaces (hero, demos). */
         card: 'none',
         raised: 'none',
         overlay: 'none',
         agent: 'none',
+        /** Hairline + soft ambient — reads “product,” not sticker shadow */
+        edge: '0 1px 0 rgba(14, 15, 18, 0.06)',
+        'lift-sm': '0 1px 0 rgba(14, 15, 18, 0.05), 0 12px 32px -12px rgba(14, 15, 18, 0.1)',
+        lift: '0 1px 0 rgba(14, 15, 18, 0.06), 0 24px 56px -20px rgba(14, 15, 18, 0.14)',
+        glow: '0 0 0 1px rgba(91, 46, 145, 0.12), 0 20px 50px -24px rgba(91, 46, 145, 0.18)',
+      },
+      backgroundImage: {
+        'mesh-warm':
+          'radial-gradient(ellipse 100% 85% at 0% -15%, rgba(91, 46, 145, 0.11), transparent 52%), radial-gradient(ellipse 70% 55% at 100% 0%, rgba(199, 132, 28, 0.07), transparent 48%)',
+        noise:
+          "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E\")",
       },
       transitionTimingFunction: {
         'smooth': 'cubic-bezier(0.16, 1, 0.3, 1)',

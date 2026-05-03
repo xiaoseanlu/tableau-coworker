@@ -1,25 +1,36 @@
 import type { ReactNode } from 'react'
 
+/** Shown under preset chips — ties walkthrough behavior to the dock (plan/03: honest prototype affordances). */
+export const DEMO_PRESET_STRIP_HELP =
+  'Saved demo moments: each chip jumps this surface and updates the Coworker dock below—the same read you get after tapping the real control, without hunting every tile.'
+
 /**
  * Preset row — matches plan/03 pill / eyebrow conventions (mono label, rounded-full chips).
+ * Optional `description` explains demo presets for reviewers (jump UI state → dock).
  */
 export function JumpStateStrip({
   label,
   children,
   className = '',
+  description,
 }: {
   label: string
   children: ReactNode
   className?: string
+  /** One line: why these chips exist and what changes when you press them */
+  description?: string
 }) {
   return (
-    <div
-      className={`flex flex-wrap items-center gap-2 border-b border-ink-100 bg-canvas-sunken/40 ${className}`}
-    >
-      <span className="text-2xs font-mono uppercase tracking-[0.14em] text-accent-ink shrink-0 font-medium">
-        {label}
-      </span>
-      <div className="flex flex-wrap items-center gap-2">{children}</div>
+    <div className={`border-b border-ink-100 bg-canvas-sunken/50 ${className}`}>
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="text-2xs font-mono uppercase tracking-[0.14em] text-accent-ink shrink-0 font-medium">
+          {label}
+        </span>
+        <div className="flex flex-wrap items-center gap-2">{children}</div>
+      </div>
+      {description ? (
+        <p className="text-2xs text-ink-600 leading-relaxed mt-2.5 mb-0 max-w-prose">{description}</p>
+      ) : null}
     </div>
   )
 }

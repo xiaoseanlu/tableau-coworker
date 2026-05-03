@@ -14,7 +14,8 @@ import {
   YAxis,
 } from 'recharts'
 import AgentDock from './AgentDock'
-import { CHART, CHART_AXIS } from './chartTokens'
+import { CHART, CHART_AXIS, CHART_FONT_MONO, chartTooltip } from './chartTokens'
+import { DEMO_PRESET_STRIP_HELP } from './JumpStateStrip'
 import { MAYA_BRIEF } from './mayaDemoContext'
 import { MAYA_AGENT_DATA_SURFACE } from '../../data/personaFlowMeta'
 
@@ -66,7 +67,7 @@ function agentForSelection(sel: Selection): { title: string; body: string; confi
     return {
       title: 'Coworker',
       body:
-        'Click any point on the West coverage curve, a rep bar, a region tile, a KPI card, or the ARR vs plan lines. I surface reads with sources and confidence — not a chat thread grafted on the grid.',
+        'Click the curve, a rep bar, a region row, a KPI tile, or the ARR vs plan line. Answers land here with sources and confidence—no second chat tab to hunt for.',
       confidence: 'n/a — awaiting your selection',
     }
   }
@@ -81,14 +82,14 @@ function agentForSelection(sel: Selection): { title: string; body: string; confi
     }
     return {
       title: `West coverage · ${sel.week}`,
-      body: `${sel.coverage.toFixed(2)}× — in band with prior four weeks. No single-rep concentration flagged above 22% for this slice. I’d leave this week off the staff deck unless someone asks.`,
+        body: `${sel.coverage.toFixed(2)}× — right in line with the last month. Nobody owns more than 22% of this slice; I would not put this week on the staff deck unless someone brings it up.`,
       confidence: 'moderate',
     }
   }
   if (sel.kind === 'rep') {
     return {
       title: `${sel.name} · rep read`,
-      body: `${sel.share}% of the WoW coverage move — heavily weighted to ${sel.segment}. Opportunity-level: 9 opps thinned; none enterprise top-20. Suggest Sam names three accounts in stand-up, not a pipeline autopsy.`,
+      body: `${sel.share}% of the week-over-week move, mostly ${sel.segment}. Nine smaller opps thinned; nothing in the enterprise top 20. Have Sam name three accounts in stand-up instead of a full pipeline postmortem.`,
       confidence: 'high on share attribution · moderate on call',
     }
   }
@@ -97,7 +98,7 @@ function agentForSelection(sel: Selection): { title: string; body: string; confi
       title: `${sel.region} · regional lens`,
       body:
         sel.region === 'West'
-          ? `${sel.coverage.toFixed(2)}× coverage (${sel.delta.toFixed(2)} WoW). This is the only region underwater vs rolling 8-week median — narrative anchor for Maya’s staff.`
+          ? `${sel.coverage.toFixed(2)}× coverage (${sel.delta.toFixed(2)} WoW). Only region below the rolling eight-week median—the line you will want in staff if the room gets nervous about West.`
           : `${sel.region} at ${sel.coverage.toFixed(2)}×. Delta ${sel.delta >= 0 ? '+' : ''}${sel.delta.toFixed(2)} WoW — within noise for EMEA; Germany still the watch item with low signal this week.`,
       confidence: sel.region === 'West' ? 'high' : 'low–moderate',
     }
@@ -105,9 +106,10 @@ function agentForSelection(sel: Selection): { title: string; body: string; confi
   if (sel.kind === 'kpi') {
     const bodies: Record<string, string> = {
       arr:
-        '$87.4M YTD vs $89.5M plan — gap $2.1M but narrowing vs prior week. Top 5 enterprise advanced; Acme Co slipped legal. Still feasible on Q-end if West stabilizes.',
-      west: '2.6× West coverage (v2 definition, Jordan Apr 30). Compare to East 3.1× — the spread is politically noticeable at staff even if finance is calm.',
-      qend: '3.4× Q-end coverage — +0.1 WoW buffer. Helps offset West noise in roll-up models Finance shows the board.',
+        '$87.4M YTD against $89.5M plan — still $2.1M light, but a little better than last week. Top five enterprise deals moved; Acme Co is the slip in legal. Quarter-end is still plausible if West stops sliding.',
+      west:
+        '2.6× West coverage on Jordan’s v2 bind (Apr 30). East is at 3.1×—that gap is the thing people feel in the room even when Finance says the roll-up is fine.',
+      qend: '3.4× on Q-end buffer—up a tenth week over week. Gives Finance a little air cover for West in the board pack.',
     }
     return {
       title: sel.title,
@@ -119,7 +121,7 @@ function agentForSelection(sel: Selection): { title: string; body: string; confi
     return {
       title: `ARR vs plan · ${sel.week}`,
       body:
-        'Gap widens from plan line after W6 as West thins. Not a model bug — CRM sync 8:38 AM confirms. I’d couple this chart with the coverage click, not as a separate story.',
+        'Gap opens vs plan after week six as West thins. CRM synced at 8:38—this is not a spreadsheet glitch. Show this next to the West coverage point you picked; it should be one story, not two.',
       confidence: 'moderate',
     }
   }
@@ -129,7 +131,7 @@ function agentForSelection(sel: Selection): { title: string; body: string; confi
       sel.q === 'Why did West drop?'
         ? 'Combination of mid-market manufacturing thinning and timing — not renewal cliff, not definition drift (v2 holds on old vs new bind).'
         : sel.q === 'Which deals moved?'
-          ? 'Nine opportunities moved stage back or reduced ACV — list pinned to CRM view «West_WoW_exceptions» (prototype: copy in staff appendix).'
+          ? 'Nine deals moved stage or cut ACV—the list is in CRM under «West_WoW_exceptions»; same rows are in Maya’s staff pack.'
           : 'East +0.04 and EMEA flat — West is the outlier; worth one sentence in staff, not a regional compare.',
     confidence: 'moderate',
   }
@@ -140,18 +142,19 @@ function NarrativeLeadBlock({ compact = false }: { compact?: boolean }) {
   return (
     <div className="border-l-[3px] border-signal bg-signal-soft/20 px-4 py-4 md:px-5 md:py-5 space-y-3">
       <div className="flex flex-wrap items-center gap-2">
-        <span className="pill bg-signal-soft text-signal-ink text-2xs font-mono">Confidence: high — numbers match grid below</span>
+        <span className="pill bg-signal-soft text-signal-ink text-2xs font-mono">Confidence: high · same numbers as the grid</span>
         <span className="text-2xs font-mono text-ink-500">{MAYA_BRIEF.dateLabel}</span>
       </div>
-      <p className={`font-serif ${compact ? 'text-base' : 'text-base md:text-lg'} text-ink-900 leading-snug m-0`}>
+      <p className={`editorial ${compact ? 'text-base' : 'text-base md:text-lg'} text-ink-900 leading-snug m-0`}>
         {MAYA_BRIEF.headline} {MAYA_BRIEF.subline}
       </p>
-      <p className={`font-serif ${para} text-ink-700 leading-relaxed m-0`}>
-        {MAYA_BRIEF.staffBullets[0]?.text} {MAYA_BRIEF.staffBullets[1]?.text}
-      </p>
-      <p className={`font-serif ${para} text-ink-700 leading-relaxed m-0`}>
-        {MAYA_BRIEF.staffBullets[2]?.text} ARR prints at {MAYA_BRIEF.kpis[0]?.value}; West coverage {MAYA_BRIEF.kpis[1]?.value} on
-        Jordan&apos;s v2 bind. What follows is drill-in evidence — not where the Monday read starts.
+      <p className={`editorial ${para} text-ink-700 leading-relaxed m-0`}>{MAYA_BRIEF.staffBullets[0]?.text}</p>
+      <p className={`editorial ${para} text-ink-700 leading-relaxed m-0`}>{MAYA_BRIEF.staffBullets[1]?.text}</p>
+      <p className={`editorial ${para} text-ink-700 leading-relaxed m-0`}>
+        {MAYA_BRIEF.staffBullets[2]?.text} ARR is at{' '}
+        <span className="font-mono tabular-nums font-semibold text-ink-900">{MAYA_BRIEF.kpis[0]?.value}</span>; West coverage is{' '}
+        <span className="font-mono tabular-nums font-semibold text-ink-900">{MAYA_BRIEF.kpis[1]?.value}</span> on Jordan&apos;s v2 bind.
+        Down below is the chart grid for proving the story—not the first screen Maya reads on Monday.
       </p>
     </div>
   )
@@ -191,74 +194,77 @@ export default function MayaInteractiveDashboard({
       : 'Default briefing surface · not a summoned side chat'
 
   return (
-    <div className={`rounded-xl border border-ink-200 bg-canvas-raised overflow-hidden ${compactHero ? 'shadow-sm' : ''}`}>
+    <div className="rounded-xl border border-ink-200/90 bg-canvas-raised overflow-hidden shadow-lift-sm ring-1 ring-ink-900/[0.035]">
       {presetStrip ? (
-        <div className="flex flex-wrap items-center gap-2 px-4 py-2.5 border-b border-ink-100 bg-accent-soft/30">
-          <span className="text-2xs font-mono uppercase tracking-wide text-accent-ink shrink-0 mr-1">Jump UI state</span>
-          <button
-            type="button"
-            onClick={() => setLayoutMode('narrativeLeads')}
-            className={`rounded-full px-2.5 py-1 text-2xs font-medium border bg-canvas-raised text-ink-700 hover:border-accent/40 ${
-              layoutMode === 'narrativeLeads' ? 'border-signal ring-1 ring-signal/35' : 'border-ink-200'
-            }`}
-          >
-            Thesis · narrative leads
-          </button>
-          <button
-            type="button"
-            onClick={() => setLayoutMode('classic')}
-            className={`rounded-full px-2.5 py-1 text-2xs font-medium border bg-canvas-raised text-ink-700 hover:border-accent/40 ${
-              layoutMode === 'classic' ? 'border-accent ring-1 ring-accent/25' : 'border-ink-200'
-            }`}
-          >
-            Classic grid
-          </button>
-          <button
-            type="button"
-            onClick={() => setSel(null)}
-            className="rounded-full px-2.5 py-1 text-2xs font-medium border border-ink-200 bg-canvas-raised text-ink-700 hover:border-accent/40"
-          >
-            Idle dock
-          </button>
-          <button
-            type="button"
-            onClick={() =>
-              setSel({ kind: 'kpi', id: 'west', title: 'West pipeline coverage', value: '2.6×' })
-            }
-            className="rounded-full px-2.5 py-1 text-2xs font-medium border border-ink-200 bg-canvas-raised text-ink-700 hover:border-accent/40"
-          >
-            West KPI
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              const w = WEEKLY[WEEKLY.length - 1]
-              setSel({ kind: 'week', week: w.week, coverage: w.coverage, idx: WEEKLY.length - 1 })
-            }}
-            className="rounded-full px-2.5 py-1 text-2xs font-medium border border-ink-200 bg-canvas-raised text-ink-700 hover:border-accent/40"
-          >
-            Apr 28 week
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              const r = REPS[0]
-              if (r) setSel({ kind: 'rep', name: r.name, share: r.share, segment: r.segment })
-            }}
-            className="rounded-full px-2.5 py-1 text-2xs font-medium border border-ink-200 bg-canvas-raised text-ink-700 hover:border-accent/40"
-          >
-            Rep Morales
-          </button>
-          <button
-            type="button"
-            onClick={() => setSel({ kind: 'region', region: 'West', coverage: 2.6, delta: -0.21 })}
-            className="rounded-full px-2.5 py-1 text-2xs font-medium border border-ink-200 bg-canvas-raised text-ink-700 hover:border-accent/40"
-          >
-            Region row
-          </button>
-          <span className="text-2xs text-ink-500 ml-auto max-sm:hidden">
-            {layoutMode === 'narrativeLeads' ? 'Narrative first — grid is evidence' : 'Same canvas — selection drives the dock'}
-          </span>
+        <div className="border-b border-ink-100 bg-accent-soft/30 px-4 py-2.5">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-2xs font-mono uppercase tracking-wide text-accent-ink shrink-0 mr-1">Jump UI state</span>
+            <button
+              type="button"
+              onClick={() => setLayoutMode('narrativeLeads')}
+              className={`rounded-full px-2.5 py-1 text-2xs font-medium border bg-canvas-raised text-ink-700 hover:border-accent/40 ${
+                layoutMode === 'narrativeLeads' ? 'border-signal ring-1 ring-signal/35' : 'border-ink-200'
+              }`}
+            >
+              Thesis · narrative leads
+            </button>
+            <button
+              type="button"
+              onClick={() => setLayoutMode('classic')}
+              className={`rounded-full px-2.5 py-1 text-2xs font-medium border bg-canvas-raised text-ink-700 hover:border-accent/40 ${
+                layoutMode === 'classic' ? 'border-accent ring-1 ring-accent/25' : 'border-ink-200'
+              }`}
+            >
+              Classic grid
+            </button>
+            <button
+              type="button"
+              onClick={() => setSel(null)}
+              className="rounded-full px-2.5 py-1 text-2xs font-medium border border-ink-200 bg-canvas-raised text-ink-700 hover:border-accent/40"
+            >
+              Idle dock
+            </button>
+            <button
+              type="button"
+              onClick={() =>
+                setSel({ kind: 'kpi', id: 'west', title: 'West pipeline coverage', value: '2.6×' })
+              }
+              className="rounded-full px-2.5 py-1 text-2xs font-medium border border-ink-200 bg-canvas-raised text-ink-700 hover:border-accent/40"
+            >
+              West KPI
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                const w = WEEKLY[WEEKLY.length - 1]
+                setSel({ kind: 'week', week: w.week, coverage: w.coverage, idx: WEEKLY.length - 1 })
+              }}
+              className="rounded-full px-2.5 py-1 text-2xs font-medium border border-ink-200 bg-canvas-raised text-ink-700 hover:border-accent/40"
+            >
+              Apr 28 week
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                const r = REPS[0]
+                if (r) setSel({ kind: 'rep', name: r.name, share: r.share, segment: r.segment })
+              }}
+              className="rounded-full px-2.5 py-1 text-2xs font-medium border border-ink-200 bg-canvas-raised text-ink-700 hover:border-accent/40"
+            >
+              Rep Morales
+            </button>
+            <button
+              type="button"
+              onClick={() => setSel({ kind: 'region', region: 'West', coverage: 2.6, delta: -0.21 })}
+              className="rounded-full px-2.5 py-1 text-2xs font-medium border border-ink-200 bg-canvas-raised text-ink-700 hover:border-accent/40"
+            >
+              Region row
+            </button>
+            <span className="text-2xs text-ink-500 ml-auto max-sm:hidden">
+              {layoutMode === 'narrativeLeads' ? 'Narrative first — grid is evidence' : 'Same canvas — selection drives the dock'}
+            </span>
+          </div>
+          <p className="text-2xs text-ink-600 mt-2.5 mb-0 leading-relaxed max-w-prose">{DEMO_PRESET_STRIP_HELP}</p>
         </div>
       ) : null}
       {layoutMode === 'classic' ? (
@@ -314,8 +320,8 @@ export default function MayaInteractiveDashboard({
               }`}
             >
               <div className="text-2xs uppercase tracking-wider text-ink-500 font-mono mb-1">ARR · YTD</div>
-              <div className="font-mono text-2xl text-ink-900">{MAYA_BRIEF.kpis[0].value}</div>
-              <div className="text-xs text-warning font-medium mt-1">{MAYA_BRIEF.kpis[0].delta} · narrowing</div>
+              <div className="font-mono text-2xl font-semibold tabular-nums text-ink-900 tracking-tight">{MAYA_BRIEF.kpis[0].value}</div>
+              <div className="metric-delta text-warning mt-1">{MAYA_BRIEF.kpis[0].delta} · narrowing</div>
             </button>
             <button
               type="button"
@@ -327,8 +333,8 @@ export default function MayaInteractiveDashboard({
               }`}
             >
               <div className="text-2xs uppercase tracking-wider text-ink-500 font-mono mb-1">West coverage</div>
-              <div className="font-mono text-2xl text-ink-900">{MAYA_BRIEF.kpis[1].value}</div>
-              <div className="text-xs text-danger font-medium mt-1">{MAYA_BRIEF.kpis[1].delta} · v2</div>
+              <div className="font-mono text-2xl font-semibold tabular-nums text-ink-900 tracking-tight">{MAYA_BRIEF.kpis[1].value}</div>
+              <div className="metric-delta text-danger mt-1">{MAYA_BRIEF.kpis[1].delta} · v2</div>
             </button>
             <button
               type="button"
@@ -340,8 +346,8 @@ export default function MayaInteractiveDashboard({
               }`}
             >
               <div className="text-2xs uppercase tracking-wider text-ink-500 font-mono mb-1">Q-end coverage</div>
-              <div className="font-mono text-2xl text-ink-900">{MAYA_BRIEF.kpis[2].value}</div>
-              <div className="text-xs text-success font-medium mt-1">{MAYA_BRIEF.kpis[2].delta}</div>
+              <div className="font-mono text-2xl font-semibold tabular-nums text-ink-900 tracking-tight">{MAYA_BRIEF.kpis[2].value}</div>
+              <div className="metric-delta text-success mt-1">{MAYA_BRIEF.kpis[2].delta}</div>
             </button>
           </div>
 
@@ -375,12 +381,9 @@ export default function MayaInteractiveDashboard({
                       tickFormatter={v => `${v}×`}
                     />
                     <Tooltip
-                      contentStyle={{
-                        borderRadius: 8,
-                        border: `1px solid ${CHART_AXIS.gridSubtle}`,
-                        fontSize: 12,
+                      contentStyle={chartTooltip({
                         boxShadow: '0 4px 12px rgba(14,15,18,0.06)',
-                      }}
+                      })}
                       formatter={(v: number) => [`${v.toFixed(2)}×`, 'Coverage']}
                     />
                     <Area
@@ -451,12 +454,14 @@ export default function MayaInteractiveDashboard({
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={REPS} layout="vertical" margin={{ top: 6, right: 12, left: 72, bottom: 0 }}>
                     <CartesianGrid strokeDasharray="3 6" stroke={CHART.grid} horizontal={false} />
-                    <XAxis type="number" domain={[0, 40]} tickFormatter={v => `${v}%`} tick={{ fontSize: 10 }} />
-                    <YAxis type="category" dataKey="name" tick={{ fontSize: 11, fill: CHART_AXIS.label }} width={68} axisLine={false} tickLine={false} />
-                    <Tooltip
-                      formatter={(v: number) => [`${v}%`, 'Share of move']}
-                      contentStyle={{ borderRadius: 8, border: `1px solid ${CHART_AXIS.gridSubtle}`, fontSize: 12 }}
+                    <XAxis
+                      type="number"
+                      domain={[0, 40]}
+                      tickFormatter={v => `${v}%`}
+                      tick={{ fontSize: 10, fill: CHART_AXIS.tick, fontFamily: CHART_FONT_MONO }}
                     />
+                    <YAxis type="category" dataKey="name" tick={{ fontSize: 11, fill: CHART_AXIS.label }} width={68} axisLine={false} tickLine={false} />
+                    <Tooltip formatter={(v: number) => [`${v}%`, 'Share of move']} contentStyle={chartTooltip()} />
                     <Bar
                       dataKey="share"
                       radius={[0, 6, 6, 0]}
@@ -545,7 +550,7 @@ export default function MayaInteractiveDashboard({
                       tickLine={false}
                       width={34}
                     />
-                    <Tooltip contentStyle={{ borderRadius: 8, fontSize: 12 }} />
+                    <Tooltip contentStyle={chartTooltip()} />
                     <Line type="monotone" dataKey="plan" stroke={CHART_AXIS.muted} strokeWidth={2} strokeDasharray="6 4" dot={{ r: 3 }} />
                     <Line type="monotone" dataKey="actual" stroke={CHART.accent} strokeWidth={2.5} dot={{ r: 4, cursor: 'pointer' }} />
                   </LineChart>
