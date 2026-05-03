@@ -10,9 +10,8 @@ import {
 import { Surface } from '../FlowChrome'
 import AgentDock, { type AgentInsight } from './AgentDock'
 import { MAYA_BRIEF, kpiToneClass, type BriefTone } from './mayaDemoContext'
+import { CHART } from './chartTokens'
 import { MAYA_AGENT_DATA_SURFACE } from '../../data/personaFlowMeta'
-
-const ACCENT = '#5B2E91'
 
 function KpiChipsRow({ dense = false }: { dense?: boolean }) {
   return (
@@ -281,7 +280,7 @@ export function MayaShareSheetBoard() {
                         }
                       }}
                     >
-                      <CartesianGrid strokeDasharray="3 6" stroke="#DDE0E8" vertical={false} />
+                      <CartesianGrid strokeDasharray="3 6" stroke={CHART.grid} vertical={false} />
                       <XAxis dataKey="label" tick={{ fontSize: 8 }} axisLine={false} tickLine={false} interval={0} />
                       <YAxis
                         domain={[0, 14]}
@@ -293,7 +292,7 @@ export function MayaShareSheetBoard() {
                       <Line
                         type="monotone"
                         dataKey="subs"
-                        stroke={ACCENT}
+                        stroke={CHART.accent}
                         strokeWidth={2.5}
                         dot={props => {
                           const { cx, cy, index } = props
@@ -304,8 +303,8 @@ export function MayaShareSheetBoard() {
                               cx={cx}
                               cy={cy}
                               r={active ? 8 : 5}
-                              fill={active ? ACCENT : '#fff'}
-                              stroke={ACCENT}
+                              fill={active ? CHART.accent : CHART.canvas}
+                              stroke={CHART.accent}
                               strokeWidth={2}
                               className="cursor-pointer"
                             />
@@ -419,6 +418,7 @@ export function MayaSlackHandoffBoard() {
 /** Staff opens Maya’s link — read-only recipient shell + evidence pinned by sender. */
 export function MayaRecipientBriefBoard() {
   const [evidenceOpen, setEvidenceOpen] = useState(true)
+  const [rlsWhyOpen, setRlsWhyOpen] = useState(false)
 
   return (
     <div className="rounded-xl border border-ink-200 bg-canvas-raised overflow-hidden">
@@ -440,6 +440,24 @@ export function MayaRecipientBriefBoard() {
               <div className="text-2xs font-mono uppercase tracking-wide text-ink-500 mb-2">{MAYA_BRIEF.dateLabel}</div>
               <h2 className="editorial text-2xl md:text-3xl text-ink-900 leading-tight m-0">{MAYA_BRIEF.headline}</h2>
               <p className="text-sm text-ink-600 mt-2 m-0">{MAYA_BRIEF.subline}</p>
+            </div>
+
+            <div className="rounded-lg border border-ink-200 bg-canvas-sunken/50 px-3 py-2.5 text-xs text-ink-700">
+              <span className="font-semibold text-ink-900">Scope:</span> Jordan Patel · VP Sales Ops. RLS applied — West + EMEA context
+              from Maya&apos;s {MAYA_BRIEF.version} snapshot; APAC pipeline rows are not in this brief slice.{' '}
+              <button
+                type="button"
+                className="text-accent-ink font-semibold underline underline-offset-2"
+                onClick={() => setRlsWhyOpen(o => !o)}
+              >
+                Why?
+              </button>
+              {rlsWhyOpen ? (
+                <p className="mt-2 mb-0 text-2xs text-ink-600 leading-relaxed border-t border-ink-100 pt-2">
+                  Recipients inherit row visibility at send time. Coworker stays inside the frozen snapshot — no surfacing deals or
+                  regions that were not in Maya&apos;s export for your role.
+                </p>
+              ) : null}
             </div>
 
             <KpiChipsRow />

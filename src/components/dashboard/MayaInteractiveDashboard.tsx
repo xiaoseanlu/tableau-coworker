@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useId } from 'react'
 import {
   Area,
   AreaChart,
@@ -14,6 +14,7 @@ import {
   YAxis,
 } from 'recharts'
 import AgentDock from './AgentDock'
+import { CHART, CHART_AXIS } from './chartTokens'
 import { MAYA_BRIEF } from './mayaDemoContext'
 import { MAYA_AGENT_DATA_SURFACE } from '../../data/personaFlowMeta'
 
@@ -59,9 +60,6 @@ type Selection =
   | { kind: 'arr'; week: string }
   | { kind: 'followup'; q: string }
   | null
-
-const ACCENT = '#5B2E91'
-const SIGNAL = '#C7841C'
 
 function agentForSelection(sel: Selection): { title: string; body: string; confidence: string } {
   if (!sel) {
@@ -137,7 +135,40 @@ function agentForSelection(sel: Selection): { title: string; body: string; confi
   }
 }
 
-export default function MayaInteractiveDashboard({ presetStrip = false }: { presetStrip?: boolean }) {
+function NarrativeLeadBlock({ compact = false }: { compact?: boolean }) {
+  const para = compact ? 'text-sm' : 'text-sm md:text-base'
+  return (
+    <div className="border-l-[3px] border-signal bg-signal-soft/20 px-4 py-4 md:px-5 md:py-5 space-y-3">
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="pill bg-signal-soft text-signal-ink text-2xs font-mono">Confidence: high — numbers match grid below</span>
+        <span className="text-2xs font-mono text-ink-500">{MAYA_BRIEF.dateLabel}</span>
+      </div>
+      <p className={`font-serif ${compact ? 'text-base' : 'text-base md:text-lg'} text-ink-900 leading-snug m-0`}>
+        {MAYA_BRIEF.headline} {MAYA_BRIEF.subline}
+      </p>
+      <p className={`font-serif ${para} text-ink-700 leading-relaxed m-0`}>
+        {MAYA_BRIEF.staffBullets[0]?.text} {MAYA_BRIEF.staffBullets[1]?.text}
+      </p>
+      <p className={`font-serif ${para} text-ink-700 leading-relaxed m-0`}>
+        {MAYA_BRIEF.staffBullets[2]?.text} ARR prints at {MAYA_BRIEF.kpis[0]?.value}; West coverage {MAYA_BRIEF.kpis[1]?.value} on
+        Jordan&apos;s v2 bind. What follows is drill-in evidence — not where the Monday read starts.
+      </p>
+    </div>
+  )
+}
+
+export type MayaDashboardLayout = 'classic' | 'narrativeLeads'
+
+export default function MayaInteractiveDashboard({
+  presetStrip = false,
+  initialLayout = 'classic',
+  compactHero = false,
+}: {
+  presetStrip?: boolean
+  initialLayout?: MayaDashboardLayout
+  compactHero?: boolean
+}) {
+  const [layoutMode, setLayoutMode] = useState<MayaDashboardLayout>(initialLayout)
   const [sel, setSel] = useState<Selection>(null)
   const agent = useMemo(() => agentForSelection(sel), [sel])
 
@@ -145,6 +176,7 @@ export default function MayaInteractiveDashboard({ presetStrip = false }: { pres
     if (sel?.kind !== 'rep') return -1
     return REPS.findIndex(r => r.name === sel.name)
   }, [sel])
+  const covGradId = useId().replace(/:/g, '')
 
   const regionIdx = useMemo(() => {
     if (sel?.kind !== 'region') return -1
@@ -153,11 +185,34 @@ export default function MayaInteractiveDashboard({ presetStrip = false }: { pres
 
   const weekIdx = sel?.kind === 'week' ? sel.idx : -1
 
+  const dockTag =
+    layoutMode === 'narrativeLeads'
+      ? 'Follow-ups and drill — primary read is above'
+      : 'Default briefing surface · not a summoned side chat'
+
   return (
-    <div className="rounded-xl border border-ink-200 bg-canvas-raised overflow-hidden">
+    <div className={`rounded-xl border border-ink-200 bg-canvas-raised overflow-hidden ${compactHero ? 'shadow-sm' : ''}`}>
       {presetStrip ? (
         <div className="flex flex-wrap items-center gap-2 px-4 py-2.5 border-b border-ink-100 bg-accent-soft/30">
           <span className="text-2xs font-mono uppercase tracking-wide text-accent-ink shrink-0 mr-1">Jump UI state</span>
+          <button
+            type="button"
+            onClick={() => setLayoutMode('narrativeLeads')}
+            className={`rounded-full px-2.5 py-1 text-2xs font-medium border bg-canvas-raised text-ink-700 hover:border-accent/40 ${
+              layoutMode === 'narrativeLeads' ? 'border-signal ring-1 ring-signal/35' : 'border-ink-200'
+            }`}
+          >
+            Thesis · narrative leads
+          </button>
+          <button
+            type="button"
+            onClick={() => setLayoutMode('classic')}
+            className={`rounded-full px-2.5 py-1 text-2xs font-medium border bg-canvas-raised text-ink-700 hover:border-accent/40 ${
+              layoutMode === 'classic' ? 'border-accent ring-1 ring-accent/25' : 'border-ink-200'
+            }`}
+          >
+            Classic grid
+          </button>
           <button
             type="button"
             onClick={() => setSel(null)}
@@ -201,33 +256,52 @@ export default function MayaInteractiveDashboard({ presetStrip = false }: { pres
           >
             Region row
           </button>
-          <span className="text-2xs text-ink-500 ml-auto max-sm:hidden">Same canvas — selection drives the dock</span>
+          <span className="text-2xs text-ink-500 ml-auto max-sm:hidden">
+            {layoutMode === 'narrativeLeads' ? 'Narrative first — grid is evidence' : 'Same canvas — selection drives the dock'}
+          </span>
         </div>
       ) : null}
-      {/* Product header */}
-      <div className="border-b border-ink-100 bg-gradient-to-b from-canvas to-canvas-raised px-6 py-5 md:px-8">
-        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
-          <div>
-            <div className="text-2xs font-mono uppercase tracking-wider text-ink-500 mb-2">
-              Monday · May 4 · 8:42 AM · Maya Chen · CRO
+      {layoutMode === 'classic' ? (
+        <div
+          className={`border-b border-ink-100 bg-gradient-to-b from-canvas to-canvas-raised px-6 py-5 md:px-8 ${compactHero ? 'py-4' : ''}`}
+        >
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
+            <div>
+              <div className="text-2xs font-mono uppercase tracking-wider text-ink-500 mb-2">
+                Monday · May 4 · 8:42 AM · Maya Chen · CRO
+              </div>
+              <h2 className="editorial text-2xl md:text-3xl text-ink-900 leading-tight max-w-3xl">
+                {MAYA_BRIEF.headline}
+                <span className="block mt-2 text-lg md:text-xl text-ink-700 font-normal">
+                  What changed, what to flag for staff, what to leave alone — click the viz; the dock carries confidence.
+                </span>
+              </h2>
             </div>
-            <h2 className="editorial text-2xl md:text-3xl text-ink-900 leading-tight max-w-3xl">
-              {MAYA_BRIEF.headline}
-              <span className="block mt-2 text-lg md:text-xl text-ink-700 font-normal">
-                What changed, what to flag for staff, what to leave alone — click the viz; the dock carries confidence.
-              </span>
-            </h2>
-          </div>
-          <div className="flex items-center gap-2 text-xs text-ink-500 font-mono shrink-0">
-            <span className="w-2 h-2 rounded-full bg-success animate-pulse" aria-hidden />
-            {MAYA_BRIEF.sourcesLine.split('·')[0]?.trim()} · v2 definitions
+            <div className="flex items-center gap-2 text-xs text-ink-500 font-mono shrink-0">
+              <span className="w-2 h-2 rounded-full bg-success animate-pulse" aria-hidden />
+              {MAYA_BRIEF.sourcesLine.split('·')[0]?.trim()} · v2 definitions
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div className={`border-b border-ink-100 px-4 py-3 md:px-6 ${compactHero ? 'py-2' : ''}`}>
+          <div className="text-2xs font-mono uppercase tracking-wider text-ink-500 mb-2">Thesis at first paint</div>
+          <NarrativeLeadBlock compact={compactHero} />
+        </div>
+      )}
 
       <div className="flex flex-col xl:flex-row xl:items-start">
         {/* Main canvas */}
-        <div className="flex-1 min-w-0 p-4 md:p-6 space-y-5 border-b xl:border-b-0 xl:border-r border-ink-100">
+        <div
+          className={`flex-1 min-w-0 border-b xl:border-b-0 xl:border-r border-ink-100 ${
+            layoutMode === 'narrativeLeads'
+              ? `${compactHero ? 'p-3 md:p-4' : 'p-4 md:p-5'} space-y-4`
+              : `${compactHero ? 'p-3 md:p-4' : 'p-4 md:p-6'} space-y-5`
+          }`}
+        >
+          <div
+            className={`space-y-5 ${layoutMode === 'narrativeLeads' ? `${compactHero ? 'origin-top scale-[0.82] xl:scale-[0.88]' : 'origin-top scale-[0.88] xl:scale-90'} max-xl:scale-[0.82]` : ''}`}
+          >
           {/* KPI strip — clickable */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <button
@@ -285,16 +359,16 @@ export default function MayaInteractiveDashboard({ presetStrip = false }: { pres
                 <ResponsiveContainer width="100%" height="100%">
                   <AreaChart data={WEEKLY} margin={{ top: 6, right: 6, left: -18, bottom: 0 }}>
                     <defs>
-                      <linearGradient id="covGrad" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor={ACCENT} stopOpacity={0.22} />
-                        <stop offset="100%" stopColor={ACCENT} stopOpacity={0} />
+                      <linearGradient id={covGradId} x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor={CHART.accent} stopOpacity={0.22} />
+                        <stop offset="100%" stopColor={CHART.accent} stopOpacity={0} />
                       </linearGradient>
                     </defs>
-                    <CartesianGrid strokeDasharray="3 6" stroke="#DDE0E8" vertical={false} />
-                    <XAxis dataKey="label" tick={{ fontSize: 10, fill: '#5B6070' }} axisLine={false} tickLine={false} />
+                    <CartesianGrid strokeDasharray="3 6" stroke={CHART.grid} vertical={false} />
+                    <XAxis dataKey="label" tick={{ fontSize: 10, fill: CHART_AXIS.tick }} axisLine={false} tickLine={false} />
                     <YAxis
                       domain={[2.4, 3.05]}
-                      tick={{ fontSize: 10, fill: '#5B6070', fontFamily: 'JetBrains Mono' }}
+                      tick={{ fontSize: 10, fill: CHART_AXIS.tick, fontFamily: 'JetBrains Mono' }}
                       axisLine={false}
                       tickLine={false}
                       width={36}
@@ -303,7 +377,7 @@ export default function MayaInteractiveDashboard({ presetStrip = false }: { pres
                     <Tooltip
                       contentStyle={{
                         borderRadius: 8,
-                        border: '1px solid #EEF0F4',
+                        border: `1px solid ${CHART_AXIS.gridSubtle}`,
                         fontSize: 12,
                         boxShadow: '0 4px 12px rgba(14,15,18,0.06)',
                       }}
@@ -312,9 +386,9 @@ export default function MayaInteractiveDashboard({ presetStrip = false }: { pres
                     <Area
                       type="monotone"
                       dataKey="coverage"
-                      stroke={ACCENT}
+                      stroke={CHART.accent}
                       strokeWidth={2.5}
-                      fill="url(#covGrad)"
+                      fill={`url(#${covGradId})`}
                       dot={(props: {
                         cx?: number
                         cy?: number
@@ -333,8 +407,8 @@ export default function MayaInteractiveDashboard({ presetStrip = false }: { pres
                             cx={cx}
                             cy={cy}
                             r={active ? 8 : 5}
-                            fill={active ? ACCENT : '#fff'}
-                            stroke={ACCENT}
+                            fill={active ? CHART.accent : CHART.canvas}
+                            stroke={CHART.accent}
                             strokeWidth={2}
                             className="cursor-pointer focus:outline-none focus:ring-2 focus:ring-signal"
                             onClick={() =>
@@ -376,12 +450,12 @@ export default function MayaInteractiveDashboard({ presetStrip = false }: { pres
               <div className="h-[220px] w-full">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={REPS} layout="vertical" margin={{ top: 6, right: 12, left: 72, bottom: 0 }}>
-                    <CartesianGrid strokeDasharray="3 6" stroke="#DDE0E8" horizontal={false} />
+                    <CartesianGrid strokeDasharray="3 6" stroke={CHART.grid} horizontal={false} />
                     <XAxis type="number" domain={[0, 40]} tickFormatter={v => `${v}%`} tick={{ fontSize: 10 }} />
-                    <YAxis type="category" dataKey="name" tick={{ fontSize: 11, fill: '#3D414C' }} width={68} axisLine={false} tickLine={false} />
+                    <YAxis type="category" dataKey="name" tick={{ fontSize: 11, fill: CHART_AXIS.label }} width={68} axisLine={false} tickLine={false} />
                     <Tooltip
                       formatter={(v: number) => [`${v}%`, 'Share of move']}
-                      contentStyle={{ borderRadius: 8, border: '1px solid #EEF0F4', fontSize: 12 }}
+                      contentStyle={{ borderRadius: 8, border: `1px solid ${CHART_AXIS.gridSubtle}`, fontSize: 12 }}
                     />
                     <Bar
                       dataKey="share"
@@ -395,7 +469,7 @@ export default function MayaInteractiveDashboard({ presetStrip = false }: { pres
                       {REPS.map((_, i) => (
                         <Cell
                           key={i}
-                          fill={i === repIdx ? '#3A1B5E' : ACCENT}
+                          fill={i === repIdx ? CHART.accentInk : CHART.accent}
                           fillOpacity={repIdx >= 0 && i !== repIdx ? 0.35 : 1}
                         />
                       ))}
@@ -426,7 +500,7 @@ export default function MayaInteractiveDashboard({ presetStrip = false }: { pres
                         className="h-full rounded-full"
                         style={{
                           width: `${(r.coverage / 3.4) * 100}%`,
-                          backgroundColor: r.region === 'West' ? SIGNAL : ACCENT,
+                          backgroundColor: r.region === 'West' ? CHART.signal : CHART.accent,
                         }}
                       />
                     </div>
@@ -462,7 +536,7 @@ export default function MayaInteractiveDashboard({ presetStrip = false }: { pres
                       }
                     }}
                   >
-                    <CartesianGrid strokeDasharray="3 6" stroke="#DDE0E8" vertical={false} />
+                    <CartesianGrid strokeDasharray="3 6" stroke={CHART.grid} vertical={false} />
                     <XAxis dataKey="w" tick={{ fontSize: 10 }} axisLine={false} tickLine={false} />
                     <YAxis
                       domain={[78, 94]}
@@ -472,8 +546,8 @@ export default function MayaInteractiveDashboard({ presetStrip = false }: { pres
                       width={34}
                     />
                     <Tooltip contentStyle={{ borderRadius: 8, fontSize: 12 }} />
-                    <Line type="monotone" dataKey="plan" stroke="#858B9C" strokeWidth={2} strokeDasharray="6 4" dot={{ r: 3 }} />
-                    <Line type="monotone" dataKey="actual" stroke={ACCENT} strokeWidth={2.5} dot={{ r: 4, cursor: 'pointer' }} />
+                    <Line type="monotone" dataKey="plan" stroke={CHART_AXIS.muted} strokeWidth={2} strokeDasharray="6 4" dot={{ r: 3 }} />
+                    <Line type="monotone" dataKey="actual" stroke={CHART.accent} strokeWidth={2.5} dot={{ r: 4, cursor: 'pointer' }} />
                   </LineChart>
                 </ResponsiveContainer>
               </div>
@@ -484,6 +558,7 @@ export default function MayaInteractiveDashboard({ presetStrip = false }: { pres
             Prototype data — interactions are real; warehouse isn’t. Intent: agent narrates what you touch, same class of read Tableau
             Agent already produces in trial captures.
           </p>
+          </div>
         </div>
 
         <AgentDock
@@ -492,7 +567,7 @@ export default function MayaInteractiveDashboard({ presetStrip = false }: { pres
           onFollowup={q => setSel({ kind: 'followup', q })}
           onClear={() => setSel(null)}
           selectionActive={!!sel}
-          productTagline="Default briefing surface · not a summoned side chat"
+          productTagline={dockTag}
           dataSurface={MAYA_AGENT_DATA_SURFACE}
         />
       </div>

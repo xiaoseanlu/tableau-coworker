@@ -6,6 +6,7 @@ import Strategy from './pages/Strategy'
 import Summary from './pages/Summary'
 import Competitive from './pages/Competitive'
 import DesignSystem from './pages/DesignSystem'
+import AuthoringConcepts from './pages/AuthoringConcepts'
 import FlowsIndex from './pages/FlowsIndex'
 import MayaCroMonday from './flows/MayaCroMonday'
 import JordanCuration from './flows/JordanCuration'
@@ -25,6 +26,7 @@ export default function App() {
         <Route path="/summary" element={<Summary />} />
         <Route path="/competitive" element={<Competitive />} />
         <Route path="/design-system" element={<DesignSystem />} />
+        <Route path="/authoring" element={<AuthoringConcepts />} />
         <Route path="*" element={<Home />} />
       </Routes>
     </SiteShell>

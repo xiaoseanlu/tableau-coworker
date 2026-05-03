@@ -6,7 +6,7 @@ export default function Summary() {
     <article className="ds-page py-14">
       <header className="mb-12">
         <div className="h-eyebrow mb-4">04 · One-page summary</div>
-        <h1 className="h-display mb-6">Five-day take. One-page sum-up.</h1>
+        <h1 className="h-display mb-6">Five-day take. One-page wrap-up.</h1>
         <p className="text-lg text-ink-600">
           Approach, assumptions, tradeoffs, and what I&apos;d explore further — a short sprint on
           Tableau Coworker.
@@ -24,6 +24,22 @@ export default function Summary() {
           promotes narration, keeps charts as drill-in evidence, and uses observed usage to govern
           sprawl — not another configuration tax.
         </p>
+
+        <h3>Wedge vs what a longer sprint would add</h3>
+        <ul className="text-sm text-ink-700">
+          <li>
+            <strong>Wedge in this prototype:</strong> narrative-first Monday canvas, frozen v18 handoffs, visible RLS/snapshot scope on
+            recipient read, capture-grounded &quot;today.&quot;
+          </li>
+          <li>
+            <strong>vNext (not oversold here):</strong> generated-first paint without a chart scaffold; deeper permissions design in-flow;
+            branching mobile states.
+          </li>
+          <li>
+            <strong>Cut for scope:</strong> top-nav depth pages moved to footer Process links; merged flow steps where the story stayed
+            intact.
+          </li>
+        </ul>
 
         <h3>Assumptions I made</h3>
         <ul>

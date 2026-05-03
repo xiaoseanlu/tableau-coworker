@@ -531,6 +531,11 @@ export default function DesignSystem() {
         </h2>
         <p className="ds-section-lede !mb-6">
           Full-width rail lists every PNG under <span className="font-mono text-2xs">public/captures/</span>. Table below is the flow → yield crosswalk.
+          For the authoring sequence only (chronological proof + runway concept), see{' '}
+          <Link to="/authoring" className="text-accent-ink font-semibold hover:underline">
+            Authoring
+          </Link>
+          .
         </p>
         <div className="mb-10">
           <DesignSystemCaptureEvidenceStrip />
@@ -957,7 +962,7 @@ interface Region {
         <h3 className="ds-subheading mt-10 mb-4">In scope vs out of scope</h3>
         <div className="grid md:grid-cols-2 gap-6 mb-4">
           <div className="rounded-2xl border border-ink-200 bg-canvas-raised p-6 md:p-8">
-            <div className="text-2xs font-mono font-semibold uppercase tracking-wide text-accent mb-3">In scope (take-home)</div>
+            <div className="text-2xs font-mono font-semibold uppercase tracking-wide text-accent mb-3">In scope (this prototype)</div>
             <ul className="m-0 pl-4 text-sm text-ink-700 space-y-2 list-disc marker:text-accent">
               {SCOPE_IN.map(x => (
                 <li key={x} className="leading-relaxed">

@@ -159,7 +159,7 @@ export default function WhatsBroken() {
           color="warning"
           title="Threats"
           items={[
-            'Power BI ecosystem leverage inside Microsoft 365; Looker on the warehouse; Sigma and Hex on the modern data stack.',
+            'Power BI living inside Microsoft 365; Looker on the warehouse; Sigma and Hex on the modern data stack.',
             'Buyers renegotiating cloud seat economics; shelfware dashboards inflate both cost and cynicism.',
             'Every quarter, LLMs make "ask the data in language" cheaper —Tableau\'s moat shifts from viz novelty to trust and workflow.',
           ]}

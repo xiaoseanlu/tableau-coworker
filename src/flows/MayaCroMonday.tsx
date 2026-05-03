@@ -5,7 +5,7 @@
  *   I  · Living surface — same web canvas, all viz interactive, AgentDock on the side
  *   II · Out to the org — share sheet, Slack, recipient read, Calendar (handoff + triage)
  *
- * Capures: `plan/08-flow-maya-cro-monday.md`, Open=`flow-d-explore-superstore/06-overview-exec-dashboard.png`
+ * Captures: `plan/08-flow-maya-cro-monday.md`, Open=`flow-d-explore-superstore/06-overview-exec-dashboard.png`
  * (mirrored `key/04-exec-wall-of-widgets.png`), Drill receipt=`flow-h-ai-agent/22-...` / `key/10-...`.
  */
 
@@ -44,8 +44,8 @@ const steps: FlowStep[] = [
     ),
     notes: (
       <>
-        <Note title="Design beat, not step 1 of a diary">
-          This frame exists so the next beat reads as <em>designed interaction</em>, not marketing.
+        <Note title="Capture-first beat">
+          Tap zones name the wall&apos;s failure modes before the redesign begins.
         </Note>
         <Note title="Spec">
           Anchored in <span className="font-mono text-2xs">plan/08-flow-maya-cro-monday.md</span> scene 01.
@@ -55,53 +55,30 @@ const steps: FlowStep[] = [
   },
 
   {
-    label: 'Canvas',
+    label: 'Living canvas',
     designStory: 'I · Living surface',
     surface: 'Web · one canvas',
     immersive: true,
     body: (
       <div className="space-y-4">
         <div className="max-w-3xl">
-          <div className="text-2xs uppercase tracking-wider text-ink-500 font-mono mb-1">Design story I · A</div>
+          <div className="text-2xs uppercase tracking-wider text-ink-500 font-mono mb-1">Design story I</div>
           <h2 className="editorial text-2xl text-ink-900 leading-snug mb-2">
-            One screen — KPIs, region rows, trend geometry — AgentDock binds to every selection.
+            Thesis at first paint — language leads; the grid is evidence underneath.
           </h2>
           <p className="text-sm text-ink-600 leading-relaxed">
-            Use <strong className="font-semibold text-ink-800">Jump UI state</strong> to scrub the same layout, or click any viz.
-            The story we are telling is <em>selection → read → confidence</em>, not “Maya clicked next.”
+            Default is <strong className="font-semibold text-ink-800">narrative leads</strong> (same Acme numbers as always). Use{' '}
+            <strong className="font-semibold text-ink-800">Jump UI state</strong> to compare classic grid, selections, and dock reads.
+            Scroll for the drill layer and the real Agent capture as receipt.
           </p>
         </div>
-        <MayaInteractiveDashboard presetStrip />
-      </div>
-    ),
-    notes: (
-      <>
-        <Note title="Interaction design">
-          Presets demonstrate multiple <em>states of one surface</em> — the craft reviewers grade on a redesign exercise.
-        </Note>
-        <Note title="Tech">
-          Recharts + shared dock contract — same pattern as the design system demos.
-        </Note>
-      </>
-    ),
-  },
-
-  {
-    label: 'Evidence',
-    designStory: 'I · Living surface',
-    surface: 'Web · proof + receipt',
-    immersive: true,
-    body: (
-      <div className="space-y-4">
-        <div className="max-w-3xl">
-          <div className="text-2xs uppercase tracking-wider text-ink-500 font-mono mb-1">Design story I · B</div>
-          <h2 className="editorial text-2xl text-ink-900 leading-snug mb-2">
-            Evidence layer — charts, ruled-out checks, and the real Agent capture as receipt.
-          </h2>
-          <p className="text-sm text-ink-600 leading-relaxed">
-            Still one design language: left canvas, right dock. The Tableau Agent output in{' '}
+        <MayaInteractiveDashboard presetStrip initialLayout="narrativeLeads" />
+        <div className="max-w-3xl pt-6 border-t border-ink-200 space-y-3">
+          <h3 className="editorial text-xl text-ink-900 m-0">Evidence · drill + capture receipt</h3>
+          <p className="text-sm text-ink-600 leading-relaxed m-0">
+            One design language: chart clicks still drive the dock. The Tableau Agent output in{' '}
             <span className="font-mono text-2xs">flow-h-ai-agent/22-overview-dashboard-agent-with-insights.png</span> proves the
-            analysis class already exists — we are showing placement and trust primitives.
+            analysis class already exists — this beat is placement and trust.
           </p>
         </div>
         <MayaDrillBoard />
@@ -109,11 +86,11 @@ const steps: FlowStep[] = [
     ),
     notes: (
       <>
-        <Note title="key/10">
-          Ohio / Colorado read is the strongest capture-backed defense in the project.
+        <Note title="Same surface, multiple states">
+          Presets rehearse how one Monday canvas behaves before and after selection — no linear “click next.”
         </Note>
-        <Note title="Conversation as mode">
-          Follow-ups stay editorial chips — not a thread replacing the surface.
+        <Note title="Tech">
+          Recharts + shared dock contract — same pattern as the design system demos.
         </Note>
       </>
     ),
@@ -142,30 +119,33 @@ const steps: FlowStep[] = [
     notes: (
       <>
         <Note title="Why a separate story">
-          Handoff UI is its own design problem — permissions, audit, and unfurl metadata are not “step four of Monday.”
+          Handoff UI is its own design problem — permissions, audit, and unfurl metadata are not a footnote in Monday prep.
         </Note>
       </>
     ),
   },
 
   {
-    label: 'Slack',
+    label: 'Hand off',
     designStory: 'II · Out to the org',
-    surface: 'Slack · mock',
+    surface: 'Slack + Web · two views',
     immersive: true,
     body: (
       <div className="space-y-4">
         <div className="max-w-3xl">
-          <div className="text-2xs uppercase tracking-wider text-ink-500 font-mono mb-1">Design story II · B</div>
+          <div className="text-2xs uppercase tracking-wider text-ink-500 font-mono mb-1">Design story II · B–C</div>
           <h2 className="editorial text-2xl text-ink-900 leading-snug mb-2">
-            Message shape: prose body, link, unfurl card.
+            One payload — channel shape, then recipient read.
           </h2>
           <p className="text-sm text-ink-600 leading-relaxed">
-            KPI strip, staff bullets, verdict block — recipients decide in-channel whether to open the brief. Unfurl subtitle carries
-            confidence scopes (West vs EMEA).
+            Slack shows the unfurl and triage copy; Jordan opens the same frozen brief in a read-only shell. Same v18, scoped dock,
+            pinned evidence.
           </p>
         </div>
-        <MayaSlackHandoffBoard />
+        <div className="grid xl:grid-cols-2 gap-6 items-start">
+          <MayaSlackHandoffBoard />
+          <MayaRecipientBriefBoard />
+        </div>
       </div>
     ),
     notes: (
@@ -173,35 +153,8 @@ const steps: FlowStep[] = [
         <Note title="Message shape">
           Numbers are the hook; narrative is skimmable; link is the only mutable source of truth for charts.
         </Note>
-      </>
-    ),
-  },
-
-  {
-    label: 'Inbox',
-    designStory: 'II · Out to the org',
-    surface: 'Web · shared read',
-    immersive: true,
-    body: (
-      <div className="space-y-4">
-        <div className="max-w-3xl">
-          <div className="text-2xs uppercase tracking-wider text-ink-500 font-mono mb-1">Design story II · C</div>
-          <h2 className="editorial text-2xl text-ink-900 leading-snug mb-2">
-            Jordan opens the link — same v18, scoped dock, pinned evidence.
-          </h2>
-          <p className="text-sm text-ink-600 leading-relaxed">
-            Recipient perspective: triage <strong className="font-semibold text-ink-800">dig in vs skim</strong> from KPI + verdict
-            row; expand Maya’s pinned West read without edit rights. Agent here never outruns RLS or the frozen snapshot.
-          </p>
-        </div>
-        <MayaRecipientBriefBoard />
-      </div>
-    ),
-    notes: (
-      <>
         <Note title="Post-share agent">
-          “Ask next” only about this brief — cites v18 and pinned tables; no org-wide surfacing. That is how you keep trust after
-          share.
+          “Ask next” only about this brief — cites v18 and pinned tables; no org-wide surfacing past RLS and snapshot.
         </Note>
       </>
     ),
@@ -241,7 +194,7 @@ export default function MayaCroMonday() {
     <FlowChrome
       flowNumber="01"
       title="Maya — living surface, then handoff"
-      thesis="CRO briefing: one canvas where every viz drives the dock. Then handoff — same frozen v18 to staff, Slack, and calendar."
+      thesis="CRO briefing: narrative-first Monday canvas, then handoff — same frozen v18 to staff, Slack, and calendar."
       persona={MAYA_FLOW_PERSONA}
       steps={steps}
     />

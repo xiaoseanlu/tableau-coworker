@@ -36,6 +36,7 @@ import {
   type IconProps,
 } from '../Icons'
 import { Sparkline } from '../viz/DataViz'
+import { CHART, CHART_AXIS } from '../dashboard/chartTokens'
 import { CAPTURE_PNG_COUNT, CAPTURE_PNG_PATHS } from '../../data/captureFiles'
 
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/')
@@ -95,9 +96,7 @@ const SEL_POINTS = [
   { x: 'W6', y: 49, label: 'W6 slide', ai: 'Pullback after peak; agent cites prior week for contrast.' },
 ] as const
 
-const ACCENT = '#5B2E91'
-const INK_GRID = '#EEF0F4'
-const tickSmall = { fill: '#5B6070', fontSize: 10, fontFamily: 'Inter, system-ui, sans-serif' }
+const tickSmall = { fill: CHART_AXIS.tick, fontSize: 10, fontFamily: 'Inter, system-ui, sans-serif' }
 
 const FT_LENS = [
   { key: 'Change over time', sample: 'Line / area', color: 'bg-accent/15 text-accent-ink border-accent/25' },
@@ -301,13 +300,13 @@ export function DesignSystemVizSelectionToAgentDemo() {
           <div className="h-[200px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={[...SEL_POINTS]} margin={{ top: 8, right: 12, left: 0, bottom: 4 }}>
-                <CartesianGrid stroke={INK_GRID} vertical={false} />
+                <CartesianGrid stroke={CHART_AXIS.gridSubtle} vertical={false} />
                 <XAxis dataKey="x" tick={tickSmall} tickLine={false} axisLine={{ stroke: 'rgba(14,15,18,0.09)' }} />
                 <YAxis hide domain={['dataMin - 4', 'dataMax + 4']} />
                 <Line
                   type="monotone"
                   dataKey="y"
-                  stroke={ACCENT}
+                  stroke={CHART.accent}
                   strokeWidth={2}
                   isAnimationActive={false}
                   dot={p => {
@@ -318,7 +317,7 @@ export function DesignSystemVizSelectionToAgentDemo() {
                         cx={p.cx}
                         cy={p.cy}
                         r={on ? 8 : 5}
-                        fill={on ? '#C7841C' : ACCENT}
+                        fill={on ? CHART.signal : CHART.accent}
                         stroke="#fff"
                         strokeWidth={2}
                         className="cursor-pointer"
@@ -652,12 +651,12 @@ export function FtCategoryMiniChart({ category }: { category: string }) {
     return (
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={wf} margin={g}>
-          <CartesianGrid stroke={INK_GRID} vertical={false} />
+          <CartesianGrid stroke={CHART_AXIS.gridSubtle} vertical={false} />
           <XAxis dataKey="n" tick={tickSmall} tickLine={false} axisLine={{ stroke: 'rgba(14,15,18,0.09)' }} />
           <YAxis hide />
           <Bar dataKey="v" radius={[4, 4, 0, 0]} isAnimationActive={false}>
             {wf.map((entry, index) => (
-              <Cell key={entry.n} fill={entry.v < 0 ? '#B0263A' : index === 0 ? '#9CA3AF' : ACCENT} />
+              <Cell key={entry.n} fill={entry.v < 0 ? CHART.danger : index === 0 ? CHART_AXIS.muted : CHART.accent} />
             ))}
           </Bar>
         </BarChart>
@@ -674,12 +673,12 @@ export function FtCategoryMiniChart({ category }: { category: string }) {
     return (
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={stacked} margin={g}>
-          <CartesianGrid stroke={INK_GRID} vertical={false} />
+          <CartesianGrid stroke={CHART_AXIS.gridSubtle} vertical={false} />
           <XAxis dataKey="x" tick={tickSmall} tickLine={false} axisLine={{ stroke: 'rgba(14,15,18,0.09)' }} />
           <YAxis hide />
-          <Area type="monotone" dataKey="a" stackId="1" stroke={ACCENT} fill={`${ACCENT}55`} isAnimationActive={false} />
-          <Area type="monotone" dataKey="b" stackId="1" stroke="#7a5a9e" fill="#7a5a9e44" isAnimationActive={false} />
-          <Area type="monotone" dataKey="c" stackId="1" stroke="#C7841C" fill="#C7841C44" isAnimationActive={false} />
+          <Area type="monotone" dataKey="a" stackId="1" stroke={CHART.accent} fill={`${CHART.accent}55`} isAnimationActive={false} />
+          <Area type="monotone" dataKey="b" stackId="1" stroke={CHART.accentInk} fill={`${CHART.accentInk}44`} isAnimationActive={false} />
+          <Area type="monotone" dataKey="c" stackId="1" stroke={CHART.signal} fill={`${CHART.signal}44`} isAnimationActive={false} />
         </AreaChart>
       </ResponsiveContainer>
     )
@@ -696,10 +695,10 @@ export function FtCategoryMiniChart({ category }: { category: string }) {
     return (
       <ResponsiveContainer width="100%" height="100%">
         <ScatterChart margin={g}>
-          <CartesianGrid stroke={INK_GRID} />
+          <CartesianGrid stroke={CHART_AXIS.gridSubtle} />
           <XAxis type="number" dataKey="x" tick={tickSmall} tickLine={false} axisLine={{ stroke: 'rgba(14,15,18,0.09)' }} />
           <YAxis type="number" dataKey="y" tick={tickSmall} tickLine={false} axisLine={{ stroke: 'rgba(14,15,18,0.09)' }} />
-          <Scatter data={sc} fill={ACCENT} isAnimationActive={false} />
+          <Scatter data={sc} fill={CHART.accent} isAnimationActive={false} />
         </ScatterChart>
       </ResponsiveContainer>
     )
@@ -710,10 +709,10 @@ export function FtCategoryMiniChart({ category }: { category: string }) {
     return (
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={hist} margin={g}>
-          <CartesianGrid stroke={INK_GRID} vertical={false} />
+          <CartesianGrid stroke={CHART_AXIS.gridSubtle} vertical={false} />
           <XAxis dataKey="k" tick={tickSmall} tickLine={false} axisLine={{ stroke: 'rgba(14,15,18,0.09)' }} />
           <YAxis hide />
-          <Bar dataKey="v" fill={ACCENT} radius={[3, 3, 0, 0]} isAnimationActive={false} />
+          <Bar dataKey="v" fill={CHART.accent} radius={[3, 3, 0, 0]} isAnimationActive={false} />
         </BarChart>
       </ResponsiveContainer>
     )
@@ -728,13 +727,13 @@ export function FtCategoryMiniChart({ category }: { category: string }) {
     return (
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={dv} margin={g}>
-          <CartesianGrid stroke={INK_GRID} vertical={false} />
+          <CartesianGrid stroke={CHART_AXIS.gridSubtle} vertical={false} />
           <XAxis dataKey="n" tick={tickSmall} tickLine={false} axisLine={{ stroke: 'rgba(14,15,18,0.09)' }} />
           <YAxis hide />
           <ReferenceLine y={0} stroke="#3D414C" strokeDasharray="4 4" />
           <Bar dataKey="v" radius={[3, 3, 0, 0]} isAnimationActive={false}>
             {dv.map(e => (
-              <Cell key={e.n} fill={e.v < 0 ? '#B0263A' : '#1F7A4D'} />
+              <Cell key={e.n} fill={e.v < 0 ? CHART.danger : CHART.success} />
             ))}
           </Bar>
         </BarChart>
@@ -754,17 +753,17 @@ export function FtCategoryMiniChart({ category }: { category: string }) {
         <AreaChart data={series} margin={g}>
           <defs>
             <linearGradient id="ds-ft-lens-change" x1="100%" x2="100%" y1="0" y2="100%">
-              <stop offset="0%" stopColor={ACCENT} stopOpacity={0.35} />
-              <stop offset="100%" stopColor={ACCENT} stopOpacity={0.06} />
+              <stop offset="0%" stopColor={CHART.accent} stopOpacity={0.35} />
+              <stop offset="100%" stopColor={CHART.accent} stopOpacity={0.06} />
             </linearGradient>
           </defs>
-          <CartesianGrid stroke={INK_GRID} vertical={false} />
+          <CartesianGrid stroke={CHART_AXIS.gridSubtle} vertical={false} />
           <XAxis dataKey="x" tick={tickSmall} tickLine={false} axisLine={{ stroke: 'rgba(14,15,18,0.09)' }} />
           <YAxis hide />
           <Area
             type="monotone"
             dataKey="y"
-            stroke={ACCENT}
+            stroke={CHART.accent}
             strokeWidth={2}
             fill="url(#ds-ft-lens-change)"
             isAnimationActive={false}
@@ -790,10 +789,10 @@ export function FtCategoryMiniChart({ category }: { category: string }) {
     return (
       <ResponsiveContainer width="100%" height="100%">
         <BarChart layout="vertical" data={rank} margin={{ top: 6, right: 12, left: 40, bottom: 2 }}>
-          <CartesianGrid stroke={INK_GRID} horizontal={false} />
+          <CartesianGrid stroke={CHART_AXIS.gridSubtle} horizontal={false} />
           <XAxis type="number" hide />
           <YAxis dataKey="n" type="category" tick={tickSmall} tickLine={false} axisLine={false} width={56} />
-          <Bar dataKey="v" fill={ACCENT} radius={[0, 4, 4, 0]} isAnimationActive={false} barSize={18} />
+          <Bar dataKey="v" fill={CHART.accent} radius={[0, 4, 4, 0]} isAnimationActive={false} barSize={18} />
         </BarChart>
       </ResponsiveContainer>
     )
@@ -808,10 +807,10 @@ export function FtCategoryMiniChart({ category }: { category: string }) {
   return (
     <ResponsiveContainer width="100%" height="100%">
       <LineChart data={line} margin={g}>
-        <CartesianGrid stroke={INK_GRID} vertical={false} />
+        <CartesianGrid stroke={CHART_AXIS.gridSubtle} vertical={false} />
         <XAxis dataKey="x" tick={tickSmall} tickLine={false} axisLine={{ stroke: 'rgba(14,15,18,0.09)' }} />
         <YAxis hide />
-        <Line type="monotone" dataKey="y" stroke={ACCENT} strokeWidth={2} dot={{ r: 4, fill: ACCENT }} isAnimationActive={false} />
+        <Line type="monotone" dataKey="y" stroke={CHART.accent} strokeWidth={2} dot={{ r: 4, fill: CHART.accent }} isAnimationActive={false} />
       </LineChart>
     </ResponsiveContainer>
   )
@@ -1162,7 +1161,7 @@ export function DesignSystemHeroBento() {
           Sparkline · same primitive as KPI tiles
         </div>
         <div className="h-10 w-full mt-2 min-w-0">
-          <Sparkline values={[3, 4, 3.5, 5, 4.2, 4.6, 4.4]} stroke={ACCENT} height={40} />
+          <Sparkline values={[3, 4, 3.5, 5, 4.2, 4.6, 4.4]} stroke={CHART.accent} height={40} />
         </div>
         <p className="text-2xs text-ink-500 m-0 mt-2 leading-snug">Lightweight SVG path — not a separate chart engine check.</p>
       </div>

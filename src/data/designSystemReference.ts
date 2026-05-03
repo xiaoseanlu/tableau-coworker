@@ -169,7 +169,7 @@ export const VOICE_DONT_LINES: string[] = [
 export const IMPLEMENTATION_MAP: Array<{ artifact: string; path: string; note: string }> = [
   { artifact: 'Tokens (Tailwind)', path: 'tailwind.config.js', note: 'Color, editorial type scale, radius, ease-smooth' },
   { artifact: 'Global / utilities', path: 'src/styles/index.css', note: 'ds-doc, buttons, focus — if split from main entry' },
-  { artifact: 'Chart hex bridge', path: 'src/components/dashboard/chartTokens.ts', note: 'Recharts constants until semantic viz CSS vars' },
+  { artifact: 'Chart hex bridge', path: 'src/components/dashboard/chartTokens.ts', note: 'CHART + CHART_AXIS for Recharts until semantic viz CSS vars' },
   { artifact: 'Design system page', path: 'src/pages/DesignSystem.tsx', note: 'This route + reference tables' },
   { artifact: 'DS demos (viz + UI)', path: 'src/components/ds/DesignSystemSamples.tsx', note: 'Gallery, interaction playground, UI primitives' },
   { artifact: 'DS demos (capture + FT)', path: 'src/components/ds/DesignSystemInteractiveDemos.tsx', note: 'Evidence rail, pipeline, layout playground' },
@@ -180,7 +180,7 @@ export const IMPLEMENTATION_MAP: Array<{ artifact: string; path: string; note: s
 export const SCOPE_IN: string[] = [
   'Single theme, English, one narrative voice for the agent.',
   'Tokens + primitives + capture-grounded molecules enough for three persona flows.',
-  'Documentation on this page as the “mini DS” for reviewers.',
+  'Documentation on this page as a concise token + primitive reference for the build.',
 ]
 
 export const SCOPE_OUT: string[] = [

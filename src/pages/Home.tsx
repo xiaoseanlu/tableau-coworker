@@ -2,6 +2,10 @@ import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Sparkle } from '../components/Icons'
 import { MiniStackedHealth, Sparkline } from '../components/viz/DataViz'
+import { CHART } from '../components/dashboard/chartTokens'
+import MayaInteractiveDashboard from '../components/dashboard/MayaInteractiveDashboard'
+
+const CAP = `${import.meta.env.BASE_URL}captures/`
 
 const DESIGN_DOC_HREF = import.meta.env.VITE_GITHUB_URL
   ? `${String(import.meta.env.VITE_GITHUB_URL).replace(/\/$/, '')}/blob/main/DESIGN.md`
@@ -35,6 +39,40 @@ export default function Home() {
                 Or jump to the flows
               </Link>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Thesis proof — product before framework */}
+      <section className="border-t border-ink-100 bg-canvas-raised">
+        <div className="ds-page py-14 md:py-16">
+          <div className="h-eyebrow mb-3">Thesis, rendered</div>
+          <h2 className="h-section max-w-3xl mb-2">Tableau today vs Coworker — same numbers, different first paint</h2>
+          <p className="text-ink-600 max-w-3xl mb-8 leading-relaxed">
+            Left: wall of widgets from the trial (
+            <span className="font-mono text-2xs">key/04-exec-wall-of-widgets.png</span>). Right: narrative-first Monday canvas (Maya
+            flow — interactive walkthrough).
+          </p>
+          <div className="grid lg:grid-cols-2 gap-6 items-start">
+            <div>
+              <div className="text-2xs font-mono uppercase tracking-wide text-ink-500 mb-2">Today · capture</div>
+              <img
+                src={`${CAP}key/04-exec-wall-of-widgets.png`}
+                alt="Tableau Executive Overview — dense widget wall"
+                className="w-full rounded-xl border border-ink-200 shadow-sm"
+              />
+            </div>
+            <div className="min-w-0">
+              <div className="text-2xs font-mono uppercase tracking-wide text-ink-500 mb-2">Coworker · thesis layout</div>
+              <div className="max-h-[min(70vh,560px)] overflow-y-auto overflow-x-hidden rounded-xl border border-ink-200 shadow-sm">
+                <MayaInteractiveDashboard initialLayout="narrativeLeads" compactHero />
+              </div>
+            </div>
+          </div>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Link to="/flows/maya" className="btn-primary text-sm">
+              Open Maya flow <ArrowRight size={14} />
+            </Link>
           </div>
         </div>
       </section>
@@ -89,7 +127,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Design system + craft (reviewer-facing) */}
+      {/* Tokens, captures, interactive flows */}
       <section className="border-t border-ink-100 bg-canvas-raised">
         <div className="ds-page py-16">
           <div className="h-eyebrow mb-3">Redesign deliverable</div>
@@ -137,7 +175,7 @@ export default function Home() {
             to="/flows/maya"
             number="Flow 01"
             title="Maya — surface, then handoff"
-            blurb="Seven beats: capture → living canvas with agent dock → evidence → compose/share (payload preview) → Slack triage shape → recipient shared read → Calendar. Demo data is one consistent Acme SaaS Q2 brief (v18)."
+            blurb="Five beats: capture → narrative-first canvas + evidence drill → share sheet → Slack + Jordan inbox → Calendar. Demo data is one consistent Acme SaaS Q2 brief (v18)."
             tag="Maya Chen · CRO"
             preview={
               <Sparkline
@@ -165,7 +203,7 @@ export default function Home() {
               <Sparkline
                 values={[2.95, 2.92, 2.9, 2.88, 2.86, 2.84, 2.82, 2.6]}
                 className="text-danger"
-                stroke="#B0263A"
+                stroke={CHART.danger}
                 height={32}
               />
             }
@@ -184,17 +222,15 @@ export default function Home() {
               </h3>
               <p className="prose-body text-base">
                 The deliverable is laid out in the order it was thought through.
-                The strategy stands on what's broken; the flows stand on the strategy.
-                Each section is also self-contained — feel free to skim.
+                The strategy stands on what&apos;s broken; the flows stand on the strategy.
+                Design system, authoring deep-dive, and competitive appendix live under <strong className="font-medium text-ink-800">Process & depth</strong> in the footer.
               </p>
             </div>
             <div className="space-y-3">
               <ReadCard num="1" to="/whats-broken" title="What's broken today"     mins="6 min" />
               <ReadCard num="2" to="/strategy"     title="Strategy for the future" mins="7 min" />
               <ReadCard num="3" to="/flows"        title="The three flows"          mins="10 min · interactive" />
-              <ReadCard num="4" to="/summary"      title="Summary &amp; next steps" mins="2 min" />
-              <ReadCard num="5" to="/design-system" title="Design system architecture" mins="5 min" />
-              <ReadCard num="6" to="/competitive"  title="Competitive scan (appendix)" mins="4 min" />
+              <ReadCard num="4" to="/summary" title="Summary &amp; next steps" mins="2 min" />
             </div>
           </div>
         </div>

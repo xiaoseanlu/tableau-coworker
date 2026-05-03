@@ -12,8 +12,7 @@ export default function FlowsIndex() {
         <p className="text-lg text-ink-600 max-w-3xl">
           Acme SaaS Inc. — same CRM + revenue data, three roles. Each flow uses real Tableau
           captures for the &quot;before&quot; and designed UI — including <strong className="text-ink-800">SVG charts you can hover</strong> (Maya),
-          portfolio composition (Jordan), and spark trends (Sam) — for the proposed surface. Scripted steps,
-          not live warehouse queries.
+          portfolio composition (Jordan), and spark trends (Sam) — for the proposed surface. States are scripted, not live warehouse queries.
         </p>
       </header>
 
@@ -23,9 +22,9 @@ export default function FlowsIndex() {
           number="01"
           icon={<Sparkle className="text-accent" size={22} />}
           title="Maya — living surface, then handoff"
-          subtitle="Two design stories: one canvas + agent dock; then Slack, Calendar, link."
-          shows={['Design I · living canvas', 'Design II · share + recipient', 'Acme SaaS · Q2 · v18 data']}
-          description="Seven beats: capture receipt → interactive canvas with jump states + evidence → compose handoff (toggles + preview) → Slack message shape → Jordan’s shared read → Calendar block. Numbers and deal context stay consistent across surfaces."
+          subtitle="Two design stories: narrative-first canvas + evidence; then share, dual hand-off, calendar."
+          shows={['Design I · narrative leads + drill', 'Design II · share + dual surfaces', 'Acme SaaS · Q2 · v18 data']}
+          description="Five beats: capture → living canvas (narrative default, presets, drill + Agent receipt) → compose handoff → Slack + Jordan inbox side-by-side → Calendar. Same numbers end-to-end."
           surfaces={['Web · Tableau + Coworker', 'Slack · mock', 'Calendar · mock']}
         />
 
@@ -34,9 +33,9 @@ export default function FlowsIndex() {
           number="02"
           icon={<Inbox className="text-accent" size={22} />}
           title="Jordan — Tenant loop, then broadcast"
-          subtitle="Two design stories: sprawl → queue → diagnose → resolve; then Slack, mail, Finance inbox."
-          shows={['Design I · jump states + dock', 'Design II · audit-led broadcast', 'Pillar 04 · observed flags']}
-          description="Six beats: Superstore-backed sprawl, computed queue with portfolio + tiles, Finance drift diagnosis (key/02), closure receipt, then stakeholder notify + Finance recipient mail — same audit id as Maya&apos;s substrate."
+          subtitle="Two design stories: sprawl → queue → diagnose → resolve; then broadcast + Finance in one arc."
+          shows={['Design I · jump states + dock', 'Design II · notify + inbox', 'Pillar 04 · observed flags']}
+          description="Five beats: sprawl, queue, diagnose (key/02), resolve — then one &quot;Out&quot; step: stakeholder notify + Finance recipient mail side-by-side. Same audit id as Maya&apos;s substrate."
           surfaces={['Web · workbook + queue + notify', 'Web · recipient inbox']}
         />
 
@@ -47,7 +46,7 @@ export default function FlowsIndex() {
           title="Sam — Mobile surface, then legal inbox"
           subtitle="Two design stories: squished capture → brief → drill → act; then legal recipient read."
           shows={['Design I · presets + thumb dock', 'Design II · Chen inbox', 'key/05 squish receipt']}
-          description="Five beats: Executive Overview on phone (key/05), West briefing cards, Acme drill with Send, receipt + watcher, then M. Chen&apos;s Coworker mail — same draft object as the Act step."
+          description="Five beats: single squished capture frame (key/05, no tap grid) — then brief presets, Acme drill + Send, receipt, M. Chen legal inbox. Same draft object as the Act step."
           surfaces={['Mobile · briefing', 'Mobile · legal handoff']}
         />
       </section>
@@ -60,6 +59,10 @@ export default function FlowsIndex() {
           deliberate for a time-boxed exploration — the review is interaction model and evidence, not production
           hardening. With more time: branching paths, local state persistence, and a timeline scrubber
           for walkthroughs.
+        </p>
+        <p className="text-sm text-ink-600 mt-4 m-0">
+          Authoring captures (chronological walkthrough) live on the separate{' '}
+          <Link to="/authoring" className="text-accent-ink font-semibold hover:underline">Authoring</Link> page.
         </p>
       </section>
     </article>

@@ -20,16 +20,11 @@ import {
   YAxis,
 } from 'recharts'
 import { Sparkline } from '../viz/DataViz'
-
-const ACCENT = '#5B2E91'
-const SIGNAL = '#C7841C'
-const INK = { grid: '#EEF0F4', axis: '#5B6070', M: '#3D414C', tick: '#5B6070' }
-const POS = '#1F7A4D'
-const NEG = '#B0263A'
+import { CHART, CHART_AXIS } from '../dashboard/chartTokens'
 
 /** Fintech-grade: legible ticks, hairline axes, horizontal bands only (no chart junk). */
 const tickProps = {
-  fill: INK.tick,
+  fill: CHART_AXIS.tick,
   fontSize: 11,
   fontFamily: 'Inter, system-ui, sans-serif',
   fontWeight: 500,
@@ -153,27 +148,27 @@ function GalleryLineWithArea() {
       <ComposedChart data={W} margin={marginPlot}>
         <defs>
           <linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor={ACCENT} stopOpacity={0.18} />
-            <stop offset="100%" stopColor={ACCENT} stopOpacity={0} />
+            <stop offset="0%" stopColor={CHART.accent} stopOpacity={0.18} />
+            <stop offset="100%" stopColor={CHART.accent} stopOpacity={0} />
           </linearGradient>
         </defs>
-        <CartesianGrid stroke={INK.grid} strokeWidth={1} vertical={false} />
+        <CartesianGrid stroke={CHART_AXIS.gridSubtle} strokeWidth={1} vertical={false} />
         <XAxis dataKey="x" {...xAxisProps} />
         <YAxis {...yAxisProps} domain={['dataMin - 2', 'dataMax + 2']} />
         <Area type="monotone" dataKey="y" stroke="none" fill={`url(#${gradId})`} fillOpacity={1} isAnimationActive={false} />
         <Line
           type="monotone"
           dataKey="y"
-          stroke={ACCENT}
+          stroke={CHART.accent}
           strokeWidth={2.25}
           strokeLinecap="round"
           isAnimationActive={false}
           dot={props => {
             const { cx, cy, index } = props
             if (index !== W.length - 1) return <g />
-            return <circle cx={cx} cy={cy} r={5} fill={ACCENT} stroke="#fff" strokeWidth={2} />
+            return <circle cx={cx} cy={cy} r={5} fill={CHART.accent} stroke="#fff" strokeWidth={2} />
           }}
-          activeDot={{ r: 6, fill: ACCENT, stroke: '#fff', strokeWidth: 2 }}
+          activeDot={{ r: 6, fill: CHART.accent, stroke: '#fff', strokeWidth: 2 }}
         />
       </ComposedChart>
     </MiniAxisChart>
@@ -236,19 +231,19 @@ export function DesignSystemVizRolesDemo() {
         aria-label="Schematic line chart: gridlines, axes, series stroke, selection dot and signal fill, hover band"
       >
         {[20, 45, 70].map(y => (
-          <line key={y} x1="32" x2="260" y1={y} y2={y} stroke={INK.grid} strokeOpacity={0.6} strokeWidth={1} />
+          <line key={y} x1="32" x2="260" y1={y} y2={y} stroke={CHART_AXIS.gridSubtle} strokeOpacity={0.6} strokeWidth={1} />
         ))}
-        <line x1="32" x2="32" y1="12" y2="88" stroke={INK.axis} strokeWidth={1} />
-        <line x1="32" x2="260" y1="88" y2="88" stroke={INK.axis} strokeWidth={1} />
+        <line x1="32" x2="32" y1="12" y2="88" stroke={CHART_AXIS.tick} strokeWidth={1} />
+        <line x1="32" x2="260" y1="88" y2="88" stroke={CHART_AXIS.tick} strokeWidth={1} />
         <path
           d="M 48 72 L 88 58 L 128 62 L 168 48 L 208 42 L 248 28"
           fill="none"
-          stroke={ACCENT}
+          stroke={CHART.accent}
           strokeWidth={2}
           strokeLinecap="round"
         />
-        <circle cx="248" cy="28" r="5" fill={SIGNAL} fillOpacity={0.95} stroke="#fff" strokeWidth={1.5} />
-        <rect x="220" y="18" width="44" height="20" rx="4" fill={ACCENT} fillOpacity={0.12} />
+        <circle cx="248" cy="28" r="5" fill={CHART.signal} fillOpacity={0.95} stroke="#fff" strokeWidth={1.5} />
+        <rect x="220" y="18" width="44" height="20" rx="4" fill={CHART.accent} fillOpacity={0.12} />
       </svg>
     </figure>
   )
@@ -311,7 +306,7 @@ export function DesignSystemVizTypeGallery() {
           </div>
           <div className="font-mono text-xs font-medium tabular-nums text-danger">−6.2% WoW</div>
           <div className="mt-2 rounded-xl border border-ink-200 bg-canvas-sunken/40 px-3 py-2">
-            <Sparkline values={[2.95, 2.92, 2.9, 2.88, 2.82, 2.6]} stroke={ACCENT} height={40} />
+            <Sparkline values={[2.95, 2.92, 2.9, 2.88, 2.82, 2.6]} stroke={CHART.accent} height={40} />
           </div>
         </div>
       </ChartFrame>
@@ -325,18 +320,18 @@ export function DesignSystemVizTypeGallery() {
           <AreaChart data={W_STACK} margin={marginPlot}>
             <defs>
               <linearGradient id="ds-area-a" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor={ACCENT} stopOpacity={0.45} />
-                <stop offset="100%" stopColor={ACCENT} stopOpacity={0.12} />
+                <stop offset="0%" stopColor={CHART.accent} stopOpacity={0.45} />
+                <stop offset="100%" stopColor={CHART.accent} stopOpacity={0.12} />
               </linearGradient>
             </defs>
-            <CartesianGrid stroke={INK.grid} strokeWidth={1} vertical={false} />
+            <CartesianGrid stroke={CHART_AXIS.gridSubtle} strokeWidth={1} vertical={false} />
             <XAxis dataKey="x" {...xAxisProps} />
             <YAxis {...yAxisProps} />
             <Area
               type="monotone"
               dataKey="a"
               stackId="1"
-              stroke={ACCENT}
+              stroke={CHART.accent}
               strokeWidth={1.5}
               fill="url(#ds-area-a)"
             />
@@ -344,18 +339,18 @@ export function DesignSystemVizTypeGallery() {
               type="monotone"
               dataKey="b"
               stackId="1"
-              stroke={INK.M}
+              stroke={CHART_AXIS.label}
               strokeWidth={1}
-              fill={INK.M}
+              fill={CHART_AXIS.label}
               fillOpacity={0.22}
             />
             <Area
               type="monotone"
               dataKey="c"
               stackId="1"
-              stroke={SIGNAL}
+              stroke={CHART.signal}
               strokeWidth={1}
-              fill={SIGNAL}
+              fill={CHART.signal}
               fillOpacity={0.2}
             />
           </AreaChart>
@@ -365,10 +360,10 @@ export function DesignSystemVizTypeGallery() {
       <ChartFrame label="bar · magnitude">
         <MiniAxisChart>
           <BarChart data={MAG} margin={marginPlot}>
-            <CartesianGrid stroke={INK.grid} strokeWidth={1} vertical={false} />
+            <CartesianGrid stroke={CHART_AXIS.gridSubtle} strokeWidth={1} vertical={false} />
             <XAxis dataKey="n" {...xAxisProps} />
             <YAxis {...yAxisProps} />
-            <Bar dataKey="v" fill={ACCENT} fillOpacity={0.92} radius={[5, 5, 0, 0]} stroke="rgba(255,255,255,0.35)" strokeWidth={1} />
+            <Bar dataKey="v" fill={CHART.accent} fillOpacity={0.92} radius={[5, 5, 0, 0]} stroke="rgba(255,255,255,0.35)" strokeWidth={1} />
           </BarChart>
         </MiniAxisChart>
       </ChartFrame>
@@ -376,10 +371,10 @@ export function DesignSystemVizTypeGallery() {
       <ChartFrame label="bar · ranking (sorted)">
         <MiniAxisChart>
           <BarChart layout="vertical" data={MAG_SORT} margin={marginVHBar}>
-            <CartesianGrid stroke={INK.grid} strokeWidth={1} vertical={false} />
+            <CartesianGrid stroke={CHART_AXIS.gridSubtle} strokeWidth={1} vertical={false} />
             <XAxis type="number" {...xAxisProps} />
             <YAxis type="category" dataKey="n" {...yAxisProps} width={52} tick={{ ...tickProps, fontSize: 10 }} />
-            <Bar dataKey="v" fill={ACCENT} fillOpacity={0.92} radius={[0, 5, 5, 0]} stroke="rgba(255,255,255,0.35)" strokeWidth={1} />
+            <Bar dataKey="v" fill={CHART.accent} fillOpacity={0.92} radius={[0, 5, 5, 0]} stroke="rgba(255,255,255,0.35)" strokeWidth={1} />
           </BarChart>
         </MiniAxisChart>
       </ChartFrame>
@@ -387,13 +382,13 @@ export function DesignSystemVizTypeGallery() {
       <ChartFrame label="divergingBar">
         <MiniAxisChart>
           <BarChart layout="vertical" data={DIV} margin={marginVHBar}>
-            <CartesianGrid stroke={INK.grid} strokeWidth={1} vertical={false} />
+            <CartesianGrid stroke={CHART_AXIS.gridSubtle} strokeWidth={1} vertical={false} />
             <XAxis type="number" {...xAxisProps} />
             <YAxis type="category" dataKey="n" {...yAxisProps} width={52} tick={{ ...tickProps, fontSize: 10 }} />
             <ReferenceLine x={0} stroke="rgba(14,15,18,0.2)" strokeWidth={1} />
             <Bar dataKey="v" radius={[0, 4, 4, 0]} strokeWidth={0}>
               {DIV.map((e, i) => (
-                <Cell key={i} fill={e.v >= 0 ? POS : NEG} fillOpacity={0.9} />
+                <Cell key={i} fill={e.v >= 0 ? CHART.success : CHART.danger} fillOpacity={0.9} />
               ))}
             </Bar>
           </BarChart>
@@ -403,7 +398,7 @@ export function DesignSystemVizTypeGallery() {
       <ChartFrame label="lineColumnCombo">
         <MiniAxisChart>
           <ComposedChart data={COMBO} margin={{ ...marginPlot, right: 18 }}>
-            <CartesianGrid stroke={INK.grid} strokeWidth={1} vertical={false} />
+            <CartesianGrid stroke={CHART_AXIS.gridSubtle} strokeWidth={1} vertical={false} />
             <XAxis dataKey="m" {...xAxisProps} />
             <YAxis yAxisId="l" {...yAxisProps} tickFormatter={v => `${v}`} />
             <YAxis yAxisId="r" orientation="right" {...yAxisProps} tickFormatter={v => `${(v * 100).toFixed(0)}%`} />
@@ -419,10 +414,10 @@ export function DesignSystemVizTypeGallery() {
               yAxisId="r"
               type="monotone"
               dataKey="margin"
-              stroke={SIGNAL}
+              stroke={CHART.signal}
               strokeWidth={2.25}
               strokeLinecap="round"
-              dot={{ r: 4, fill: SIGNAL, stroke: '#fff', strokeWidth: 2 }}
+              dot={{ r: 4, fill: CHART.signal, stroke: '#fff', strokeWidth: 2 }}
             />
           </ComposedChart>
         </MiniAxisChart>
@@ -431,10 +426,10 @@ export function DesignSystemVizTypeGallery() {
       <ChartFrame label="histogram">
         <MiniAxisChart>
           <BarChart data={HIST} margin={marginPlot}>
-            <CartesianGrid stroke={INK.grid} strokeWidth={1} vertical={false} />
+            <CartesianGrid stroke={CHART_AXIS.gridSubtle} strokeWidth={1} vertical={false} />
             <XAxis dataKey="b" {...xAxisProps} />
             <YAxis {...yAxisProps} allowDecimals={false} />
-            <Bar dataKey="c" fill={ACCENT} fillOpacity={0.88} radius={[4, 4, 0, 0]} />
+            <Bar dataKey="c" fill={CHART.accent} fillOpacity={0.88} radius={[4, 4, 0, 0]} />
           </BarChart>
         </MiniAxisChart>
       </ChartFrame>
@@ -449,20 +444,20 @@ export function DesignSystemVizTypeGallery() {
 
       <ChartFrame label="smallMultiples">
         <div className="grid grid-cols-2 gap-2 h-full">
-          <MiniLine subset={W.slice(0, 4)} color={ACCENT} />
-          <MiniLine subset={W.slice(1, 5).map((r, i) => ({ ...r, y: r.y - 5 + i }))} color={SIGNAL} />
+          <MiniLine subset={W.slice(0, 4)} color={CHART.accent} />
+          <MiniLine subset={W.slice(1, 5).map((r, i) => ({ ...r, y: r.y - 5 + i }))} color={CHART.signal} />
         </div>
       </ChartFrame>
 
       <ChartFrame label="scatter · correlation">
         <MiniAxisChart>
           <ScatterChart margin={marginPlot}>
-            <CartesianGrid stroke={INK.grid} strokeWidth={1} vertical={false} />
+            <CartesianGrid stroke={CHART_AXIS.gridSubtle} strokeWidth={1} vertical={false} />
             <XAxis type="number" dataKey="q" name="q" {...xAxisProps} />
             <YAxis type="number" dataKey="r" name="r" {...yAxisProps} />
             <Scatter
               data={SCAT}
-              fill={ACCENT}
+              fill={CHART.accent}
               fillOpacity={0.85}
               stroke="#fff"
               strokeWidth={2}
@@ -527,7 +522,7 @@ function MiniLine({ subset, color }: { subset: { x: string; y: number }[]; color
   return (
     <ResponsiveContainer width="100%" height="100%">
       <LineChart data={subset} margin={{ top: 6, right: 8, left: 2, bottom: 4 }}>
-        <CartesianGrid stroke={INK.grid} strokeWidth={1} vertical={false} />
+        <CartesianGrid stroke={CHART_AXIS.gridSubtle} strokeWidth={1} vertical={false} />
         <XAxis dataKey="x" tick={tickProps} tickLine={false} axisLine={false} fontSize={10} />
         <YAxis hide domain={['auto', 'auto']} />
         <Line
@@ -552,16 +547,16 @@ function SlopeMini() {
   const x1 = w - pad - 16
   return (
     <svg viewBox={`0 0 ${w} ${h}`} className="h-full w-full" aria-hidden>
-      <text x={x0} y={16} fontSize={11} fontWeight={600} fill={INK.tick} fontFamily="Inter, system-ui, sans-serif" textAnchor="middle">
+      <text x={x0} y={16} fontSize={11} fontWeight={600} fill={CHART_AXIS.tick} fontFamily="Inter, system-ui, sans-serif" textAnchor="middle">
         T0
       </text>
-      <text x={x1} y={16} fontSize={11} fontWeight={600} fill={INK.tick} fontFamily="Inter, system-ui, sans-serif" textAnchor="middle">
+      <text x={x1} y={16} fontSize={11} fontWeight={600} fill={CHART_AXIS.tick} fontFamily="Inter, system-ui, sans-serif" textAnchor="middle">
         T1
       </text>
       {SLOPE.map((row, i) => {
         const y0 = yFor(row.t0)
         const y1 = yFor(row.t1)
-        const col = i % 2 === 0 ? ACCENT : SIGNAL
+        const col = i % 2 === 0 ? CHART.accent : CHART.signal
         return (
           <g key={row.cat}>
             <line x1={x0} y1={y0} x2={x1} y2={y1} stroke={col} strokeWidth={2.25} strokeLinecap="round" opacity={0.9} />
@@ -572,7 +567,7 @@ function SlopeMini() {
               y={y0 + 4}
               fontSize={10}
               fontWeight={500}
-              fill={INK.M}
+              fill={CHART_AXIS.label}
               fontFamily="Inter, system-ui, sans-serif"
               textAnchor="end"
             >
@@ -604,17 +599,17 @@ function WaterfallMini() {
   const gap = 8
   return (
     <svg viewBox="0 0 220 110" className="w-full h-full" aria-hidden>
-      <line x1="20" y1="88" x2="200" y2="88" stroke={INK.grid} />
+      <line x1="20" y1="88" x2="200" y2="88" stroke={CHART_AXIS.gridSubtle} />
       {segs.map((s, idx) => {
         const x = 28 + idx * (36 + gap)
         const yTop = 80 - ((Math.max(s.start, s.end) - min) / range) * 70
         const yBot = 80 - ((Math.min(s.start, s.end) - min) / range) * 70
         const h = Math.max(3, yBot - yTop)
-        const fill = s.v >= 0 ? ACCENT : NEG
+        const fill = s.v >= 0 ? CHART.accent : CHART.danger
         return (
           <g key={s.l}>
             <rect x={x} y={yTop} width={32} height={h} rx={2} fill={fill} fillOpacity={0.85} />
-            <text x={x + 16} y="100" fontSize={8} fill={INK.axis} textAnchor="middle">
+            <text x={x + 16} y="100" fontSize={8} fill={CHART_AXIS.tick} textAnchor="middle">
               {s.l}
             </text>
           </g>
@@ -627,10 +622,10 @@ function WaterfallMini() {
 function BulletMini() {
   return (
     <svg viewBox="0 0 220 60" className="w-full h-full" aria-hidden>
-      <rect x="16" y="14" width="180" height="10" rx="2" fill={INK.grid} fillOpacity={0.5} />
-      <rect x="16" y="14" width="120" height="10" rx="2" fill={ACCENT} fillOpacity={0.35} />
-      <rect x="16" y="32" width="140" height="10" rx="2" fill={SIGNAL} fillOpacity={0.5} />
-      <line x1="100" y1="10" x2="100" y2="48" stroke={NEG} strokeDasharray="3 2" strokeWidth={1} />
+      <rect x="16" y="14" width="180" height="10" rx="2" fill={CHART_AXIS.gridSubtle} fillOpacity={0.5} />
+      <rect x="16" y="14" width="120" height="10" rx="2" fill={CHART.accent} fillOpacity={0.35} />
+      <rect x="16" y="32" width="140" height="10" rx="2" fill={CHART.signal} fillOpacity={0.5} />
+      <line x1="100" y1="10" x2="100" y2="48" stroke={CHART.danger} strokeDasharray="3 2" strokeWidth={1} />
     </svg>
   )
 }
@@ -779,11 +774,11 @@ export function DesignSystemInteractionPlayground() {
               data={[...PLAY_DATA]}
               margin={{ top: 32, right: 12, left: 8, bottom: showBrush ? 28 : 12 }}
             >
-              <CartesianGrid stroke={INK.grid} strokeWidth={1} vertical={false} />
+              <CartesianGrid stroke={CHART_AXIS.gridSubtle} strokeWidth={1} vertical={false} />
               <XAxis dataKey="x" {...xAxisProps} />
               <YAxis {...yAxisProps} domain={['dataMin - 2', 'dataMax + 4']} />
               <Tooltip
-                cursor={{ stroke: ACCENT, strokeWidth: 1, strokeDasharray: '4 4' }}
+                cursor={{ stroke: CHART.accent, strokeWidth: 1, strokeDasharray: '4 4' }}
                 contentStyle={{ borderRadius: 8, fontSize: 12, border: '1px solid #DDE0E8' }}
               />
               <Legend
@@ -816,7 +811,7 @@ export function DesignSystemInteractionPlayground() {
                 type="monotone"
                 dataKey="west"
                 name="West"
-                stroke={ACCENT}
+                stroke={CHART.accent}
                 strokeWidth={2.25}
                 strokeOpacity={hidden.west ? 0.15 : 1}
                 dot={p => {
@@ -828,7 +823,7 @@ export function DesignSystemInteractionPlayground() {
                       cx={p.cx}
                       cy={p.cy}
                       r={r}
-                      fill={on ? SIGNAL : ACCENT}
+                      fill={on ? CHART.signal : CHART.accent}
                       stroke="#fff"
                       strokeWidth={2}
                       className={hidden.west ? 'pointer-events-none' : 'cursor-pointer'}
@@ -844,7 +839,7 @@ export function DesignSystemInteractionPlayground() {
                 type="monotone"
                 dataKey="east"
                 name="East"
-                stroke="#1F7A4D"
+                stroke={CHART.success}
                 strokeWidth={2}
                 strokeOpacity={hidden.east ? 0.15 : 1}
                 dot={p => {
@@ -856,7 +851,7 @@ export function DesignSystemInteractionPlayground() {
                       cx={p.cx}
                       cy={p.cy}
                       r={r}
-                      fill={on ? SIGNAL : '#1F7A4D'}
+                      fill={on ? CHART.signal : CHART.success}
                       stroke="#fff"
                       strokeWidth={2}
                       className={hidden.east ? 'pointer-events-none' : 'cursor-pointer'}
@@ -872,8 +867,8 @@ export function DesignSystemInteractionPlayground() {
                 <Brush
                   dataKey="x"
                   height={22}
-                  stroke="#858B9C"
-                  fill="#F2F2EE"
+                  stroke={CHART_AXIS.muted}
+                  fill={CHART.canvasSunken}
                   travellerWidth={8}
                   tickFormatter={() => ''}
                 />

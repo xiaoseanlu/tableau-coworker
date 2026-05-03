@@ -29,7 +29,7 @@ const competitors: CompRow[] = [
     postureScore: 5,
     craftScore: 4,
     strengths:
-      'Copilot + Microsoft 365 distribution; natural-language questions and summaries are a central story; enterprise procurement leverage.',
+            'Copilot plus Microsoft 365 distribution; natural-language questions and summaries are central in most pitch decks; hard to ignore if you already live in Teams and Excel.',
     gap: 'Semantic and viz fidelity expectations differ from Tableau shops; migration and dual-BI politics are the battlefield, not chart novelty.',
     notes: 'Primary distribution threat — meets users where Tableau often does not.',
   },

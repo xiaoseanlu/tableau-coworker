@@ -1,4 +1,5 @@
 import { useCallback, useId, useMemo, useState } from 'react'
+import { CHART } from '../dashboard/chartTokens'
 
 /** Normalizes points to SVG viewBox 0..100 x 0..40 (y inverted) */
 function sparkPath(values: number[], ymin: number, ymax: number): string {
@@ -106,8 +107,8 @@ export function CoverageTrendChart() {
       >
         <defs>
           <linearGradient id={`${gid}-fill`} x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#5B2E91" stopOpacity="0.12" />
-            <stop offset="100%" stopColor="#5B2E91" stopOpacity="0" />
+            <stop offset="0%" stopColor={CHART.accent} stopOpacity={0.12} />
+            <stop offset="100%" stopColor={CHART.accent} stopOpacity={0} />
           </linearGradient>
         </defs>
         {/* grid */}
@@ -118,7 +119,7 @@ export function CoverageTrendChart() {
             x2={w - pad}
             y1={pad + t * innerH}
             y2={pad + t * innerH}
-            stroke="#DDE0E8"
+            stroke={CHART.grid}
             strokeWidth="1"
             strokeDasharray="3 4"
           />
@@ -128,15 +129,15 @@ export function CoverageTrendChart() {
           d={`${lineD} L ${pts[pts.length - 1].x} ${pad + innerH} L ${pts[0].x} ${pad + innerH} Z`}
           fill={`url(#${gid}-fill)`}
         />
-        <path d={lineD} fill="none" stroke="#5B2E91" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d={lineD} fill="none" stroke={CHART.accent} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
         {pts.map(p => (
           <circle
             key={p.idx}
             cx={p.x}
             cy={p.y}
             r={i === p.idx ? 5 : 3}
-            fill={i === p.idx ? '#5B2E91' : '#FFFFFF'}
-            stroke="#5B2E91"
+            fill={i === p.idx ? CHART.accent : CHART.canvas}
+            stroke={CHART.accent}
             strokeWidth="1.5"
             className="transition-all duration-150"
           />
@@ -148,7 +149,7 @@ export function CoverageTrendChart() {
               x2={active.x}
               y1={pad}
               y2={pad + innerH}
-              stroke="#C7841C"
+              stroke={CHART.signal}
               strokeWidth="1"
               strokeDasharray="2 3"
             />
@@ -176,10 +177,10 @@ export function CoverageTrendChart() {
 /** Stacked bar: portfolio health for Jordan flow */
 export function PortfolioMixBar() {
   const segments = [
-    { label: 'Active & trusted', pct: 54, color: '#1F7A4D' },
-    { label: 'Stale', pct: 19, color: '#A85B00' },
-    { label: 'Duplicate risk', pct: 15, color: '#5B2E91' },
-    { label: 'Data-quality flags', pct: 12, color: '#B0263A' },
+    { label: 'Active & trusted', pct: 54, color: CHART.success },
+    { label: 'Stale', pct: 19, color: CHART.warning },
+    { label: 'Duplicate risk', pct: 15, color: CHART.accent },
+    { label: 'Data-quality flags', pct: 12, color: CHART.danger },
   ]
   return (
     <div className="w-full" role="img" aria-label="Portfolio mix: 47 dashboards by health category">
@@ -209,10 +210,10 @@ export function PortfolioMixBar() {
 /** Compact strip for home-page flow cards */
 export function MiniStackedHealth() {
   const segments = [
-    { pct: 54, color: '#1F7A4D' },
-    { pct: 19, color: '#A85B00' },
-    { pct: 15, color: '#5B2E91' },
-    { pct: 12, color: '#B0263A' },
+    { pct: 54, color: CHART.success },
+    { pct: 19, color: CHART.warning },
+    { pct: 15, color: CHART.accent },
+    { pct: 12, color: CHART.danger },
   ]
   return (
     <div className="flex h-2 rounded-full overflow-hidden border border-ink-100" aria-hidden>

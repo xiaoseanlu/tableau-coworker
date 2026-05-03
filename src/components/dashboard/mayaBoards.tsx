@@ -13,12 +13,10 @@ import {
 } from 'recharts'
 import { Surface } from '../FlowChrome'
 import AgentDock, { type AgentInsight } from './AgentDock'
+import { CHART } from './chartTokens'
 import { MAYA_AGENT_DATA_SURFACE } from '../../data/personaFlowMeta'
 
 const CAP = `${import.meta.env.BASE_URL}captures/`
-
-const ACCENT = '#5B2E91'
-const SIGNAL = '#C7841C'
 
 type OpenZoneId = 'kpi-grid' | 'geo' | 'trends' | 'toolbar'
 
@@ -256,7 +254,7 @@ export function MayaDrillBoard() {
                     layout="vertical"
                     margin={{ top: 4, right: 8, left: 64, bottom: 0 }}
                   >
-                    <CartesianGrid strokeDasharray="3 6" stroke="#DDE0E8" horizontal={false} />
+                    <CartesianGrid strokeDasharray="3 6" stroke={CHART.grid} horizontal={false} />
                     <XAxis type="number" domain={[-25, 0]} tickFormatter={v => `${v}%`} tick={{ fontSize: 10 }} />
                     <YAxis type="category" dataKey="state" width={58} tick={{ fontSize: 11 }} axisLine={false} tickLine={false} />
                     <Tooltip formatter={(v: number) => [`${v}%`, 'Profit']} contentStyle={{ fontSize: 12, borderRadius: 8 }} />
@@ -272,7 +270,7 @@ export function MayaDrillBoard() {
                       {DRILL_STATES.map((_, i) => (
                         <Cell
                           key={i}
-                          fill={i === stIdx ? '#3A1B5E' : ACCENT}
+                          fill={i === stIdx ? CHART.accentInk : CHART.accent}
                           fillOpacity={stIdx >= 0 && i !== stIdx ? 0.35 : 1}
                         />
                       ))}
@@ -288,7 +286,7 @@ export function MayaDrillBoard() {
               <div className="h-[220px] w-full">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={DRILL_REPS} layout="vertical" margin={{ top: 4, right: 8, left: 72, bottom: 0 }}>
-                    <CartesianGrid strokeDasharray="3 6" stroke="#DDE0E8" horizontal={false} />
+                    <CartesianGrid strokeDasharray="3 6" stroke={CHART.grid} horizontal={false} />
                     <XAxis type="number" domain={[0, 40]} tickFormatter={v => `${v}%`} tick={{ fontSize: 10 }} />
                     <YAxis type="category" dataKey="name" width={68} tick={{ fontSize: 11 }} axisLine={false} tickLine={false} />
                     <Tooltip formatter={(v: number) => [`${v}%`, 'Share']} contentStyle={{ fontSize: 12, borderRadius: 8 }} />
@@ -304,7 +302,7 @@ export function MayaDrillBoard() {
                       {DRILL_REPS.map((_, i) => (
                         <Cell
                           key={i}
-                          fill={i === repIdx ? '#3A1B5E' : SIGNAL}
+                          fill={i === repIdx ? CHART.accentInk : CHART.signal}
                           fillOpacity={repIdx >= 0 && i !== repIdx ? 0.35 : 1}
                         />
                       ))}
@@ -482,14 +480,14 @@ export function MayaSendBoard() {
                     }
                   }}
                 >
-                  <CartesianGrid strokeDasharray="3 6" stroke="#DDE0E8" vertical={false} />
+                  <CartesianGrid strokeDasharray="3 6" stroke={CHART.grid} vertical={false} />
                   <XAxis dataKey="label" tick={{ fontSize: 9 }} axisLine={false} tickLine={false} interval={0} />
                   <YAxis domain={[0, 14]} tick={{ fontSize: 10, fontFamily: 'JetBrains Mono' }} width={28} axisLine={false} tickLine={false} />
                   <Tooltip contentStyle={{ fontSize: 12, borderRadius: 8 }} />
                   <Line
                     type="monotone"
                     dataKey="subs"
-                    stroke={ACCENT}
+                    stroke={CHART.accent}
                     strokeWidth={2.5}
                     dot={props => {
                       const { cx, cy, index } = props
@@ -500,8 +498,8 @@ export function MayaSendBoard() {
                           cx={cx}
                           cy={cy}
                           r={active ? 8 : 5}
-                          fill={active ? ACCENT : '#fff'}
-                          stroke={ACCENT}
+                          fill={active ? CHART.accent : CHART.canvas}
+                          stroke={CHART.accent}
                           strokeWidth={2}
                           className="cursor-pointer"
                         />

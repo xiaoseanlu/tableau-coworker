@@ -19,7 +19,7 @@ import {
 import { Sparkle, Layers, Clock } from '../Icons'
 import { Sparkline } from '../viz/DataViz'
 import AgentDock, { type AgentInsight } from './AgentDock'
-import { CHART } from './chartTokens'
+import { CHART, CHART_AXIS } from './chartTokens'
 import { JORDAN_QUEUE_COPY, JORDAN_TENANT } from './jordanDemoContext'
 import { JumpPresetButton, JumpStateStrip } from './JumpStateStrip'
 import { JORDAN_AGENT_DATA_SURFACE } from '../../data/personaFlowMeta'
@@ -192,15 +192,15 @@ export function JordanSprawlBoard({ presetStrip = false }: { presetStrip?: boole
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={SPRAWL_VIEWS} layout="vertical" margin={{ top: 8, right: 16, left: 78, bottom: 0 }}>
                       <CartesianGrid strokeDasharray="3 6" stroke={CHART.grid} horizontal={false} />
-                      <XAxis type="number" domain={[0, 100]} tickFormatter={v => `${v}%`} tick={{ fontSize: 10, fill: '#5B6070' }} />
-                      <YAxis type="category" dataKey="name" width={74} tick={{ fontSize: 10, fill: '#3D414C' }} axisLine={false} tickLine={false} />
+                      <XAxis type="number" domain={[0, 100]} tickFormatter={v => `${v}%`} tick={{ fontSize: 10, fill: CHART_AXIS.tick }} />
+                      <YAxis type="category" dataKey="name" width={74} tick={{ fontSize: 10, fill: CHART_AXIS.label }} axisLine={false} tickLine={false} />
                       <Tooltip
                         cursor={{ fill: 'rgba(91, 46, 145, 0.06)' }}
                         formatter={(v: number) => [`${v}%`, 'Open share']}
                         contentStyle={{
                           borderRadius: 10,
                           fontSize: 12,
-                          border: '1px solid #DDE0E8',
+                          border: `1px solid ${CHART.grid}`,
                           boxShadow: '0 8px 24px rgba(14,15,18,0.08)',
                         }}
                       />
@@ -251,7 +251,7 @@ export function JordanSprawlBoard({ presetStrip = false }: { presetStrip?: boole
                         outerRadius={82}
                         paddingAngle={2}
                         strokeWidth={2}
-                        stroke="#FAFAF7"
+                        stroke={CHART.canvasPage}
                         cursor="pointer"
                         onClick={(_d, i: number) => {
                           const row = SPRAWL_PIE[i]
@@ -269,7 +269,7 @@ export function JordanSprawlBoard({ presetStrip = false }: { presetStrip?: boole
                       </Pie>
                       <Tooltip
                         formatter={(v: number, name: string) => [`${v} index units`, name]}
-                        contentStyle={{ borderRadius: 10, border: '1px solid #DDE0E8', fontSize: 12 }}
+                        contentStyle={{ borderRadius: 10, border: `1px solid ${CHART.grid}`, fontSize: 12 }}
                       />
                     </PieChart>
                   </ResponsiveContainer>
@@ -622,7 +622,7 @@ export function JordanQueueBoard({ presetStrip = false }: { presetStrip?: boolea
                       outerRadius={76}
                       paddingAngle={1.5}
                       strokeWidth={2}
-                      stroke="#FAFAF7"
+                      stroke={CHART.canvasPage}
                       cursor="pointer"
                       onClick={(_e, i: number) => {
                         const row = PORTFOLIO_PIE[i]
@@ -640,7 +640,7 @@ export function JordanQueueBoard({ presetStrip = false }: { presetStrip?: boolea
                     </Pie>
                     <Tooltip
                       formatter={(v: number) => [`${v}%`, 'Share']}
-                      contentStyle={{ borderRadius: 10, border: '1px solid #DDE0E8', fontSize: 12 }}
+                      contentStyle={{ borderRadius: 10, border: `1px solid ${CHART.grid}`, fontSize: 12 }}
                     />
                   </PieChart>
                 </ResponsiveContainer>
@@ -657,12 +657,12 @@ export function JordanQueueBoard({ presetStrip = false }: { presetStrip?: boolea
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={QUEUE_SEVERITY_BARS} layout="vertical" margin={{ top: 4, right: 12, left: 100, bottom: 0 }}>
                   <CartesianGrid strokeDasharray="3 6" stroke={CHART.grid} horizontal={false} />
-                  <XAxis type="number" domain={[0, 12]} tick={{ fontSize: 10, fill: '#5B6070' }} />
-                  <YAxis type="category" dataKey="label" width={96} tick={{ fontSize: 11, fill: '#3D414C' }} axisLine={false} tickLine={false} />
+                  <XAxis type="number" domain={[0, 12]} tick={{ fontSize: 10, fill: CHART_AXIS.tick }} />
+                  <YAxis type="category" dataKey="label" width={96} tick={{ fontSize: 11, fill: CHART_AXIS.label }} axisLine={false} tickLine={false} />
                   <Tooltip
                     cursor={{ fill: 'rgba(199, 132, 28, 0.08)' }}
                     formatter={(v: number) => [v, 'Items']}
-                    contentStyle={{ borderRadius: 10, border: '1px solid #DDE0E8', fontSize: 12 }}
+                    contentStyle={{ borderRadius: 10, border: `1px solid ${CHART.grid}`, fontSize: 12 }}
                   />
                   <Bar
                     dataKey="count"
@@ -929,11 +929,11 @@ export function JordanDiagnoseBoard({ presetStrip = false }: { presetStrip?: boo
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={DRIFT_ROWS} layout="vertical" margin={{ top: 8, right: 20, left: 108, bottom: 0 }}>
                   <CartesianGrid strokeDasharray="3 6" stroke={CHART.grid} horizontal={false} />
-                  <XAxis type="number" tick={{ fontSize: 10, fill: '#5B6070' }} />
-                  <YAxis type="category" dataKey="wb" width={102} tick={{ fontSize: 9, fill: '#3D414C' }} axisLine={false} tickLine={false} />
+                  <XAxis type="number" tick={{ fontSize: 10, fill: CHART_AXIS.tick }} />
+                  <YAxis type="category" dataKey="wb" width={102} tick={{ fontSize: 9, fill: CHART_AXIS.label }} axisLine={false} tickLine={false} />
                   <Tooltip
                     cursor={{ fill: 'rgba(91, 46, 145, 0.06)' }}
-                    contentStyle={{ borderRadius: 10, border: '1px solid #DDE0E8', fontSize: 12 }}
+                    contentStyle={{ borderRadius: 10, border: `1px solid ${CHART.grid}`, fontSize: 12 }}
                   />
                   <Bar
                     dataKey="legacy"
@@ -987,7 +987,7 @@ export function JordanDiagnoseBoard({ presetStrip = false }: { presetStrip?: boo
                   <CartesianGrid strokeDasharray="3 6" stroke={CHART.grid} vertical={false} />
                   <XAxis dataKey="w" tick={{ fontSize: 10 }} axisLine={false} tickLine={false} />
                   <YAxis domain={[0, 6]} tick={{ fontSize: 10, fontFamily: 'JetBrains Mono' }} width={28} axisLine={false} tickLine={false} />
-                  <Tooltip contentStyle={{ borderRadius: 10, border: '1px solid #DDE0E8', fontSize: 12 }} />
+                  <Tooltip contentStyle={{ borderRadius: 10, border: `1px solid ${CHART.grid}`, fontSize: 12 }} />
                   <Area
                     type="monotone"
                     dataKey="issues"
@@ -1201,9 +1201,9 @@ export function JordanResolveBoard({ presetStrip = false }: { presetStrip?: bool
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="3 6" stroke={CHART.grid} vertical={false} />
-                  <XAxis dataKey="day" tick={{ fontSize: 11, fill: '#3D414C' }} axisLine={false} tickLine={false} />
+                  <XAxis dataKey="day" tick={{ fontSize: 11, fill: CHART_AXIS.label }} axisLine={false} tickLine={false} />
                   <YAxis domain={[76, 84]} tick={{ fontSize: 10, fontFamily: 'JetBrains Mono' }} width={32} axisLine={false} tickLine={false} />
-                  <Tooltip contentStyle={{ borderRadius: 10, border: '1px solid #DDE0E8', fontSize: 12 }} />
+                  <Tooltip contentStyle={{ borderRadius: 10, border: `1px solid ${CHART.grid}`, fontSize: 12 }} />
                   <Area
                     type="monotone"
                     dataKey="score"
@@ -1257,8 +1257,8 @@ export function JordanResolveBoard({ presetStrip = false }: { presetStrip?: bool
                 <BarChart data={[...SUBSCRIBER_BREAKDOWN]} layout="vertical" margin={{ top: 4, right: 16, left: 4, bottom: 0 }}>
                   <CartesianGrid strokeDasharray="3 6" stroke={CHART.grid} horizontal={false} />
                   <XAxis type="number" domain={[0, 6]} hide />
-                  <YAxis type="category" dataKey="role" width={88} tick={{ fontSize: 11, fill: '#3D414C' }} axisLine={false} tickLine={false} />
-                  <Tooltip formatter={(v: number) => [v, 'Recipients']} contentStyle={{ borderRadius: 10, border: '1px solid #DDE0E8', fontSize: 12 }} />
+                  <YAxis type="category" dataKey="role" width={88} tick={{ fontSize: 11, fill: CHART_AXIS.label }} axisLine={false} tickLine={false} />
+                  <Tooltip formatter={(v: number) => [v, 'Recipients']} contentStyle={{ borderRadius: 10, border: `1px solid ${CHART.grid}`, fontSize: 12 }} />
                   <Bar
                     dataKey="n"
                     radius={[0, 8, 8, 0]}

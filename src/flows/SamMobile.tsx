@@ -28,13 +28,12 @@ const steps: FlowStep[] = [
             Between meetings. Tableau on his phone is Tableau on his desktop, squished.
           </h2>
           <p className="text-sm text-ink-600 leading-relaxed">
-            Real capture: <span className="font-mono text-2xs">key/05-mobile-squished.png</span>. Use{' '}
-            <strong className="font-semibold text-ink-800">Jump today state</strong> or tap bars — Coworker narrates the failure mode
-            and the proposed push ({SAM_MOBILE.pushProposed.title}).
+            Real capture: <span className="font-mono text-2xs">key/05-mobile-squished.png</span>. One composition — no tap grid on this
+            beat. The Brief step shows the Coworker surface and presets.
           </p>
         </div>
         <Surface chrome="mobile">
-          <SamTodayBoard presetStrip />
+          <SamTodayBoard squishOnly />
         </Surface>
       </div>
     ),

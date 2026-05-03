@@ -137,53 +137,32 @@ const steps: FlowStep[] = [
   },
 
   {
-    label: 'Broadcast',
+    label: 'Out',
     designStory: 'II · Out to the org',
-    surface: 'Web · notify + payload',
+    surface: 'Web · broadcast + recipient',
     immersive: true,
     body: (
       <div className="space-y-4">
         <div className="max-w-3xl">
-          <div className="text-2xs uppercase tracking-wider text-ink-500 font-mono mb-1">Design story II · A</div>
+          <div className="text-2xs uppercase tracking-wider text-ink-500 font-mono mb-1">Design story II · A–B</div>
           <h2 className="editorial text-2xl text-ink-900 leading-snug mb-2">
-            Same audit object in Slack, mail, and Jira — Finance does not learn about v2 from Maya&apos;s staff deck alone.
+            Same audit id — notify surfaces, then what Finance opens.
           </h2>
           <p className="text-sm text-ink-600 leading-relaxed">
-            Tap destinations and follow-ups; payload preview shows the hash-locked copy before anything leaves Tableau.
+            Payload preview and destinations on the left; R. Okonkwo&apos;s inbox on the right — one governance object, two moments in the
+            loop.
           </p>
         </div>
-        <JordanBroadcastBoard />
+        <div className="grid xl:grid-cols-2 gap-6 items-start">
+          <JordanBroadcastBoard />
+          <JordanFinanceRecipientBoard />
+        </div>
       </div>
     ),
     notes: (
       <>
-        <Note title="Mirrors Maya share beat">Handoff is its own design problem — permissions and unfurl metadata, not step five of a diary.</Note>
-      </>
-    ),
-  },
-
-  {
-    label: 'Finance',
-    designStory: 'II · Out to the org',
-    surface: 'Web · recipient inbox',
-    immersive: true,
-    body: (
-      <div className="space-y-4">
-        <div className="max-w-3xl">
-          <div className="text-2xs uppercase tracking-wider text-ink-500 font-mono mb-1">Design story II · B</div>
-          <h2 className="editorial text-2xl text-ink-900 leading-snug mb-2">
-            What lands for R. Okonkwo — archive, open Tableau, or reply to Jordan.
-          </h2>
-          <p className="text-sm text-ink-600 leading-relaxed">
-            Scannable mail card ties republish to board-pack delta and audit id — no screenshot handoff.
-          </p>
-        </div>
-        <JordanFinanceRecipientBoard />
-      </div>
-    ),
-    notes: (
-      <>
-        <Note title="Recipient lens">Completes the governance loop outside the curator&apos;s session — same pattern as Maya inbox.</Note>
+        <Note title="Handoff is scoped">Permissions and unfurl metadata stay explicit — not folded into queue triage.</Note>
+        <Note title="Recipient lens">Finance sees audit + board-pack delta — same pattern as Maya&apos;s shared read.</Note>
       </>
     ),
   },

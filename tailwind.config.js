@@ -4,8 +4,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Workday Coworker design system
-        // A warmer, more confident neutral palette than today's Workday blue/grey
+        // Tableau Coworker design system
+        // Warmer canvas + aubergine accent (plan/03) — distinct from default “enterprise blue” BI chrome
         ink: {
           900: '#0E0F12', // primary text
           800: '#1A1C22',
@@ -45,7 +45,7 @@ export default {
         mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
       },
       fontSize: {
-        // Tighter, more editorial scale than Workday's current
+        // Tighter, more editorial scale than typical dashboard UI
         '2xs': ['0.6875rem', { lineHeight: '1rem' }],
         'xs':  ['0.75rem',   { lineHeight: '1.1rem' }],
         'sm':  ['0.8125rem', { lineHeight: '1.25rem' }],

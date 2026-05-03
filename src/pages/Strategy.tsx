@@ -169,10 +169,17 @@ export default function Strategy() {
         <Sparkle className="text-accent mb-4" size={22} />
         <div className="h-eyebrow text-accent-ink mb-2">The strategic bet</div>
         <p className="text-lg text-ink-900 leading-relaxed editorial italic">
-          Tableau&apos;s moat is trusted semantics at scale. The next moat is who loads first on Monday —
-          tiles, or the sentence those tiles were always trying to become.
+          Tableau&apos;s strength is trusted semantics at scale. The next fight is what loads first on Monday —
+          the chart wall, or the short read that wall was supposed to spare you from assembling by hand.
         </p>
       </section>
+
+      <p className="text-sm text-ink-600 mt-12 mb-0">
+        <Link to="/competitive" className="text-accent-ink font-semibold hover:underline">
+          Competitive scan (appendix)
+        </Link>
+        <span className="text-ink-400"> · qualitative vendor read, not market share data.</span>
+      </p>
 
       <nav className="mt-16 pt-8 border-t border-ink-100 flex items-center justify-between">
         <Link to="/whats-broken" className="btn-ghost">

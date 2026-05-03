@@ -17,7 +17,7 @@ import {
 import { Phone, Send } from '../Icons'
 import { Sparkline } from '../viz/DataViz'
 import AgentDock, { type AgentInsight } from './AgentDock'
-import { CHART } from './chartTokens'
+import { CHART, CHART_AXIS } from './chartTokens'
 import { SAM_MOBILE } from './samDemoContext'
 import { JumpPresetButton, JumpStateStrip } from './JumpStateStrip'
 import { SAM_AGENT_DATA_SURFACE } from '../../data/personaFlowMeta'
@@ -118,11 +118,40 @@ function agentToday(sel: TodaySel): AgentInsight {
   return m[sel.id]
 }
 
-export function SamTodayBoard({ presetStrip = false }: { presetStrip?: boolean }) {
+export function SamTodayBoard({ presetStrip = false, squishOnly = false }: { presetStrip?: boolean; squishOnly?: boolean }) {
   const [sel, setSel] = useState<TodaySel>(null)
   const insight = useMemo(() => agentToday(sel), [sel])
   const idx = sel?.kind === 'bar' ? LEGIBILITY.findIndex(b => b.id === sel.id) : -1
   const pieActive = sel?.kind === 'modepie' ? (sel.segment === 'coworker' ? 1 : 0) : -1
+
+  if (squishOnly) {
+    return (
+      <div className="bg-canvas h-full min-h-[520px] flex flex-col">
+        <div className="px-4 pt-4 pb-2">
+          <div className="text-2xs font-mono text-ink-500">
+            Capture: <span className="text-ink-700">key/05-mobile-squished.png</span>
+          </div>
+          <div className="editorial text-base text-ink-900 leading-tight mt-2">Executive Overview on a phone — before Coworker</div>
+        </div>
+        <div className="flex-1 flex justify-center px-3 pb-8">
+          <div className="relative w-full max-w-[390px]">
+            <img
+              src={`${CAP}key/05-mobile-squished.png`}
+              alt="Tableau Superstore Executive Overview on iPhone — squished desktop layout"
+              className="block w-full rounded-xl border border-ink-200 shadow-sm"
+            />
+            <div className="absolute left-1/2 top-[42%] -translate-x-1/2 w-[min(92%,280px)]">
+              <div className="rounded-lg border border-signal/40 bg-canvas-raised/95 px-3 py-2.5 shadow-lg text-center">
+                <p className="text-sm text-ink-800 leading-snug m-0">
+                  Built for a wide desktop. Forced into phone width. Sam closes the tab.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="bg-canvas h-full min-h-[560px] flex flex-col overflow-hidden">
@@ -179,7 +208,7 @@ export function SamTodayBoard({ presetStrip = false }: { presetStrip?: boolean }
                     <CartesianGrid strokeDasharray="3 6" stroke={CHART.grid} vertical={false} />
                     <XAxis
                       dataKey="label"
-                      tick={{ fontSize: 9, fill: '#5B6070' }}
+                      tick={{ fontSize: 9, fill: CHART_AXIS.tick }}
                       interval={0}
                       angle={-16}
                       textAnchor="end"
@@ -187,11 +216,11 @@ export function SamTodayBoard({ presetStrip = false }: { presetStrip?: boolean }
                       axisLine={false}
                       tickLine={false}
                     />
-                    <YAxis domain={[0, 100]} tick={{ fontSize: 10, fontFamily: 'JetBrains Mono', fill: '#3D414C' }} width={28} axisLine={false} tickLine={false} />
+                    <YAxis domain={[0, 100]} tick={{ fontSize: 10, fontFamily: 'JetBrains Mono', fill: CHART_AXIS.label }} width={28} axisLine={false} tickLine={false} />
                     <Tooltip
                       cursor={{ fill: 'rgba(199, 132, 28, 0.07)' }}
                       formatter={(v: number) => [`${v}`, 'Index']}
-                      contentStyle={{ fontSize: 12, borderRadius: 10, border: '1px solid #DDE0E8', boxShadow: '0 6px 20px rgba(14,15,18,0.07)' }}
+                      contentStyle={{ fontSize: 12, borderRadius: 10, border: `1px solid ${CHART.grid}`, boxShadow: '0 6px 20px rgba(14,15,18,0.07)' }}
                     />
                     <Bar
                       dataKey="score"
@@ -229,7 +258,7 @@ export function SamTodayBoard({ presetStrip = false }: { presetStrip?: boolean }
                       outerRadius={78}
                       paddingAngle={2}
                       strokeWidth={2}
-                      stroke="#FAFAF7"
+                      stroke={CHART.canvasPage}
                       cursor="pointer"
                       onClick={(_e, i: number) => {
                         const row = LEGIBILITY_PIE[i]
@@ -240,7 +269,7 @@ export function SamTodayBoard({ presetStrip = false }: { presetStrip?: boolean }
                         <Cell key={entry.segment} fill={entry.segment === 'coworker' ? CHART.accent : CHART.signal} fillOpacity={pieActive >= 0 && i !== pieActive ? 0.3 : 1} />
                       ))}
                     </Pie>
-                    <Tooltip contentStyle={{ borderRadius: 10, fontSize: 12, border: '1px solid #DDE0E8' }} />
+                    <Tooltip contentStyle={{ borderRadius: 10, fontSize: 12, border: `1px solid ${CHART.grid}` }} />
                   </PieChart>
                 </ResponsiveContainer>
                 <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
@@ -509,7 +538,7 @@ export function SamBriefBoard({ presetStrip = false }: { presetStrip?: boolean }
                   </defs>
                   <XAxis dataKey="w" tick={{ fontSize: 9 }} axisLine={false} tickLine={false} />
                   <Tooltip
-                    contentStyle={{ borderRadius: 8, fontSize: 11, border: '1px solid #DDE0E8' }}
+                    contentStyle={{ borderRadius: 8, fontSize: 11, border: `1px solid ${CHART.grid}` }}
                     formatter={(v: number) => [`${v}`, 'Pulse']}
                   />
                   <Area
@@ -518,7 +547,7 @@ export function SamBriefBoard({ presetStrip = false }: { presetStrip?: boolean }
                     stroke={CHART.success}
                     strokeWidth={2}
                     fill="url(#winsGradSam)"
-                    dot={{ r: 3, fill: CHART.success, stroke: '#fff', strokeWidth: 1 }}
+                    dot={{ r: 3, fill: CHART.success, stroke: CHART.canvas, strokeWidth: 1 }}
                   />
                 </AreaChart>
               </ResponsiveContainer>

@@ -1,6 +1,8 @@
 /**
  * Jordan Patel · VP Sales Ops — Acme SaaS curation queue demo (aligned to plan/09 + Maya v18).
  */
+import { CHART } from './chartTokens'
+
 export const JORDAN_TENANT = {
   workbooks: 47,
   queueThisWeek: 17,
@@ -8,10 +10,10 @@ export const JORDAN_TENANT = {
   moment: 'Wed · May 6, 2026 · 2:18 PM PT',
   mayaAsk: '$87.4M ARR in Monday brief — "the real one?"',
   portfolio: [
-    { id: 'active' as const, label: 'Active & trusted', pct: 54, color: '#1F7A4D' },
-    { id: 'stale' as const, label: 'Stale', pct: 19, color: '#A85B00' },
-    { id: 'dup' as const, label: 'Duplicate risk', pct: 15, color: '#5B2E91' },
-    { id: 'dq' as const, label: 'Data-quality flags', pct: 12, color: '#B0263A' },
+    { id: 'active' as const, label: 'Active & trusted', pct: 54, color: CHART.success },
+    { id: 'stale' as const, label: 'Stale', pct: 19, color: CHART.warning },
+    { id: 'dup' as const, label: 'Duplicate risk', pct: 15, color: CHART.accent },
+    { id: 'dq' as const, label: 'Data-quality flags', pct: 12, color: CHART.danger },
   ],
   tiles: { stale: 9, dup: 5, dq: 3 },
   audit: {
