@@ -183,7 +183,7 @@ export function PortfolioMixBar() {
   ]
   return (
     <div className="w-full" role="img" aria-label="Portfolio mix: 47 dashboards by health category">
-      <div className="flex h-3 rounded-full overflow-hidden border border-ink-100 shadow-card">
+      <div className="flex h-3 rounded-full overflow-hidden border border-ink-200">
         {segments.map(s => (
           <div
             key={s.label}

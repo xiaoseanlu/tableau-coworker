@@ -14,6 +14,8 @@ import {
   YAxis,
 } from 'recharts'
 import AgentDock from './AgentDock'
+import { MAYA_BRIEF } from './mayaDemoContext'
+import { MAYA_AGENT_DATA_SURFACE } from '../../data/personaFlowMeta'
 
 const WEEKLY = [
   { week: 'Mar 10', coverage: 2.95, label: 'Mar 10' },
@@ -135,7 +137,7 @@ function agentForSelection(sel: Selection): { title: string; body: string; confi
   }
 }
 
-export default function MayaInteractiveDashboard() {
+export default function MayaInteractiveDashboard({ presetStrip = false }: { presetStrip?: boolean }) {
   const [sel, setSel] = useState<Selection>(null)
   const agent = useMemo(() => agentForSelection(sel), [sel])
 
@@ -152,7 +154,56 @@ export default function MayaInteractiveDashboard() {
   const weekIdx = sel?.kind === 'week' ? sel.idx : -1
 
   return (
-    <div className="rounded-xl border border-ink-200 bg-canvas-raised shadow-raised overflow-hidden">
+    <div className="rounded-xl border border-ink-200 bg-canvas-raised overflow-hidden">
+      {presetStrip ? (
+        <div className="flex flex-wrap items-center gap-2 px-4 py-2.5 border-b border-ink-100 bg-accent-soft/30">
+          <span className="text-2xs font-mono uppercase tracking-wide text-accent-ink shrink-0 mr-1">Jump UI state</span>
+          <button
+            type="button"
+            onClick={() => setSel(null)}
+            className="rounded-full px-2.5 py-1 text-2xs font-medium border border-ink-200 bg-canvas-raised text-ink-700 hover:border-accent/40"
+          >
+            Idle dock
+          </button>
+          <button
+            type="button"
+            onClick={() =>
+              setSel({ kind: 'kpi', id: 'west', title: 'West pipeline coverage', value: '2.6×' })
+            }
+            className="rounded-full px-2.5 py-1 text-2xs font-medium border border-ink-200 bg-canvas-raised text-ink-700 hover:border-accent/40"
+          >
+            West KPI
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              const w = WEEKLY[WEEKLY.length - 1]
+              setSel({ kind: 'week', week: w.week, coverage: w.coverage, idx: WEEKLY.length - 1 })
+            }}
+            className="rounded-full px-2.5 py-1 text-2xs font-medium border border-ink-200 bg-canvas-raised text-ink-700 hover:border-accent/40"
+          >
+            Apr 28 week
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              const r = REPS[0]
+              if (r) setSel({ kind: 'rep', name: r.name, share: r.share, segment: r.segment })
+            }}
+            className="rounded-full px-2.5 py-1 text-2xs font-medium border border-ink-200 bg-canvas-raised text-ink-700 hover:border-accent/40"
+          >
+            Rep Morales
+          </button>
+          <button
+            type="button"
+            onClick={() => setSel({ kind: 'region', region: 'West', coverage: 2.6, delta: -0.21 })}
+            className="rounded-full px-2.5 py-1 text-2xs font-medium border border-ink-200 bg-canvas-raised text-ink-700 hover:border-accent/40"
+          >
+            Region row
+          </button>
+          <span className="text-2xs text-ink-500 ml-auto max-sm:hidden">Same canvas — selection drives the dock</span>
+        </div>
+      ) : null}
       {/* Product header */}
       <div className="border-b border-ink-100 bg-gradient-to-b from-canvas to-canvas-raised px-6 py-5 md:px-8">
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
@@ -161,12 +212,15 @@ export default function MayaInteractiveDashboard() {
               Monday · May 4 · 8:42 AM · Maya Chen · CRO
             </div>
             <h2 className="editorial text-2xl md:text-3xl text-ink-900 leading-tight max-w-3xl">
-              West softened. Acme Co is the staff name. Everything below is live — click the viz.
+              {MAYA_BRIEF.headline}
+              <span className="block mt-2 text-lg md:text-xl text-ink-700 font-normal">
+                What changed, what to flag for staff, what to leave alone — click the viz; the dock carries confidence.
+              </span>
             </h2>
           </div>
           <div className="flex items-center gap-2 text-xs text-ink-500 font-mono shrink-0">
             <span className="w-2 h-2 rounded-full bg-success animate-pulse" aria-hidden />
-            Sources synced 8:38 AM PT · v2 definitions
+            {MAYA_BRIEF.sourcesLine.split('·')[0]?.trim()} · v2 definitions
           </div>
         </div>
       </div>
@@ -181,39 +235,39 @@ export default function MayaInteractiveDashboard() {
               onClick={() =>
                 setSel({ kind: 'kpi', id: 'arr', title: 'ARR pacing YTD', value: '$87.4M' })
               }
-              className={`text-left card p-4 transition-all hover:shadow-raised hover:border-accent/30 ${
+              className={`text-left card p-4 transition-colors hover:border-accent/40 ${
                 sel?.kind === 'kpi' && sel.id === 'arr' ? 'ring-2 ring-accent/40 border-accent/40' : ''
               }`}
             >
               <div className="text-2xs uppercase tracking-wider text-ink-500 font-mono mb-1">ARR · YTD</div>
-              <div className="font-mono text-2xl text-ink-900">$87.4M</div>
-              <div className="text-xs text-warning font-medium mt-1">−$2.1M vs plan · narrowing</div>
+              <div className="font-mono text-2xl text-ink-900">{MAYA_BRIEF.kpis[0].value}</div>
+              <div className="text-xs text-warning font-medium mt-1">{MAYA_BRIEF.kpis[0].delta} · narrowing</div>
             </button>
             <button
               type="button"
               onClick={() =>
                 setSel({ kind: 'kpi', id: 'west', title: 'West pipeline coverage', value: '2.6×' })
               }
-              className={`text-left card p-4 transition-all hover:shadow-raised hover:border-accent/30 ${
+              className={`text-left card p-4 transition-colors hover:border-accent/40 ${
                 sel?.kind === 'kpi' && sel.id === 'west' ? 'ring-2 ring-accent/40 border-accent/40' : ''
               }`}
             >
               <div className="text-2xs uppercase tracking-wider text-ink-500 font-mono mb-1">West coverage</div>
-              <div className="font-mono text-2xl text-ink-900">2.6×</div>
-              <div className="text-xs text-danger font-medium mt-1">−0.22 WoW · v2</div>
+              <div className="font-mono text-2xl text-ink-900">{MAYA_BRIEF.kpis[1].value}</div>
+              <div className="text-xs text-danger font-medium mt-1">{MAYA_BRIEF.kpis[1].delta} · v2</div>
             </button>
             <button
               type="button"
               onClick={() =>
                 setSel({ kind: 'kpi', id: 'qend', title: 'Q-end coverage buffer', value: '3.4×' })
               }
-              className={`text-left card p-4 transition-all hover:shadow-raised hover:border-accent/30 ${
+              className={`text-left card p-4 transition-colors hover:border-accent/40 ${
                 sel?.kind === 'kpi' && sel.id === 'qend' ? 'ring-2 ring-accent/40 border-accent/40' : ''
               }`}
             >
               <div className="text-2xs uppercase tracking-wider text-ink-500 font-mono mb-1">Q-end coverage</div>
-              <div className="font-mono text-2xl text-ink-900">3.4×</div>
-              <div className="text-xs text-success font-medium mt-1">+0.1 WoW</div>
+              <div className="font-mono text-2xl text-ink-900">{MAYA_BRIEF.kpis[2].value}</div>
+              <div className="text-xs text-success font-medium mt-1">{MAYA_BRIEF.kpis[2].delta}</div>
             </button>
           </div>
 
@@ -362,7 +416,7 @@ export default function MayaInteractiveDashboard() {
                     key={r.region}
                     type="button"
                     onClick={() => setSel({ kind: 'region', region: r.region, coverage: r.coverage, delta: r.delta })}
-                    className={`w-full flex items-center gap-3 rounded-lg border px-3 py-2.5 text-left transition-all hover:shadow-card ${
+                    className={`w-full flex items-center gap-3 rounded-lg border px-3 py-2.5 text-left transition-colors hover:border-ink-400 ${
                       regionIdx === i ? 'border-accent bg-accent-soft/50 ring-1 ring-accent/30' : 'border-ink-100 bg-canvas'
                     }`}
                   >
@@ -438,6 +492,8 @@ export default function MayaInteractiveDashboard() {
           onFollowup={q => setSel({ kind: 'followup', q })}
           onClear={() => setSel(null)}
           selectionActive={!!sel}
+          productTagline="Default briefing surface · not a summoned side chat"
+          dataSurface={MAYA_AGENT_DATA_SURFACE}
         />
       </div>
     </div>

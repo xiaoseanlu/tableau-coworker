@@ -14,6 +14,8 @@ export default function AgentDock({
   selectionActive,
   productName = 'Tableau Coworker',
   productTagline = 'Read · not a side panel',
+  /** How real Tableau surfaces (marks, lineage, RLS) show up in this board — optional educate line */
+  dataSurface,
   /** Full-width bottom stack (mobile shells) instead of desktop side rail */
   stack = false,
 }: {
@@ -24,6 +26,7 @@ export default function AgentDock({
   selectionActive?: boolean
   productName?: string
   productTagline?: string
+  dataSurface?: string
   stack?: boolean
 }) {
   const shell =
@@ -40,14 +43,17 @@ export default function AgentDock({
         <div className="w-9 h-9 rounded-lg bg-signal-soft border border-signal/30 grid place-items-center text-signal">
           <Sparkle size={18} aria-hidden />
         </div>
-        <div>
+        <div className="min-w-0">
           <div className="text-xs font-semibold text-ink-900">{productName}</div>
           <div className="text-2xs text-ink-500 font-mono">{productTagline}</div>
+          {dataSurface ? (
+            <p className="text-[10px] leading-snug text-ink-500 font-mono mt-1.5 m-0 border-l border-ink-200 pl-2">{dataSurface}</p>
+          ) : null}
         </div>
       </div>
 
       <div
-        className={`rounded-lg border border-signal/25 bg-signal-soft/40 shadow-agent ${stack ? 'p-3 flex-1 min-h-0' : 'p-4 flex-1 min-h-[180px]'}`}
+        className={`rounded-lg border border-signal/30 bg-signal-soft/40 ${stack ? 'p-3 flex-1 min-h-0' : 'p-4 flex-1 min-h-[180px]'}`}
       >
         <div className="text-2xs uppercase tracking-wider font-mono text-signal mb-2">{insight.title}</div>
         <p className="text-sm text-ink-800 leading-relaxed">{insight.body}</p>

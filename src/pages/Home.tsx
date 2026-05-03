@@ -13,7 +13,7 @@ export default function Home() {
       {/* Hero */}
       <section className="relative overflow-hidden">
         <div className="grid-backdrop absolute inset-0 opacity-60 pointer-events-none" />
-        <div className="max-w-6xl mx-auto px-6 pt-20 pb-24 relative">
+        <div className="ds-page pt-20 pb-24 relative">
           <div className="max-w-3xl">
             <div className="h-eyebrow mb-5">Design exploration · Tableau</div>
             <h1 className="h-display mb-6">
@@ -41,7 +41,7 @@ export default function Home() {
 
       {/* Three pillars TL;DR */}
       <section className="border-t border-ink-100 bg-canvas-raised">
-        <div className="max-w-6xl mx-auto px-6 py-16">
+        <div className="ds-page py-16">
           <div className="h-eyebrow mb-3">Four strategic bets</div>
           <h2 className="h-section max-w-3xl mb-12">
             Tableau already ships strong AI. The shell still treats the 2015
@@ -91,7 +91,7 @@ export default function Home() {
 
       {/* Design system + craft (reviewer-facing) */}
       <section className="border-t border-ink-100 bg-canvas-raised">
-        <div className="max-w-6xl mx-auto px-6 py-16">
+        <div className="ds-page py-16">
           <div className="h-eyebrow mb-3">Redesign deliverable</div>
           <h2 className="h-section max-w-3xl mb-4">
             Interactive surfaces — captures for &quot;today,&quot; designed UI + data viz for &quot;tomorrow&quot;
@@ -126,7 +126,7 @@ export default function Home() {
       </section>
 
       {/* Flow trailers */}
-      <section className="max-w-6xl mx-auto px-6 py-20">
+      <section className="ds-page py-20">
         <div className="h-eyebrow mb-3">Three flows, brought to life</div>
         <h2 className="h-section max-w-3xl mb-10">
           Each flow is a complete, clickable demonstration: real product capture → redesigned surface with live charts.
@@ -136,8 +136,8 @@ export default function Home() {
           <FlowCard
             to="/flows/maya"
             number="Flow 01"
-            title="Maya — Monday before staff"
-            blurb="CRO lands on a generated briefing: narrative, KPI cards, hoverable coverage trend, drill-to-evidence — not the executive wall of widgets."
+            title="Maya — surface, then handoff"
+            blurb="Seven beats: capture → living canvas with agent dock → evidence → compose/share (payload preview) → Slack triage shape → recipient shared read → Calendar. Demo data is one consistent Acme SaaS Q2 brief (v18)."
             tag="Maya Chen · CRO"
             preview={
               <Sparkline
@@ -175,7 +175,7 @@ export default function Home() {
 
       {/* Reading order */}
       <section className="border-t border-ink-100 bg-canvas-sunken">
-        <div className="max-w-6xl mx-auto px-6 py-14">
+        <div className="ds-page py-14">
           <div className="grid md:grid-cols-2 gap-12 items-start">
             <div>
               <div className="h-eyebrow mb-3">How to read this</div>
@@ -229,7 +229,7 @@ function FlowCard({
   preview?: ReactNode
 }) {
   return (
-    <Link to={to} className="card hover:shadow-raised transition-shadow p-6 group block">
+    <Link to={to} className="card hover:border-ink-400 transition-colors p-6 group block">
       <div className="flex items-center justify-between mb-4">
         <span className="text-2xs font-mono text-ink-400">{number}</span>
         <span className="pill bg-accent-soft text-accent-ink">{tag}</span>
@@ -246,7 +246,7 @@ function FlowCard({
 
 function ReadCard({ num, to, title, mins }: { num: string; to: string; title: string; mins: string }) {
   return (
-    <Link to={to} className="flex items-center gap-4 p-4 bg-canvas-raised border border-ink-100 rounded-md hover:border-accent/40 hover:shadow-card transition-all group">
+    <Link to={to} className="flex items-center gap-4 p-4 bg-canvas-raised border border-ink-200 rounded-md hover:border-accent/40 transition-colors group">
       <div className="w-7 h-7 rounded-full bg-ink-100 text-ink-500 grid place-items-center text-xs font-mono shrink-0 group-hover:bg-accent-soft group-hover:text-accent-ink transition-colors">
         {num}
       </div>

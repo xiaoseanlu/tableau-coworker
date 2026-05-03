@@ -3,7 +3,7 @@ import { ArrowRight, Sparkle } from '../components/Icons'
 
 export default function Strategy() {
   return (
-    <article className="max-w-4xl mx-auto px-6 py-14">
+    <article className="ds-page py-14">
       <header className="mb-12">
         <div className="h-eyebrow mb-4">02 · Strategy for the future</div>
         <h1 className="h-display mb-6">

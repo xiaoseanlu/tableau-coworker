@@ -3,7 +3,7 @@ import { ArrowRight, Sparkle, Inbox, Phone } from '../components/Icons'
 
 export default function FlowsIndex() {
   return (
-    <article className="max-w-5xl mx-auto px-6 py-14">
+    <article className="ds-page py-14">
       <header className="mb-12">
         <div className="h-eyebrow mb-4">03 · Bring it to life</div>
         <h1 className="h-display mb-6">
@@ -22,33 +22,33 @@ export default function FlowsIndex() {
           to="/flows/maya"
           number="01"
           icon={<Sparkle className="text-accent" size={22} />}
-          title="Maya — Monday briefing"
-          subtitle="The narrative replaces the wall of widgets."
-          shows={['Pillar 01 · generated landing', 'Pillar 02 · chart as evidence', 'Pillar 04 · why am I seeing this']}
-          description="Maya Chen, CRO, has eighteen minutes before exec staff. Today she gets the Superstore Executive Overview — KPIs, map, trends, no story. Tomorrow she lands on a composed briefing with three metrics, three things-for-staff, and drill-down that cites what the agent checked. End state: save and forward as text, not a screenshot."
-          surfaces={['Web · Tableau Cloud']}
+          title="Maya — living surface, then handoff"
+          subtitle="Two design stories: one canvas + agent dock; then Slack, Calendar, link."
+          shows={['Design I · living canvas', 'Design II · share + recipient', 'Acme SaaS · Q2 · v18 data']}
+          description="Seven beats: capture receipt → interactive canvas with jump states + evidence → compose handoff (toggles + preview) → Slack message shape → Jordan’s shared read → Calendar block. Numbers and deal context stay consistent across surfaces."
+          surfaces={['Web · Tableau + Coworker', 'Slack · mock', 'Calendar · mock']}
         />
 
         <FlowOpener
           to="/flows/jordan"
           number="02"
           icon={<Inbox className="text-accent" size={22} />}
-          title="Jordan — Curation queue"
-          subtitle="Governance from observed usage."
-          shows={['Pillar 01 · queue as home', 'Pillar 04 · flags without a settings tab', 'Canonical metric repair']}
-          description="Jordan Patel, VP Sales Ops, owns the definitions Maya&apos;s cards rely on. Sprawl is visible in the trial (nine views in one workbook); admin lists people, not trust scores. The proposed flow opens on a prioritized queue — stale, duplicate, data-quality — then diagnoses one item against authoring + Tableau Agent, and closes the loop so downstream briefings update."
-          surfaces={['Web · workbook + queue']}
+          title="Jordan — Tenant loop, then broadcast"
+          subtitle="Two design stories: sprawl → queue → diagnose → resolve; then Slack, mail, Finance inbox."
+          shows={['Design I · jump states + dock', 'Design II · audit-led broadcast', 'Pillar 04 · observed flags']}
+          description="Six beats: Superstore-backed sprawl, computed queue with portfolio + tiles, Finance drift diagnosis (key/02), closure receipt, then stakeholder notify + Finance recipient mail — same audit id as Maya&apos;s substrate."
+          surfaces={['Web · workbook + queue + notify', 'Web · recipient inbox']}
         />
 
         <FlowOpener
           to="/flows/sam"
           number="03"
           icon={<Phone className="text-accent" size={22} />}
-          title="Sam — Mobile between meetings"
-          subtitle="Region scope, thumb scale."
-          shows={['Pillar 03 · mobile first-class', 'Pillar 04 · Tuesday habit', 'Exception, not desktop squish']}
-          description="Sam Reyes, West regional sales director, operates on exceptions. Today the Executive Overview on phone is the desktop sheet squeezed (flow-e captures). Tomorrow: push or open to a region briefing — stuck deals, wins, forecast risk — with one-tap actions. Same numbers Jordan curates and Maya sees rolled up."
-          surfaces={['Mobile · briefing shell']}
+          title="Sam — Mobile surface, then legal inbox"
+          subtitle="Two design stories: squished capture → brief → drill → act; then legal recipient read."
+          shows={['Design I · presets + thumb dock', 'Design II · Chen inbox', 'key/05 squish receipt']}
+          description="Five beats: Executive Overview on phone (key/05), West briefing cards, Acme drill with Send, receipt + watcher, then M. Chen&apos;s Coworker mail — same draft object as the Act step."
+          surfaces={['Mobile · briefing', 'Mobile · legal handoff']}
         />
       </section>
 

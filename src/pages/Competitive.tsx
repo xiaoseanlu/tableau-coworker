@@ -97,7 +97,7 @@ const competitors: CompRow[] = [
 
 export default function Competitive() {
   return (
-    <article className="max-w-5xl mx-auto px-6 py-14">
+    <article className="ds-page py-14">
       <header className="mb-10">
         <div className="h-eyebrow mb-4">Appendix · Competitive scan</div>
         <h1 className="h-display mb-6">

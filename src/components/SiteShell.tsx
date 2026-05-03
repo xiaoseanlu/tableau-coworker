@@ -23,9 +23,9 @@ export default function SiteShell({ children }: Props) {
     <div className="min-h-screen flex flex-col">
       {!inFlow && (
         <header className="sticky top-0 z-30 bg-canvas/85 backdrop-blur border-b border-ink-100">
-          <div className="max-w-6xl mx-auto px-6 py-3.5 flex items-center justify-between">
+          <div className="ds-shell-inner py-3.5 flex items-center justify-between">
             <Link to="/" className="flex items-center gap-2.5 group" aria-label="Tableau Coworker home">
-              <span className="w-7 h-7 rounded-md bg-accent text-white grid place-items-center text-sm font-semibold shadow-card" aria-hidden="true">T</span>
+              <span className="w-7 h-7 rounded-md bg-accent text-white grid place-items-center text-sm font-semibold ring-1 ring-ink-200/20" aria-hidden="true">T</span>
               <span className="text-sm">
                 <span className="font-semibold text-ink-900">Tableau Coworker</span>
                 <span className="text-ink-400 ml-2 hidden sm:inline">Sean Lu</span>
@@ -37,9 +37,9 @@ export default function SiteShell({ children }: Props) {
                   key={item.to}
                   to={item.to}
                   className={({ isActive }) =>
-                    `px-3 py-1.5 rounded-md text-sm transition-colors ${
+                    `px-3 py-1.5 rounded-md text-sm transition-colors duration-150 ease-smooth motion-reduce:transition-none ${
                       isActive
-                        ? 'bg-ink-100 text-ink-900 font-medium'
+                        ? 'bg-accent-soft text-accent-ink font-semibold ring-1 ring-accent/20'
                         : 'text-ink-600 hover:text-ink-900 hover:bg-ink-50'
                     }`
                   }
@@ -56,7 +56,7 @@ export default function SiteShell({ children }: Props) {
 
       {!inFlow && (
         <footer className="border-t border-ink-100 mt-24">
-          <div className="max-w-6xl mx-auto px-6 py-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-sm text-ink-500">
+          <div className="ds-shell-inner py-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-sm text-ink-500">
             <div>
               <span className="font-semibold text-ink-700">Tableau Coworker</span>
               <span className="mx-2">·</span>

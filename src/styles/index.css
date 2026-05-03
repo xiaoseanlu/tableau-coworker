@@ -23,15 +23,15 @@
 }
 
 @layer components {
-  /* Card primitives */
+  /* Card primitives — flat surfaces; depth from background steps + hairline borders */
   .card {
-    @apply bg-canvas-raised border border-ink-100 rounded-lg shadow-card;
+    @apply bg-canvas-raised border border-ink-200 rounded-lg;
   }
   .card-raised {
-    @apply bg-canvas-raised border border-ink-100 rounded-lg shadow-raised;
+    @apply bg-canvas-raised border border-ink-200 rounded-lg;
   }
   .agent-card {
-    @apply bg-signal-soft/60 border border-signal/30 rounded-lg shadow-agent;
+    @apply bg-signal-soft/60 border border-signal/35 rounded-lg;
   }
 
   /* Buttons */
@@ -89,4 +89,91 @@
 
   /* Tiny dot indicator */
   .dot { @apply inline-block w-1.5 h-1.5 rounded-full; }
+
+  /* Site content width — plan/03 prose pages (~1024px); use inside main per route */
+  .ds-page {
+    @apply max-w-[64rem] mx-auto px-6 sm:px-10;
+  }
+
+  /* Shell chrome: same max as generous content; aligns nav with most pages */
+  .ds-shell-inner {
+    @apply max-w-[64rem] mx-auto px-6 sm:px-10;
+  }
+
+  /* Design system reference page — docs-grade focus, spacing, tables */
+  .ds-skip-link {
+    @apply sr-only focus:not-sr-only focus:fixed focus:z-[100] focus:top-4 focus:left-4
+           focus:px-4 focus:py-3 focus:rounded-lg focus:bg-ink-900 focus:text-canvas
+           focus:text-sm focus:font-medium outline-none
+           focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-canvas;
+  }
+
+  .ds-doc :where(a, button):focus-visible {
+    @apply outline-none ring-2 ring-accent/90 ring-offset-2 ring-offset-canvas rounded;
+  }
+
+  .ds-doc .ds-section-lede {
+    @apply text-sm md:text-base text-ink-600 max-w-xl leading-relaxed mb-8 md:mb-10;
+  }
+
+  .ds-doc .ds-subheading {
+    @apply text-xs font-semibold uppercase tracking-[0.14em] text-ink-500;
+  }
+
+  /* Layer taxonomy wells — global (not nested under .ds-doc) so styles always apply */
+  .ds-layer-icon-well {
+    @apply inline-flex shrink-0 w-10 h-10 rounded-xl border border-ink-100 bg-canvas-sunken/45 items-center justify-center text-accent;
+  }
+
+  .ds-layer-icon-well--lg {
+    @apply w-12 h-12;
+  }
+
+  .ds-doc .ds-toc-pill {
+    @apply inline-flex items-center min-h-[2.75rem] rounded-full border border-ink-200 bg-canvas-raised
+           px-4 py-2.5 text-sm font-medium text-ink-700
+           hover:border-accent/50 hover:text-ink-900 hover:bg-canvas-sunken/60 transition-colors
+           motion-reduce:transition-none;
+  }
+
+  .ds-doc .ds-table-wrap {
+    @apply rounded-xl border border-ink-200 bg-canvas-raised overflow-hidden;
+  }
+
+  .ds-doc .ds-table {
+    @apply w-full text-sm;
+  }
+
+  .ds-doc .ds-table thead tr {
+    @apply bg-canvas-sunken border-b border-ink-100;
+  }
+
+  .ds-doc .ds-table th {
+    @apply p-3.5 text-left text-2xs font-semibold uppercase tracking-wide text-ink-600;
+  }
+
+  .ds-doc .ds-table td {
+    @apply p-3.5 text-ink-700 align-top;
+  }
+
+  .ds-doc .ds-table tbody tr {
+    @apply border-b border-ink-100 last:border-b-0 bg-canvas-raised hover:bg-ink-50/40;
+  }
+
+  .ds-doc .ds-code {
+    @apply rounded-xl border border-ink-200 bg-canvas-sunken p-6 font-mono text-2xs text-ink-800 leading-relaxed overflow-x-auto;
+  }
+
+  .ds-doc .ds-quality-card {
+    @apply rounded-xl border border-ink-200 bg-canvas-raised
+           transition-colors duration-200 ease-out
+           hover:border-ink-300 hover:bg-canvas-sunken/30 motion-reduce:transition-none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ds-doc .ds-toc-pill,
+    .ds-doc .ds-quality-card {
+      transition: none;
+    }
+  }
 }

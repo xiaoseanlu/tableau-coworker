@@ -13,6 +13,7 @@ import {
 } from 'recharts'
 import { Surface } from '../FlowChrome'
 import AgentDock, { type AgentInsight } from './AgentDock'
+import { MAYA_AGENT_DATA_SURFACE } from '../../data/personaFlowMeta'
 
 const CAP = `${import.meta.env.BASE_URL}captures/`
 
@@ -38,7 +39,7 @@ function agentOpen(sel: OpenSel): AgentInsight {
       return {
         title: 'Delta vs Friday',
         body:
-          'The wall does not compute “since you last looked.” Maya must diff tiles in her head or open each workbook. That is the contrast the Brief step is designed to kill.',
+          'The wall does not compute “since you last looked.” Maya must diff tiles in her head or open each workbook. That is the problem the Coworker canvas is designed to remove.',
         confidence: 'high',
       }
     }
@@ -53,7 +54,7 @@ function agentOpen(sel: OpenSel): AgentInsight {
     return {
       title: 'Compare regions',
       body:
-        'Each tile is a silo. Cross-region stories require manual drill or a separate workbook. Coworker in Brief composes region rows and ARR pace on one canvas.',
+        'Each tile is a silo. Cross-region stories require manual drill or a separate workbook. Coworker composes region rows and ARR pace on one canvas.',
       confidence: 'moderate',
     }
   }
@@ -93,7 +94,7 @@ export function MayaOpenBoard() {
   const zoneActive = (id: OpenZoneId) => sel?.kind === 'zone' && sel.id === id
 
   return (
-    <div className="rounded-xl border border-ink-200 bg-canvas-raised shadow-raised overflow-hidden">
+    <div className="rounded-xl border border-ink-200 bg-canvas-raised overflow-hidden">
       <div className="flex flex-col xl:flex-row xl:items-stretch">
         <div className="flex-1 min-w-0 border-b xl:border-b-0 xl:border-r border-ink-100">
           <Surface chrome="web">
@@ -137,6 +138,8 @@ export function MayaOpenBoard() {
           onFollowup={q => setSel({ kind: 'followup', q })}
           onClear={() => setSel(null)}
           selectionActive={!!sel}
+          productTagline="Before state · wall of widgets"
+          dataSurface={MAYA_AGENT_DATA_SURFACE}
         />
       </div>
     </div>
@@ -239,7 +242,7 @@ export function MayaDrillBoard() {
   const repIdx = sel?.kind === 'rep' ? DRILL_REPS.findIndex(r => r.name === sel.name) : -1
 
   return (
-    <div className="rounded-xl border border-ink-200 bg-canvas-raised shadow-raised overflow-hidden">
+    <div className="rounded-xl border border-ink-200 bg-canvas-raised overflow-hidden">
       <div className="flex flex-col xl:flex-row xl:items-stretch">
         <div className="flex-1 min-w-0 p-5 md:p-6 space-y-6 border-b xl:border-b-0 xl:border-r border-ink-100">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
@@ -357,6 +360,8 @@ export function MayaDrillBoard() {
           onFollowup={q => setSel({ kind: 'followup', q })}
           onClear={() => setSel(null)}
           selectionActive={!!sel}
+          productTagline="Evidence + capture receipt"
+          dataSurface={MAYA_AGENT_DATA_SURFACE}
         />
       </div>
     </div>
@@ -428,7 +433,7 @@ export function MayaSendBoard() {
   const waveIdx = sel?.kind === 'wave' ? sel.idx : -1
 
   return (
-    <div className="rounded-xl border border-ink-200 bg-canvas-raised shadow-raised overflow-hidden">
+    <div className="rounded-xl border border-ink-200 bg-canvas-raised overflow-hidden">
       <div className="flex flex-col xl:flex-row xl:items-stretch">
         <div className="flex-1 min-w-0 p-6 md:p-8 space-y-6 border-b xl:border-b-0 xl:border-r border-ink-100">
           <div className="rounded-md border border-signal/30 bg-signal-soft/50 px-4 py-3 text-sm text-ink-800">
@@ -519,6 +524,8 @@ export function MayaSendBoard() {
           onFollowup={q => setSel({ kind: 'followup', q })}
           onClear={() => setSel(null)}
           selectionActive={!!sel}
+          productTagline="Briefing provenance"
+          dataSurface={MAYA_AGENT_DATA_SURFACE}
         />
       </div>
     </div>

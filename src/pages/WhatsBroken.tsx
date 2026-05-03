@@ -5,7 +5,7 @@ const CAP = `${import.meta.env.BASE_URL}captures/`
 
 export default function WhatsBroken() {
   return (
-    <article className="max-w-4xl mx-auto px-6 py-14">
+    <article className="ds-page py-14">
       <header className="mb-12">
         <div className="h-eyebrow mb-4">01 · What&apos;s broken today</div>
         <h1 className="h-display mb-6">

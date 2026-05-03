@@ -63,7 +63,7 @@ export default function AuthoringConcepts() {
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
             <header className="lg:col-span-5 space-y-8 animate-fade-slide-up" style={{ animationDelay: '80ms' }}>
               <div className="flex flex-wrap gap-2">
-                <span className="inline-flex items-center rounded-full border border-ink-200/80 bg-canvas-raised/90 px-3 py-1 text-2xs font-mono uppercase tracking-wider text-ink-600 backdrop-blur-sm shadow-card">
+                <span className="inline-flex items-center rounded-full border border-ink-200/80 bg-canvas-raised/90 px-3 py-1 text-2xs font-mono uppercase tracking-wider text-ink-600 backdrop-blur-sm">
                   Concepts
                 </span>
                 <span className="inline-flex items-center rounded-full border border-accent/25 bg-accent-soft/50 px-3 py-1 text-2xs font-mono uppercase tracking-wider text-accent-ink backdrop-blur-sm">
@@ -113,7 +113,7 @@ export default function AuthoringConcepts() {
         </div>
 
         <div className="grid lg:grid-cols-12 gap-5">
-          <div className="lg:col-span-7 group relative rounded-2xl border border-ink-200/90 bg-canvas-raised/95 p-8 shadow-overlay backdrop-blur-md transition duration-500 ease-smooth hover:shadow-[0_24px_48px_-12px_rgba(14,15,18,0.12)] hover:-translate-y-0.5">
+          <div className="lg:col-span-7 group relative rounded-2xl border border-ink-200/90 bg-canvas-raised/95 p-8 md:p-10 backdrop-blur-md transition-colors duration-300 hover:border-ink-300">
             <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             <h3 className="text-xs font-mono uppercase tracking-[0.12em] text-ink-400 mb-6">Drop grammar</h3>
             <p className="text-ink-600 text-sm mb-6 max-w-lg">
@@ -128,7 +128,7 @@ export default function AuthoringConcepts() {
                 className="sr-only"
               />
               <span className="relative h-5 w-9 shrink-0 rounded-full bg-ink-200 transition-colors group-has-[:checked]:bg-accent">
-                <span className="absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-white shadow transition-transform group-has-[:checked]:translate-x-4" />
+                <span className="absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-white ring-1 ring-ink-200/50 transition-transform group-has-[:checked]:translate-x-4" />
               </span>
               <span className="text-sm font-medium text-ink-800">Simulate field in hand · State/Province</span>
             </label>
@@ -139,7 +139,7 @@ export default function AuthoringConcepts() {
             </div>
           </div>
 
-          <div className="lg:col-span-5 relative rounded-2xl p-[1px] overflow-hidden shadow-overlay group hover:shadow-[0_20px_40px_-10px_rgba(91,46,145,0.15)] transition duration-500 ease-smooth">
+          <div className="lg:col-span-5 relative rounded-2xl p-[1px] overflow-hidden border border-ink-200/80 transition-colors duration-300 hover:border-accent/30">
             <div
               className="absolute inset-0 opacity-90"
               style={{
@@ -164,7 +164,7 @@ export default function AuthoringConcepts() {
                 </div>
                 <button
                   type="button"
-                  className="shrink-0 rounded-lg bg-ink-900 px-4 py-2.5 text-sm font-medium text-white shadow-lg shadow-ink-900/20 transition hover:bg-ink-800 hover:shadow-xl"
+                  className="shrink-0 rounded-lg bg-ink-900 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-ink-800"
                 >
                   Connect
                 </button>
@@ -247,8 +247,7 @@ function AuthoringShowcase({
 }) {
   return (
     <div className="relative">
-      <div className="absolute -inset-4 bg-gradient-to-br from-accent/10 via-transparent to-signal/10 rounded-[28px] blur-xl opacity-70" aria-hidden />
-      <div className="relative rounded-2xl border border-ink-200/80 bg-canvas-raised/95 shadow-[0_32px_64px_-16px_rgba(14,15,18,0.14),0_0_0_1px_rgba(14,15,18,0.04)] backdrop-blur-xl overflow-hidden">
+      <div className="relative rounded-2xl border border-ink-200/80 bg-canvas-raised/95 overflow-hidden">
         <div className="h-11 flex items-center px-4 gap-2 border-b border-ink-100/90 bg-gradient-to-b from-canvas-sunken/50 to-canvas-raised">
           <div className="flex gap-1.5">
             <span className="h-2.5 w-2.5 rounded-full bg-danger/80" />
@@ -322,7 +321,7 @@ function AuthoringShowcase({
               })}
             </ol>
 
-            <div className="mt-4 rounded-xl border border-signal/30 bg-gradient-to-br from-signal-soft/80 to-signal-soft/30 p-4 shadow-agent">
+            <div className="mt-4 rounded-xl border border-signal/35 bg-gradient-to-br from-signal-soft/80 to-signal-soft/30 p-4">
               <div className="flex gap-2">
                 <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-signal/20 border border-signal/30">
                   <Sparkle size={16} className="text-signal" aria-hidden />
@@ -344,7 +343,7 @@ function AuthoringShowcase({
 /** Stylized symbol map — decorative, not geographic truth */
 function MapViz_artistic() {
   return (
-    <div className="relative w-full max-w-md aspect-[16/10] rounded-xl overflow-hidden border border-ink-200/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.6)] bg-gradient-to-b from-canvas-raised to-ink-50">
+    <div className="relative w-full max-w-md aspect-[16/10] rounded-xl overflow-hidden border border-ink-200/80 bg-gradient-to-b from-canvas-raised to-ink-50">
       <svg viewBox="0 0 400 240" className="absolute inset-0 w-full h-full" aria-hidden>
         <defs>
           <linearGradient id="mapCoast" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -391,7 +390,7 @@ function FieldPill({ label, type }: { label: string; type: 'geo' | 'measure' }) 
   const isGeo = type === 'geo'
   return (
     <div
-      className={`group flex cursor-default items-center justify-between rounded-lg border px-3 py-2 text-xs font-medium transition duration-200 hover:shadow-card ${
+      className={`group flex cursor-default items-center justify-between rounded-lg border px-3 py-2 text-xs font-medium transition-colors hover:border-ink-400 ${
         isGeo ? 'border-blue-500/20 bg-blue-500/[0.07] text-blue-950' : 'border-emerald-600/20 bg-emerald-600/[0.07] text-emerald-950'
       }`}
     >
@@ -408,7 +407,7 @@ function DropZoneStripe({ label, hint, active, emphasis }: { label: string; hint
       className={`relative rounded-xl px-4 py-8 text-center transition-all duration-500 ease-smooth ${
         active
           ? emphasis
-            ? 'bg-signal-soft/50 ring-2 ring-signal/50 shadow-[0_0_24px_-4px_rgba(199,132,28,0.4)] scale-[1.02]'
+            ? 'bg-signal-soft/50 ring-2 ring-signal/50'
             : 'bg-accent-soft/40 ring-1 ring-accent/25'
           : 'bg-ink-50/80 ring-1 ring-ink-100'
       }`}
@@ -424,7 +423,7 @@ function DropZoneStripe({ label, hint, active, emphasis }: { label: string; hint
 
 function EvidenceTile({ src, alt, step, title, caption }: { src: string; alt: string; step: string; title: string; caption: string }) {
   return (
-    <figure className="group relative rounded-2xl overflow-hidden ring-1 ring-white/10 bg-ink-800/50 transition duration-500 hover:ring-signal/40 hover:-translate-y-1 hover:shadow-[0_24px_48px_-12px_rgba(0,0,0,0.45)]">
+    <figure className="group relative rounded-2xl overflow-hidden ring-1 ring-white/10 bg-ink-800/50 transition-colors duration-300 hover:ring-signal/40">
       <div className="aspect-[16/10] overflow-hidden relative">
         <img src={src} alt={alt} className="h-full w-full object-cover object-top opacity-90 group-hover:opacity-100 group-hover:scale-[1.02] transition duration-700 ease-smooth" />
         <div className="absolute inset-0 bg-gradient-to-t from-ink-900/80 via-transparent to-transparent" />

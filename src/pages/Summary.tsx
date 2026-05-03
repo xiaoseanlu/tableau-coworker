@@ -3,7 +3,7 @@ import { ArrowRight, Bolt } from '../components/Icons'
 
 export default function Summary() {
   return (
-    <article className="max-w-3xl mx-auto px-6 py-14">
+    <article className="ds-page py-14">
       <header className="mb-12">
         <div className="h-eyebrow mb-4">04 · One-page summary</div>
         <h1 className="h-display mb-6">Five-day take. One-page sum-up.</h1>

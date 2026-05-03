@@ -66,11 +66,11 @@ export default {
         '2xl': '20px',
       },
       boxShadow: {
-        // Subtle, paper-like elevation. Not Workday's hard square borders.
-        'card': '0 1px 2px rgba(14,15,18,0.04), 0 1px 1px rgba(14,15,18,0.03)',
-        'raised': '0 4px 12px rgba(14,15,18,0.06), 0 2px 4px rgba(14,15,18,0.04)',
-        'overlay': '0 16px 40px rgba(14,15,18,0.12), 0 4px 8px rgba(14,15,18,0.06)',
-        'agent': '0 1px 2px rgba(199,132,28,0.18), 0 0 0 1px rgba(199,132,28,0.20)',
+        /* Flat system (Robinhood-adjacent): separation = borders + space, not drop shadow. */
+        card: 'none',
+        raised: 'none',
+        overlay: 'none',
+        agent: 'none',
       },
       transitionTimingFunction: {
         'smooth': 'cubic-bezier(0.16, 1, 0.3, 1)',
