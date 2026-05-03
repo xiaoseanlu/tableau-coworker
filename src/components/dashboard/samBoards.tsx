@@ -154,7 +154,7 @@ export function SamTodayBoard({ presetStrip = false, squishOnly = false }: { pre
   }
 
   return (
-    <div className="bg-canvas h-full min-h-0 flex flex-col overflow-hidden">
+    <div className="bg-canvas h-full min-h-0 flex flex-col overflow-hidden relative">
       <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden overscroll-y-contain scroll-smooth">
         <div className="px-5 pt-9 pb-4 border-b border-ink-100 bg-gradient-to-br from-accent-soft/35 via-canvas to-canvas flex gap-3">
           <Phone size={22} className="text-accent shrink-0 mt-0.5" aria-hidden />
@@ -296,6 +296,7 @@ export function SamTodayBoard({ presetStrip = false, squishOnly = false }: { pre
       </div>
       <AgentDock
         stack
+        stackPresentation="sheet"
         insight={insight}
         followups={['Push deals?', 'Same definitions?']}
         onFollowup={q => setSel({ kind: 'followup', q })}
@@ -427,7 +428,7 @@ export function SamBriefBoard({ presetStrip = false }: { presetStrip?: boolean }
   const winsCount = SAM_MOBILE.wins.length
 
   return (
-    <div className="bg-canvas h-full min-h-0 flex flex-col overflow-hidden">
+    <div className="bg-canvas h-full min-h-0 flex flex-col overflow-hidden relative">
       <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden overscroll-y-contain scroll-smooth">
         <div className="px-5 pt-9 pb-4 border-b border-ink-100 bg-gradient-to-br from-accent-soft/30 via-canvas to-canvas flex gap-3">
           <Phone size={22} className="text-accent shrink-0 mt-0.5" aria-hidden />
@@ -612,6 +613,7 @@ export function SamBriefBoard({ presetStrip = false }: { presetStrip?: boolean }
       </div>
       <AgentDock
         stack
+        stackPresentation="sheet"
         insight={insight}
         followups={['Staff impact?', 'Ping Maya?']}
         onFollowup={q => setSel({ kind: 'followup', q })}
@@ -717,7 +719,7 @@ export function SamDrillBoard({ presetStrip = false }: { presetStrip?: boolean }
   const legalDays = acme.days
 
   return (
-    <div className="bg-canvas h-full min-h-0 flex flex-col overflow-hidden">
+    <div className="bg-canvas h-full min-h-0 flex flex-col overflow-hidden relative">
       <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden overscroll-y-contain scroll-smooth">
         <div className="px-5 pt-8 pb-4 border-b border-ink-100 bg-gradient-to-r from-signal-soft/35 to-canvas">
           <div className="text-2xs font-mono text-signal-ink mb-1">
@@ -820,8 +822,7 @@ export function SamDrillBoard({ presetStrip = false }: { presetStrip?: boolean }
             <div>
               <div className="font-mono text-2xs uppercase tracking-wide text-ink-500">Checks Coworker logged</div>
               <p className="text-2xs text-ink-600 mt-1.5 mb-0 leading-relaxed">
-                Each line is a diligence item on this deal. Tap it—the story opens in the Coworker dock below (scroll if you don&apos;t
-                see it).
+                Each line is a diligence item on this deal. Tap it — Coworker opens a read sheet (tap Open read if you dismissed it).
               </p>
             </div>
             <ul className="m-0 p-0 list-none space-y-1.5">
@@ -871,6 +872,7 @@ export function SamDrillBoard({ presetStrip = false }: { presetStrip?: boolean }
       </div>
       <AgentDock
         stack
+        stackPresentation="sheet"
         insight={insight}
         followups={['Escalate?', 'Loop Patel?']}
         onFollowup={q => setSel({ kind: 'followup', q })}
@@ -927,7 +929,7 @@ export function SamActBoard({ presetStrip = false }: { presetStrip?: boolean }) 
   const a = SAM_MOBILE.act
 
   return (
-    <div className="bg-canvas h-full min-h-0 flex flex-col overflow-hidden">
+    <div className="bg-canvas h-full min-h-0 flex flex-col overflow-hidden relative">
       <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden overscroll-y-contain scroll-smooth px-4 py-6 space-y-4">
         {presetStrip ? (
           <JumpStateStrip
@@ -972,6 +974,7 @@ export function SamActBoard({ presetStrip = false }: { presetStrip?: boolean }) 
       </div>
       <AgentDock
         stack
+        stackPresentation="sheet"
         insight={insight}
         followups={['Undo send?', 'Notify AE?']}
         onFollowup={q => setSel({ kind: 'followup', q })}
