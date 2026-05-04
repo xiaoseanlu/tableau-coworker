@@ -40,21 +40,20 @@ export default function FlowChrome({ flowNumber, title, thesis, steps, persona }
   return (
     <div className="min-h-screen flex flex-col bg-canvas text-ink-900">
       <header className="sticky top-0 z-20 border-b border-ink-200/80 bg-canvas-raised/95 backdrop-blur-md shadow-[0_1px_0_rgba(14,15,18,0.04)]">
-        {/* Match site shell (.ds-shell-inner): same max width + px as nav/pages so edges don’t read flush */}
-        <div className="ds-shell-inner py-4 sm:py-5">
-          {/* Title + close (close top-right) */}
-          <div className="flex items-start gap-4 min-w-0 pb-4 sm:pb-4 border-b border-ink-200/60">
+        <div className="flow-chrome-inner py-2.5 sm:py-3 flex flex-col gap-2">
+          {/* Title + close — single compact row */}
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
             <div className="min-w-0 flex-1">
               <p className="text-2xs font-mono text-ink-400 uppercase tracking-wide m-0 leading-none mb-0.5">
                 Flow {flowNumber}
               </p>
-              <h1 className="text-sm sm:text-base font-semibold text-ink-900 m-0 leading-snug line-clamp-2 sm:truncate sm:line-clamp-none">
+              <h1 className="text-sm sm:text-[0.9375rem] font-semibold text-ink-900 m-0 leading-tight line-clamp-2 md:line-clamp-1">
                 {title}
               </h1>
             </div>
             <Link
               to="/flows"
-              className="shrink-0 inline-flex items-center justify-center gap-1.5 rounded-lg h-9 px-3.5 sm:px-4 text-sm font-medium text-ink-600 hover:text-ink-900 hover:bg-ink-100/90 border border-ink-200/80"
+              className="shrink-0 inline-flex items-center justify-center gap-1 rounded-md h-8 px-2.5 sm:px-3 text-xs sm:text-sm font-medium text-ink-600 hover:text-ink-900 hover:bg-ink-100/90 border border-ink-200/80"
               aria-label="Close and return to all flows"
             >
               <span className="hidden sm:inline">Close</span>
@@ -62,20 +61,20 @@ export default function FlowChrome({ flowNumber, title, thesis, steps, persona }
             </Link>
           </div>
 
-          {/* One nav row: previous · step · next */}
-          <div className="flex items-stretch sm:items-center gap-3 pt-4">
+          {/* Back | step (caption under) | Next */}
+          <div className="flex items-stretch sm:items-center gap-2">
             <button
               type="button"
               onClick={() => setI(v => Math.max(0, v - 1))}
               disabled={i === 0}
-              className="shrink-0 inline-flex items-center justify-center rounded-lg border border-ink-200/90 bg-canvas-raised w-11 h-11 sm:w-auto sm:h-11 sm:px-3.5 text-sm text-ink-700 hover:bg-ink-50 disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-canvas-raised"
+              className="shrink-0 inline-flex items-center justify-center rounded-lg border border-ink-200/90 bg-canvas-raised w-10 h-10 sm:w-auto sm:px-3 text-sm text-ink-700 hover:bg-ink-50 disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-canvas-raised"
               aria-label="Previous step"
             >
               <ChevronLeft size={18} aria-hidden="true" />
               <span className="hidden md:inline ml-1">Back</span>
             </button>
 
-            <div className="flex-1 min-w-0 flex flex-col justify-center">
+            <div className="flex-1 min-w-0 flex flex-col gap-0.5 justify-center">
               <label htmlFor="flow-step-select" className="sr-only">
                 Choose step ({i + 1} of {total})
               </label>
@@ -84,7 +83,7 @@ export default function FlowChrome({ flowNumber, title, thesis, steps, persona }
                 value={i}
                 title={thesis}
                 onChange={e => setI(Number(e.target.value))}
-                className="w-full min-h-11 rounded-lg border border-ink-200 bg-canvas-raised py-2.5 px-3 sm:px-3.5 text-sm text-ink-900 shadow-edge"
+                className="flow-step-select w-full min-h-10 rounded-lg border border-ink-200 bg-canvas-raised py-2 pl-3 text-sm text-ink-900 shadow-edge"
               >
                 {steps.map((s, idx) => (
                   <option key={idx} value={idx}>
@@ -92,13 +91,18 @@ export default function FlowChrome({ flowNumber, title, thesis, steps, persona }
                   </option>
                 ))}
               </select>
+              {step.surface ? (
+                <p className="text-2xs text-ink-500 m-0 leading-snug px-0.5 line-clamp-2">
+                  <span className="font-medium text-ink-600">This step:</span> {step.surface}
+                </p>
+              ) : null}
             </div>
 
             <button
               type="button"
               onClick={() => setI(v => Math.min(total - 1, v + 1))}
               disabled={i === total - 1}
-              className="shrink-0 inline-flex items-center justify-center rounded-lg border border-accent/30 bg-accent text-white w-11 h-11 sm:h-11 sm:w-auto sm:px-3.5 text-sm font-medium hover:bg-accent-ink disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-accent"
+              className="shrink-0 inline-flex items-center justify-center rounded-lg border border-accent/30 bg-accent text-white w-10 h-10 sm:w-auto sm:px-3 text-sm font-medium hover:bg-accent-ink disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-accent"
               aria-label="Next step"
             >
               <span className="hidden md:inline mr-1">Next</span>
@@ -106,38 +110,29 @@ export default function FlowChrome({ flowNumber, title, thesis, steps, persona }
             </button>
           </div>
 
-          {step.surface || persona ? (
-            <div className="mt-5 pt-4 border-t border-ink-200/60 space-y-3">
-              {step.surface ? (
-                <p className="text-2xs text-ink-500 m-0 leading-relaxed">
-                  <span className="font-medium text-ink-600">This step:</span> {step.surface}
-                </p>
-              ) : null}
-              {persona ? (
-                <details className="rounded-lg border border-ink-200/70 bg-canvas-sunken/20 px-3 sm:px-4">
-                  <summary className="cursor-pointer list-none py-3 text-xs text-ink-600 flex items-center justify-between gap-3 [&::-webkit-details-marker]:hidden">
-                    <span className="shrink-0">Who you&apos;re following</span>
-                    <span className="font-semibold text-ink-900 text-right min-w-0">
-                      {persona.name}
-                      <span className="font-normal text-ink-500 hidden sm:inline"> · {persona.title}</span>
-                    </span>
-                  </summary>
-                  <div className="pb-3.5 pt-0 text-xs text-ink-600 leading-relaxed border-t border-ink-100/70">
-                    <p className="mt-3 m-0">{persona.job}</p>
-                    {persona.pillars.length > 0 ? (
-                      <p className="mt-2 mb-0 text-ink-500">{persona.pillars.join(' · ')}</p>
-                    ) : null}
-                  </div>
-                </details>
-              ) : null}
-            </div>
+          {persona ? (
+            <details className="rounded-md border border-ink-200/70 bg-canvas-sunken/20 px-2 sm:px-3">
+              <summary className="cursor-pointer list-none py-2 text-2xs sm:text-xs text-ink-600 flex items-center justify-between gap-2 [&::-webkit-details-marker]:hidden">
+                <span className="shrink-0">Who you&apos;re following</span>
+                <span className="font-semibold text-ink-900 text-right min-w-0">
+                  {persona.name}
+                  <span className="font-normal text-ink-500 hidden sm:inline"> · {persona.title}</span>
+                </span>
+              </summary>
+              <div className="pb-2.5 pt-0 text-2xs sm:text-xs text-ink-600 leading-relaxed border-t border-ink-100/70">
+                <p className="mt-2 m-0">{persona.job}</p>
+                {persona.pillars.length > 0 ? (
+                  <p className="mt-1.5 mb-0 text-ink-500">{persona.pillars.join(' · ')}</p>
+                ) : null}
+              </div>
+            </details>
           ) : null}
         </div>
       </header>
 
       <div className="flex-1 min-h-0">
         {step.immersive ? (
-          <div className="max-w-[min(100vw,1480px)] mx-auto px-6 sm:px-10 py-5 sm:py-6">
+          <div className="flow-chrome-inner py-4 sm:py-5">
             {step.body}
             <details className="mt-8 rounded-xl border border-ink-200/90 bg-canvas-raised/90 p-4 sm:p-5 shadow-lift-sm">
               <summary className="text-sm font-medium text-ink-700 cursor-pointer select-none">
@@ -147,9 +142,9 @@ export default function FlowChrome({ flowNumber, title, thesis, steps, persona }
             </details>
           </div>
         ) : (
-          <div className="ds-shell-inner py-6 sm:py-8 grid lg:grid-cols-[1fr_280px] gap-6 lg:gap-8">
+          <div className="flow-chrome-inner py-5 sm:py-7 grid lg:grid-cols-[1fr_280px] gap-6 lg:gap-8">
             <div className="min-w-0">{step.body}</div>
-            <aside className="space-y-3 lg:sticky lg:top-[var(--flow-header-h,12rem)] lg:self-start">
+            <aside className="space-y-3 lg:sticky lg:top-[7.5rem] lg:self-start">
               <div className="text-2xs uppercase tracking-wider text-ink-500">Why this step</div>
               {step.notes}
             </aside>
