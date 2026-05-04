@@ -14,6 +14,14 @@ export default function FlowsIndex() {
           captures for the &quot;before&quot; and designed UI — including <strong className="text-ink-800">SVG charts you can hover</strong> (Maya),
           portfolio composition (Jordan), and spark trends (Sam) — for the proposed surface. States are scripted, not live warehouse queries.
         </p>
+        <p className="mt-6 text-sm max-w-3xl">
+          <Link to="/design-system" className="text-accent font-semibold hover:underline underline-offset-2">
+            Design system →
+          </Link>{' '}
+          <span className="text-ink-600">
+            Tokens, viz roles, capture-to-component map, and interaction matrices — same React modules the flows import.
+          </span>
+        </p>
         <p className="mt-6 text-sm text-ink-700 max-w-3xl leading-relaxed border-l-2 border-accent/35 pl-4">
           <strong className="text-ink-900">Depth strategy:</strong> sharpen the flagship beats by merging redundant steps (hand-off as one
           surface with split views; Jordan &quot;Out&quot; as notify + Finance read) instead of padding every flow with extra scenes — Sam
@@ -64,8 +72,10 @@ export default function FlowsIndex() {
           local state, and a scrubber for replay.
         </p>
         <p className="text-sm text-ink-600 mt-4 m-0">
-          Evidence trail (how captures were collected):{' '}
-          <Link to="/authoring" className="text-accent-ink font-semibold hover:underline">Authoring</Link>.
+          Evidence trail (trial capture walkthrough):{' '}
+          <Link to="/authoring" className="text-accent-ink font-semibold hover:underline">
+            Authoring concept
+          </Link>
         </p>
       </section>
     </article>

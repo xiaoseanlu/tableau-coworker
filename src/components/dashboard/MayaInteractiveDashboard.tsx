@@ -1,4 +1,5 @@
 import { useMemo, useState, useId } from 'react'
+import { Link } from 'react-router-dom'
 import {
   Area,
   AreaChart,
@@ -166,10 +167,13 @@ export default function MayaInteractiveDashboard({
   presetStrip = false,
   initialLayout = 'classic',
   compactHero = false,
+  /** Home hero: single column, no scaling, compact Coworker strip — avoids half-width dock looking like a broken modal */
+  homeEmbed = false,
 }: {
   presetStrip?: boolean
   initialLayout?: MayaDashboardLayout
   compactHero?: boolean
+  homeEmbed?: boolean
 }) {
   const [layoutMode, setLayoutMode] = useState<MayaDashboardLayout>(initialLayout)
   const [sel, setSel] = useState<Selection>(null)
@@ -296,17 +300,23 @@ export default function MayaInteractiveDashboard({
         </div>
       )}
 
-      <div className="flex flex-col xl:flex-row xl:items-start">
+      <div className={homeEmbed ? 'flex flex-col' : 'flex flex-col xl:flex-row xl:items-start'}>
         {/* Main canvas */}
         <div
-          className={`flex-1 min-w-0 border-b xl:border-b-0 xl:border-r border-ink-100 ${
+          className={`flex-1 min-w-0 ${
+            homeEmbed ? 'border-b border-ink-100' : 'border-b xl:border-b-0 xl:border-r border-ink-100'
+          } ${
             layoutMode === 'narrativeLeads'
               ? `${compactHero ? 'p-3 md:p-4' : 'p-4 md:p-5'} space-y-4`
               : `${compactHero ? 'p-3 md:p-4' : 'p-4 md:p-6'} space-y-5`
           }`}
         >
           <div
-            className={`space-y-5 ${layoutMode === 'narrativeLeads' ? `${compactHero ? 'origin-top scale-[0.82] xl:scale-[0.88]' : 'origin-top scale-[0.88] xl:scale-90'} max-xl:scale-[0.82]` : ''}`}
+            className={`space-y-5 ${
+              homeEmbed || layoutMode !== 'narrativeLeads'
+                ? ''
+                : `${compactHero ? 'origin-top scale-[0.82] xl:scale-[0.88]' : 'origin-top scale-[0.88] xl:scale-90'} max-xl:scale-[0.82]`
+            }`}
           >
           {/* KPI strip — clickable */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -566,15 +576,41 @@ export default function MayaInteractiveDashboard({
           </div>
         </div>
 
-        <AgentDock
-          insight={agent}
-          followups={['Why did West drop?', 'Which deals moved?', 'Compare regions']}
-          onFollowup={q => setSel({ kind: 'followup', q })}
-          onClear={() => setSel(null)}
-          selectionActive={!!sel}
-          productTagline={dockTag}
-          dataSurface={MAYA_AGENT_DATA_SURFACE}
-        />
+        {homeEmbed ? (
+          <div className="shrink-0 border-t border-ink-200/90 bg-canvas-sunken/30 px-4 py-3">
+            <div className="text-2xs font-mono uppercase tracking-wide text-ink-500 mb-1">Tableau Coworker on this canvas</div>
+            <p className="text-xs text-ink-800 m-0 leading-relaxed">
+              {sel ? (
+                <>
+                  <span className="font-semibold text-ink-900">{agent.title}.</span>{' '}
+                  <span className="text-ink-600 line-clamp-3">{agent.body}</span>
+                </>
+              ) : (
+                <>
+                  Tap a KPI, week, bar, or row — the same read model as Pulse + Agent, but{' '}
+                  <strong className="font-semibold text-ink-900">default on the surface</strong>, not buried in a side panel.
+                </>
+              )}
+            </p>
+            <Link
+              to="/flows/maya"
+              className="inline-flex items-center gap-1 mt-2.5 text-xs font-medium text-accent hover:underline underline-offset-2"
+            >
+              Full Maya walkthrough with dock + handoff
+              <span aria-hidden> →</span>
+            </Link>
+          </div>
+        ) : (
+          <AgentDock
+            insight={agent}
+            followups={['Why did West drop?', 'Which deals moved?', 'Compare regions']}
+            onFollowup={q => setSel({ kind: 'followup', q })}
+            onClear={() => setSel(null)}
+            selectionActive={!!sel}
+            productTagline={dockTag}
+            dataSurface={MAYA_AGENT_DATA_SURFACE}
+          />
+        )}
       </div>
     </div>
   )

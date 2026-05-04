@@ -1,4 +1,4 @@
-import { Fragment, ReactNode, useState } from 'react'
+import { ReactNode, useState } from 'react'
 import { Link } from 'react-router-dom'
 import type { PersonaFlowContext } from '../data/personaFlowMeta'
 import { ChevronLeft, ChevronRight, X } from './Icons'
@@ -7,12 +7,10 @@ export type { PersonaFlowContext }
 
 export interface FlowStep {
   label: string
-  surface?: string  // e.g., "Web · Manager view" or "Slack · DM"
-  /** Design narrative grouping — inserts a labeled divider in the stepper when it changes from the prior step */
+  surface?: string
   designStory?: string
   body: ReactNode
-  notes: ReactNode  // annotations: what we did and why
-  /** Full-width body (dense dashboards); design notes move into a collapsible below */
+  notes: ReactNode
   immersive?: boolean
 }
 
@@ -21,8 +19,13 @@ interface Props {
   title: string
   thesis: string
   steps: FlowStep[]
-  /** Role strip under the stepper — ties each beat to responsibilities + pillars */
   persona?: PersonaFlowContext
+}
+
+function stepOptionLabel(s: FlowStep, idx: number, total: number): string {
+  const n = String(idx + 1).padStart(2, '0')
+  const surface = s.surface ? `${s.surface} · ` : ''
+  return `${n}/${String(total).padStart(2, '0')} · ${surface}${s.label}`
 }
 
 export default function FlowChrome({ flowNumber, title, thesis, steps, persona }: Props) {
@@ -32,136 +35,138 @@ export default function FlowChrome({ flowNumber, title, thesis, steps, persona }
 
   return (
     <div className="min-h-screen flex flex-col bg-canvas text-ink-900">
-      {/* Top bar */}
-      <header className="sticky top-0 z-20 bg-canvas-raised/90 backdrop-blur-xl backdrop-saturate-150 border-b border-ink-200/75 shadow-edge">
-        <div className="max-w-7xl mx-auto px-6 h-14 flex items-center gap-6">
-          <Link
-            to="/flows"
-            className="flex items-center gap-1.5 text-ink-500 hover:text-ink-900 text-sm"
-            aria-label="Close flow and return to flows index"
-          >
-            <X size={14} aria-hidden="true" /> Close flow
-          </Link>
-          <div className="h-5 w-px bg-ink-200" />
-          <div className="flex items-baseline gap-3 min-w-0">
-            <span className="font-mono text-2xs text-ink-400">Flow {flowNumber}</span>
-            <h1 className="text-sm font-semibold text-ink-900 truncate">{title}</h1>
-          </div>
-          <div className="h-5 w-px bg-ink-200 hidden md:block" />
-          <p className="hidden md:block text-xs text-ink-500 italic truncate">{thesis}</p>
-          <div className="ml-auto flex items-center gap-2">
-            <span className="text-xs text-ink-500 font-mono">{i + 1} / {total}</span>
-            {step.surface && <span className="hidden sm:inline pill bg-ink-100 text-ink-600">{step.surface}</span>}
-          </div>
-        </div>
-        {/* Step pills */}
-        <div className="border-t border-ink-100/90 bg-canvas/88 backdrop-blur-md" role="navigation" aria-label="Flow steps">
-          <div className="max-w-7xl mx-auto px-6 py-2 flex items-center gap-1 overflow-x-auto flex-nowrap">
-            {steps.map((s, idx) => (
-              <Fragment key={idx}>
-                {s.designStory != null &&
-                (idx === 0 || steps[idx - 1].designStory !== s.designStory) ? (
-                  <span
-                    className="shrink-0 text-2xs font-mono uppercase tracking-wide text-ink-400 px-2 py-1 mr-1 border-l border-ink-200 first:border-l-0 first:pl-0"
-                    aria-hidden
-                  >
-                    {s.designStory}
-                  </span>
-                ) : null}
-                <button
-                  type="button"
-                  onClick={() => setI(idx)}
-                  aria-current={idx === i ? 'step' : undefined}
-                  aria-label={`${s.designStory ? `${s.designStory} · ` : ''}${s.label}, step ${idx + 1} of ${total}`}
-                  className={`shrink-0 px-3 py-1.5 rounded-lg text-xs motion-safe:transition-all motion-safe:duration-200 ${
-                    idx === i
-                      ? 'bg-accent text-white font-medium shadow-lift-sm ring-1 ring-white/20'
-                      : idx < i
-                        ? 'text-ink-700 hover:bg-canvas-raised hover:shadow-edge'
-                        : 'text-ink-400 hover:bg-canvas-raised/90 hover:text-ink-700 hover:shadow-edge'
-                  }`}
-                >
-                  <span className="font-mono mr-1.5 opacity-60">{String(idx + 1).padStart(2, '0')}</span>
-                  {s.label}
-                </button>
-              </Fragment>
-            ))}
-          </div>
-        </div>
-        {persona ? (
-          <div className="border-t border-ink-100/90 bg-gradient-to-r from-canvas-sunken/90 via-canvas to-canvas-sunken/70">
-            <div className="max-w-7xl mx-auto px-6 py-2.5 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-3 sm:gap-y-1 text-xs">
-              <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5 min-w-0">
-                <span className="font-semibold text-ink-900 shrink-0">{persona.name}</span>
-                <span className="text-ink-500">{persona.title}</span>
-              </div>
-              <span className="hidden sm:inline text-ink-300 select-none" aria-hidden>
-                ·
-              </span>
-              <p className="text-ink-600 leading-relaxed m-0 sm:flex-1 sm:min-w-[12rem]">{persona.job}</p>
-              <div className="flex flex-wrap gap-1.5 sm:justify-end shrink-0">
-                {persona.pillars.map(p => (
-                  <span key={p} className="pill bg-ink-100 text-ink-600 text-2xs font-mono py-0.5 px-2">
-                    {p}
-                  </span>
-                ))}
-              </div>
+      <header className="sticky top-0 z-20 border-b border-ink-200/80 bg-canvas-raised/95 backdrop-blur-md">
+        <div className="max-w-7xl mx-auto px-3 sm:px-5">
+          <div className="h-12 sm:h-14 flex items-center gap-2 sm:gap-4 min-w-0">
+            <Link
+              to="/flows"
+              className="shrink-0 inline-flex items-center justify-center rounded-lg h-9 w-9 sm:w-auto sm:px-2.5 text-ink-500 hover:text-ink-900 hover:bg-ink-100/80 text-sm"
+              aria-label="Back to all flows"
+            >
+              <X size={16} aria-hidden="true" />
+              <span className="hidden sm:inline ml-1.5">Back</span>
+            </Link>
+            <div className="min-w-0 flex-1">
+              <p className="text-2xs font-mono text-ink-400 uppercase tracking-wide m-0 leading-none mb-0.5">
+                Flow {flowNumber}
+              </p>
+              <h1 className="text-sm sm:text-base font-semibold text-ink-900 truncate m-0 leading-tight">{title}</h1>
             </div>
           </div>
-        ) : null}
+
+          <div className="pb-2 sm:pb-3 space-y-2">
+            <label className="block lg:hidden">
+              <span className="sr-only">Jump to step</span>
+              <select
+                value={i}
+                onChange={e => setI(Number(e.target.value))}
+                className="w-full rounded-lg border border-ink-200 bg-canvas-raised py-2.5 px-3 text-sm text-ink-900 shadow-edge"
+              >
+                {steps.map((s, idx) => (
+                  <option key={idx} value={idx}>
+                    {stepOptionLabel(s, idx, total)}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            <nav className="hidden lg:flex flex-wrap gap-1" aria-label="Steps">
+              {steps.map((s, idx) => {
+                const active = idx === i
+                return (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => setI(idx)}
+                    aria-current={active ? 'step' : undefined}
+                    title={s.surface ? `${s.surface} — ${thesis}` : thesis}
+                    className={`max-w-[11rem] truncate rounded-md px-2 py-1 text-2xs sm:text-xs text-left transition-colors ${
+                      active
+                        ? 'bg-accent text-white font-medium'
+                        : 'text-ink-600 hover:bg-ink-100/90 border border-transparent hover:border-ink-200/80'
+                    }`}
+                  >
+                    <span className="font-mono opacity-70">{String(idx + 1).padStart(2, '0')}</span>{' '}
+                    {s.designStory && (idx === 0 || steps[idx - 1]!.designStory !== s.designStory) ? (
+                      <span className="text-ink-400 font-normal hidden xl:inline">{s.designStory} · </span>
+                    ) : null}
+                    {s.label}
+                  </button>
+                )
+              })}
+            </nav>
+
+            {step.surface ? (
+              <p className="text-2xs text-ink-500 m-0 lg:mt-1">
+                <span className="font-medium text-ink-600">This step:</span> {step.surface}
+              </p>
+            ) : null}
+          </div>
+
+          {persona ? (
+            <details className="group border-t border-ink-100/90 bg-canvas-sunken/25 -mx-3 sm:-mx-5 px-3 sm:px-5">
+              <summary className="cursor-pointer list-none py-2.5 text-xs text-ink-600 flex items-center justify-between gap-2 [&::-webkit-details-marker]:hidden">
+                <span>Who you&apos;re following</span>
+                <span className="font-semibold text-ink-900 shrink-0">
+                  {persona.name}
+                  <span className="font-normal text-ink-500 hidden sm:inline"> · {persona.title}</span>
+                </span>
+              </summary>
+              <div className="pb-3 pt-0 text-xs text-ink-600 leading-relaxed border-t border-ink-100/70">
+                <p className="mt-2 m-0">{persona.job}</p>
+                {persona.pillars.length > 0 ? (
+                  <p className="mt-2 mb-0 text-ink-500">{persona.pillars.join(' · ')}</p>
+                ) : null}
+              </div>
+            </details>
+          ) : null}
+        </div>
       </header>
 
-      {/* Body */}
       <div className="flex-1">
         {step.immersive ? (
-          <div className="max-w-[min(100vw,1480px)] mx-auto px-4 sm:px-6 py-6">
+          <div className="max-w-[min(100vw,1480px)] mx-auto px-3 sm:px-5 py-5 sm:py-6">
             {step.body}
-            <details className="mt-10 rounded-xl border border-ink-200/90 bg-canvas-raised/85 backdrop-blur-sm p-5 md:p-6 shadow-lift-sm ring-1 ring-ink-900/[0.025] open:ring-accent/15 transition-[box-shadow,border-color] duration-200">
+            <details className="mt-8 rounded-xl border border-ink-200/90 bg-canvas-raised/90 p-4 sm:p-5 shadow-lift-sm">
               <summary className="text-sm font-medium text-ink-700 cursor-pointer select-none">
-                Design notes
+                Why we built this step
               </summary>
-              <div className="mt-4 space-y-4 border-t border-ink-100 pt-4">{step.notes}</div>
+              <div className="mt-4 space-y-3 border-t border-ink-100 pt-4 text-sm text-ink-600">{step.notes}</div>
             </details>
           </div>
         ) : (
-          <div className="max-w-7xl mx-auto px-6 py-8 grid lg:grid-cols-[1fr_320px] gap-8">
+          <div className="max-w-7xl mx-auto px-3 sm:px-5 py-6 sm:py-8 grid lg:grid-cols-[1fr_280px] gap-6 lg:gap-8">
             <div className="min-w-0">{step.body}</div>
-            <aside className="space-y-4">
-              <div className="text-2xs uppercase tracking-wider text-ink-500 mb-1">Design notes</div>
+            <aside className="space-y-3 lg:sticky lg:top-24 lg:self-start">
+              <div className="text-2xs uppercase tracking-wider text-ink-500">Why this step</div>
               {step.notes}
             </aside>
           </div>
         )}
       </div>
 
-      {/* Footer nav */}
-      <footer className="bg-canvas-raised/95 backdrop-blur-md border-t border-ink-200/80 shadow-[0_-1px_0_rgba(14,15,18,0.05)] sticky bottom-0">
-        <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+      <footer className="sticky bottom-0 border-t border-ink-200/80 bg-canvas-raised/95 backdrop-blur-md">
+        <div className="max-w-7xl mx-auto px-3 sm:px-5 py-3 flex items-center justify-between gap-3">
           <button
             type="button"
             onClick={() => setI(Math.max(0, i - 1))}
             disabled={i === 0}
-            className="btn-ghost disabled:opacity-30 disabled:cursor-not-allowed"
+            className="btn-ghost text-sm disabled:opacity-30 disabled:cursor-not-allowed inline-flex items-center gap-1"
           >
-            <ChevronLeft size={14} aria-hidden="true" /> Previous
+            <ChevronLeft size={14} aria-hidden="true" />
+            <span className="hidden sm:inline">Previous</span>
           </button>
-          <div className="flex items-center gap-1" aria-hidden="true">
-            {steps.map((_, idx) => (
-              <span
-                key={idx}
-                className={`h-1 rounded-full transition-all ${
-                  idx === i ? 'w-8 bg-accent' : idx < i ? 'w-1.5 bg-ink-400' : 'w-1.5 bg-ink-200'
-                }`}
-              />
-            ))}
-          </div>
+          <span className="text-2xs font-mono text-ink-500 tabular-nums shrink-0" aria-live="polite">
+            {i + 1} / {total}
+          </span>
           <button
             type="button"
             onClick={() => setI(Math.min(total - 1, i + 1))}
             disabled={i === total - 1}
-            className="btn-primary disabled:opacity-30 disabled:cursor-not-allowed"
+            className="btn-primary text-sm disabled:opacity-30 disabled:cursor-not-allowed inline-flex items-center gap-1"
           >
-            Next <ChevronRight size={14} aria-hidden="true" />
+            <span className="hidden sm:inline">Next</span>
+            <ChevronRight size={14} aria-hidden="true" />
           </button>
         </div>
       </footer>
@@ -169,7 +174,6 @@ export default function FlowChrome({ flowNumber, title, thesis, steps, persona }
   )
 }
 
-/** Annotation card used inside the FlowStep.notes prop. */
 export function Note({ title, children }: { title: string; children: ReactNode }) {
   return (
     <div className="rounded-r-lg border-l-[3px] border-accent bg-canvas-raised/50 pl-4 py-3 pr-3 text-sm text-ink-700 ring-1 ring-ink-900/[0.02]">
@@ -179,12 +183,15 @@ export function Note({ title, children }: { title: string; children: ReactNode }
   )
 }
 
-/** Demo surface — the "screen" we're showing, with a styled chrome around it. */
-export function Surface({ chrome, children, className = '', slackTitle }: {
+export function Surface({
+  chrome,
+  children,
+  className = '',
+  slackTitle,
+}: {
   chrome?: 'web' | 'slack' | 'mobile' | 'plain'
   children: ReactNode
   className?: string
-  /** When chrome is slack — title in the purple title bar */
   slackTitle?: string
 }) {
   if (chrome === 'mobile') {
@@ -204,7 +211,6 @@ export function Surface({ chrome, children, className = '', slackTitle }: {
   if (chrome === 'slack') {
     return (
       <div className={`bg-canvas-raised rounded-xl border border-ink-200/90 overflow-hidden shadow-lift-sm ring-1 ring-ink-900/[0.04] ${className}`}>
-        {/* Slack chrome */}
         <div className="bg-[#3F0E40] text-white px-4 py-2.5 flex items-center gap-3 text-xs">
           <div className="flex gap-1.5">
             <span className="w-2.5 h-2.5 rounded-full bg-[#FF5F57]" />
@@ -217,7 +223,6 @@ export function Surface({ chrome, children, className = '', slackTitle }: {
       </div>
     )
   }
-  // 'web' default
   return (
     <div className={`bg-canvas-raised rounded-xl border border-ink-200/90 overflow-hidden shadow-lift-sm ring-1 ring-ink-900/[0.04] ${className}`}>
       {chrome !== 'plain' && (

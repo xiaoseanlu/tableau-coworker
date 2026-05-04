@@ -1,8 +1,6 @@
 import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Sparkle } from '../components/Icons'
-import { MiniStackedHealth, Sparkline } from '../components/viz/DataViz'
-import { CHART } from '../components/dashboard/chartTokens'
 import MayaInteractiveDashboard from '../components/dashboard/MayaInteractiveDashboard'
 
 const CAP = `${import.meta.env.BASE_URL}captures/`
@@ -37,16 +35,20 @@ export default function Home() {
               <Link to="/flows/maya" className="btn-secondary">
                 Open Maya flow <ArrowRight size={14} />
               </Link>
+              <Link to="/design-system" className="btn-secondary">
+                Design system <ArrowRight size={14} />
+              </Link>
             </div>
           </div>
 
           <div className="border-t border-ink-200 pt-10 md:pt-12">
             <div className="h-eyebrow mb-3">Thesis, rendered</div>
-            <h2 className="h-section max-w-3xl mb-2">Same Executive Overview numbers — different first paint</h2>
+            <h2 className="h-section max-w-3xl mb-2">Same Executive Overview numbers — a different default read</h2>
             <p className="text-ink-600 max-w-3xl mb-8 leading-relaxed text-sm md:text-base">
-              Left: wall of widgets from the trial (
-              <span className="font-mono text-2xs">key/04-exec-wall-of-widgets.png</span>). Right: narrative-first canvas (hover charts;
-              full step-by-step in the Maya flow).
+              Left: capture from the trial (
+              <span className="font-mono text-2xs">key/04-exec-wall-of-widgets.png</span>) — density without a single articulated read.
+              Right: the thesis layout for Maya — narrative leads; charts are evidence; Coworker copy stays a slim strip here so you
+              can see the canvas (full dock + handoffs in the flow).
             </p>
             <div className="grid lg:grid-cols-2 gap-6 items-start">
               <div>
@@ -60,7 +62,7 @@ export default function Home() {
               <div className="min-w-0">
                 <div className="text-2xs font-mono uppercase tracking-wide text-ink-500 mb-2">Coworker · thesis layout</div>
                 <div className="max-h-[min(70vh,560px)] overflow-y-auto overflow-x-hidden rounded-xl border border-ink-200/90 shadow-lift ring-1 ring-ink-900/[0.045] bg-canvas">
-                  <MayaInteractiveDashboard initialLayout="narrativeLeads" compactHero />
+                  <MayaInteractiveDashboard initialLayout="narrativeLeads" compactHero homeEmbed />
                 </div>
               </div>
             </div>
@@ -70,6 +72,9 @@ export default function Home() {
               </Link>
               <Link to="/flows" className="btn-secondary text-sm">
                 All three flows
+              </Link>
+              <Link to="/design-system" className="btn-secondary text-sm">
+                Design system — tokens &amp; demos
               </Link>
             </div>
           </div>
@@ -126,7 +131,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Depth — same priority as footer Process & depth */}
+      {/* Depth — footer “Keep reading” links */}
       <section className="border-t border-ink-100 bg-canvas">
         <div className="ds-page py-12 md:py-14">
           <h2 className="text-lg font-semibold text-ink-900 max-w-3xl mb-3">
@@ -155,7 +160,8 @@ export default function Home() {
       <section className="ds-page py-20">
         <div className="h-eyebrow mb-3">Three flows, brought to life</div>
         <h2 className="h-section max-w-3xl mb-10">
-          Each flow is a complete, clickable demonstration: real product capture → redesigned surface with live charts.
+          Each flow is one continuous Acme SaaS story: trial capture first, then the Coworker surface for that persona — no decorative
+          charts on these cards; proof lives inside the flows.
         </h2>
 
         <div className="grid md:grid-cols-3 gap-6">
@@ -166,10 +172,9 @@ export default function Home() {
             blurb="Five beats: capture → narrative-first canvas + evidence drill → share sheet → Slack + Jordan inbox → Calendar. Demo data is one consistent Acme SaaS Q2 brief (v18)."
             tag="Maya Chen · CRO"
             preview={
-              <Sparkline
-                values={[2.95, 2.92, 2.9, 2.88, 2.86, 2.84, 2.82, 2.6]}
-                className="text-accent"
-                height={36}
+              <FlowTeaser
+                beat="Story arc"
+                detail="West Q2 brief in one composed surface — same numbers as the wall; order and narration invert."
               />
             }
           />
@@ -177,22 +182,25 @@ export default function Home() {
             to="/flows/jordan"
             number="Flow 02"
             title="Jordan — the curator queue"
-            blurb="VP Sales Ops triages sprawl: portfolio mix visualization, stale workbooks, duplicates, data-quality flags from observed usage."
+            blurb="VP Sales Ops triages sprawl: portfolio mix, stale workbooks, duplicates, and data-quality flags from observed usage."
             tag="Jordan Patel · Sales Ops"
-            preview={<MiniStackedHealth />}
+            preview={
+              <FlowTeaser
+                beat="Story arc"
+                detail="Queue and diagnose loop on Jordan’s Superstore-grade sprawl — merge targets and lineage surface in-flow."
+              />
+            }
           />
           <FlowCard
             to="/flows/sam"
             number="Flow 03"
             title="Sam — mobile, between meetings"
-            blurb="Open on real mobile squish (key/05), then Coworker brief, drill, and legal handoff — same draft object as the desktop flows."
+            blurb="Opens on real mobile squish (key/05), then Coworker brief, drill, Send, and legal inbox — same pre-draft object Maya and Jordan hand off."
             tag="Sam Reyes · West RSD"
             preview={
-              <Sparkline
-                values={[2.95, 2.92, 2.9, 2.88, 2.86, 2.84, 2.82, 2.6]}
-                className="text-danger"
-                stroke={CHART.danger}
-                height={32}
+              <FlowTeaser
+                beat="Story arc"
+                detail="Thumb-width brief → Acme drill → receipt — legal sees the same escalation rails as desktop handoffs."
               />
             }
           />
@@ -210,7 +218,7 @@ export default function Home() {
               </h3>
               <p className="prose-body text-base">
                 Read in order: diagnosis, bet, proof.
-                Design system, authoring deep-dive, and competitive appendix sit under <strong className="font-medium text-ink-800">Process & depth</strong> in the footer.
+                Design system, the authoring concept page, and competitive notes live under <strong className="font-medium text-ink-800">Keep reading</strong> in the footer.
               </p>
             </div>
             <div className="space-y-3">
@@ -222,6 +230,16 @@ export default function Home() {
           </div>
         </div>
       </section>
+    </div>
+  )
+}
+
+/** Flow index cards: prose + left accent — avoids orphan sparklines that implied the wrong metric per persona. */
+function FlowTeaser({ beat, detail }: { beat: string; detail: string }) {
+  return (
+    <div className="rounded-lg border border-ink-200/80 border-l-[3px] border-l-accent/55 bg-canvas-sunken/35 px-3 py-2.5">
+      <div className="text-2xs font-mono uppercase tracking-[0.12em] text-ink-500">{beat}</div>
+      <p className="text-xs text-ink-800 m-0 mt-1 leading-snug">{detail}</p>
     </div>
   )
 }
@@ -257,7 +275,7 @@ function FlowCard({
         <span className="text-2xs font-mono text-ink-400">{number}</span>
         <span className="pill bg-accent-soft text-accent-ink">{tag}</span>
       </div>
-      {preview ? <div className="mb-4 -mx-1">{preview}</div> : null}
+      {preview ? <div className="mb-4">{preview}</div> : null}
       <h3 className="text-lg font-semibold text-ink-900 mb-2 group-hover:text-accent transition-colors">{title}</h3>
       <p className="text-sm text-ink-600 leading-relaxed mb-5">{blurb}</p>
       <div className="text-sm text-accent flex items-center gap-1.5">

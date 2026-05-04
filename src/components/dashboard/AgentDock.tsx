@@ -154,50 +154,56 @@ export default function AgentDock({
           >
             <button
               type="button"
-              className="pointer-events-auto absolute inset-0 bg-ink-900/25 border-0 p-0 cursor-default"
+              className="pointer-events-auto absolute inset-0 border-0 p-0 cursor-default bg-ink-900/50 backdrop-blur-[2px]"
               aria-label="Dismiss Coworker read"
               onClick={() => setSheetOpen(false)}
             />
             <div
               role="dialog"
               aria-modal="true"
-              aria-labelledby="coworker-insight-title"
-              className="pointer-events-auto relative z-10 mx-2 mb-1 max-h-[min(50dvh,340px)] min-h-0 overflow-y-auto overscroll-y-contain rounded-2xl border border-ink-200/90 bg-canvas-raised/98 shadow-lift px-3 pt-3 pb-4 ring-1 ring-ink-900/[0.06]"
+              aria-labelledby="coworker-sheet-product"
+              className="pointer-events-auto relative z-10 mx-2 mb-1 flex max-h-[min(50dvh,340px)] min-h-0 flex-col overflow-hidden rounded-2xl border border-ink-200 bg-canvas-raised shadow-lift ring-1 ring-ink-900/10"
               onClick={e => e.stopPropagation()}
             >
-              <div className="flex items-start justify-between gap-2 pb-2 border-b border-ink-100/90">
-                <div className="flex items-center gap-2 min-w-0">
-                  <div className="w-8 h-8 rounded-lg bg-signal-soft border border-signal/30 grid place-items-center text-signal shrink-0">
-                    <Sparkle size={16} aria-hidden />
+              <div className="shrink-0 border-b border-ink-200 bg-canvas-raised px-3 pt-3 pb-2.5">
+                <div className="flex items-start justify-between gap-2">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <div className="w-8 h-8 rounded-lg bg-signal-soft border border-signal/30 grid place-items-center text-signal shrink-0">
+                      <Sparkle size={16} aria-hidden />
+                    </div>
+                    <div className="min-w-0">
+                      <div id="coworker-sheet-product" className="text-xs font-semibold text-ink-900 truncate">
+                        {productName}
+                      </div>
+                      <div className="text-2xs text-ink-500 font-mono truncate">{productTagline}</div>
+                    </div>
                   </div>
-                  <div className="min-w-0">
-                    <div className="text-xs font-semibold text-ink-900 truncate">{productName}</div>
-                    <div className="text-2xs text-ink-500 font-mono truncate">{productTagline}</div>
-                  </div>
+                  <button
+                    type="button"
+                    className="shrink-0 rounded-lg p-1.5 text-ink-500 hover:bg-ink-100 hover:text-ink-900"
+                    aria-label="Close"
+                    onClick={() => setSheetOpen(false)}
+                  >
+                    <X size={16} aria-hidden />
+                  </button>
                 </div>
-                <button
-                  type="button"
-                  className="shrink-0 rounded-lg p-1.5 text-ink-500 hover:bg-ink-100 hover:text-ink-900"
-                  aria-label="Close"
-                  onClick={() => setSheetOpen(false)}
-                >
-                  <X size={16} aria-hidden />
-                </button>
               </div>
-              {dataSurface ? (
-                <p className="text-[10px] leading-snug text-ink-500 font-mono mt-2 mb-0 border-l border-ink-200 pl-2 break-words [overflow-wrap:anywhere]">
-                  {dataSurface}
-                </p>
-              ) : null}
-              <div className="mt-3">{insightPanel}</div>
-              {followupsBlock}
-              {clearBlock}
+              <div className="min-h-0 flex-1 overflow-y-auto overscroll-y-contain bg-canvas-raised px-3 pb-4 pt-3">
+                {dataSurface ? (
+                  <p className="text-[10px] leading-snug text-ink-500 font-mono mt-0 mb-3 border-l border-ink-200 pl-2 break-words [overflow-wrap:anywhere]">
+                    {dataSurface}
+                  </p>
+                ) : null}
+                <div>{insightPanel}</div>
+                {followupsBlock}
+                {clearBlock}
+              </div>
             </div>
           </div>
         ) : null}
 
         <div
-          className="relative z-[35] flex shrink-0 items-center gap-2 border-t border-ink-200/80 bg-canvas-raised/98 px-3 py-2.5 min-h-[3.25rem]"
+          className="relative z-[35] flex shrink-0 items-center gap-2 border-t border-ink-200/80 bg-canvas-raised px-3 py-2.5 min-h-[3.25rem]"
           style={{ minHeight: COLLAPSED_ANCHOR_H }}
         >
           <div className="w-8 h-8 rounded-lg bg-signal-soft/90 border border-signal/30 grid place-items-center text-signal shrink-0">

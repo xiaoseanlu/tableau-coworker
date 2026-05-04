@@ -149,17 +149,18 @@ export default function DesignSystem() {
         <header className="pt-16 md:pt-20 pb-12 md:pb-16 border-b border-ink-100">
           <div className="grid lg:grid-cols-[1fr,minmax(0,28rem)] gap-10 lg:gap-14 items-start">
             <div>
-              <div className="h-eyebrow mb-4">Design system · prototype</div>
+              <div className="h-eyebrow mb-4">Craft reference · shipped in this prototype</div>
               <h1 className="h-display mb-6 max-w-4xl tracking-tight">
-                Show the system:{' '}
-                <span className="italic text-accent">tokens, viz, AI, layout</span>
+                Design system:{' '}
+                <span className="italic text-accent">tokens, viz, AI hooks, layout</span>
               </h1>
               <p className="text-base md:text-lg leading-relaxed text-ink-600 max-w-xl mb-8">
-                Visual-first reference: interactive demos first, tables second. This page uses the same tokens and components as the rest of the prototype ({' '}
+                Everything below is runnable React in this repo — same Tailwind tokens, chart helpers, and interactive modules the flows
+                use. Demos first; contract in{' '}
                 <Link to="/design-system#contract" className="text-accent font-semibold underline underline-offset-2 decoration-accent/40 hover:decoration-accent">
                   scope
                 </Link>
-                ).
+                .
               </p>
               <nav className="flex flex-wrap gap-3 pt-1" aria-label="On this page">
                 {toc.map(item => (
@@ -541,7 +542,7 @@ export default function DesignSystem() {
           Full-width rail lists every PNG under <span className="font-mono text-2xs">public/captures/</span>. Table below is the flow → yield crosswalk.
           For the authoring sequence only (chronological proof + runway concept), see{' '}
           <Link to="/authoring" className="text-accent-ink font-semibold hover:underline">
-            Authoring
+            Authoring concept
           </Link>
           .
         </p>

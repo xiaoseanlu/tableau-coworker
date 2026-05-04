@@ -7,6 +7,7 @@ const navItems: Array<{ to: string; label: string }> = [
   { to: '/whats-broken', label: "What's broken" },
   { to: '/strategy', label: 'Strategy' },
   { to: '/flows', label: 'Flows' },
+  { to: '/design-system', label: 'Design system' },
   { to: '/summary', label: 'Summary' },
 ]
 
@@ -61,18 +62,18 @@ export default function SiteShell({ children }: Props) {
         <footer className="border-t border-ink-200/80 mt-24 bg-canvas-sunken/25">
           <div className="ds-shell-inner py-8 flex flex-col gap-6">
             <div
-              className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-x-5 gap-y-2 text-2xs text-ink-500 border-b border-ink-100 pb-6"
-              aria-label="Process and depth links"
+              className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-x-4 gap-y-2 text-sm text-ink-600 border-b border-ink-100 pb-6"
+              aria-label="Extra reading — design notes and source"
             >
-              <span className="font-semibold text-ink-700 uppercase tracking-wide">Process & depth</span>
-              <Link to="/design-system" className="hover:text-ink-900">
+              <span className="font-medium text-ink-800 shrink-0">Keep reading</span>
+              <Link to="/design-system" className="hover:text-ink-900 underline-offset-2 hover:underline">
                 Design system
               </Link>
-              <Link to="/authoring" className="hover:text-ink-900">
-                Authoring
+              <Link to="/authoring" className="hover:text-ink-900 underline-offset-2 hover:underline">
+                Authoring concept
               </Link>
-              <Link to="/competitive" className="hover:text-ink-900">
-                Competitive scan
+              <Link to="/competitive" className="hover:text-ink-900 underline-offset-2 hover:underline">
+                Competitive notes
               </Link>
             </div>
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-sm text-ink-500">
