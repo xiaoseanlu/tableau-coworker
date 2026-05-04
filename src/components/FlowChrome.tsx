@@ -61,7 +61,7 @@ export default function FlowChrome({ flowNumber, title, thesis, steps, persona }
             </Link>
           </div>
 
-          {/* Back | step (caption under) | Next */}
+          {/* Back | step | Next */}
           <div className="flex items-stretch sm:items-center gap-2">
             <button
               type="button"
@@ -74,7 +74,7 @@ export default function FlowChrome({ flowNumber, title, thesis, steps, persona }
               <span className="hidden md:inline ml-1">Back</span>
             </button>
 
-            <div className="flex-1 min-w-0 flex flex-col gap-0.5 justify-center">
+            <div className="flex-1 min-w-0 flex flex-col justify-center">
               <label htmlFor="flow-step-select" className="sr-only">
                 Choose step ({i + 1} of {total})
               </label>
@@ -91,11 +91,6 @@ export default function FlowChrome({ flowNumber, title, thesis, steps, persona }
                   </option>
                 ))}
               </select>
-              {step.surface ? (
-                <p className="text-2xs text-ink-500 m-0 leading-snug px-0.5 line-clamp-2">
-                  <span className="font-medium text-ink-600">This step:</span> {step.surface}
-                </p>
-              ) : null}
             </div>
 
             <button
