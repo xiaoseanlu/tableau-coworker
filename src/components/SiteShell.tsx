@@ -22,8 +22,8 @@ export default function SiteShell({ children }: Props) {
     <div className="min-h-screen flex flex-col">
       {!inFlow && (
         <header className="sticky top-0 z-30 bg-canvas/75 backdrop-blur-xl backdrop-saturate-150 border-b border-ink-200/70 shadow-edge">
-          <div className="ds-shell-inner py-3.5 flex items-center justify-between">
-            <Link to="/" className="flex items-center gap-2.5 group rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/45 focus-visible:ring-offset-2 focus-visible:ring-offset-canvas" aria-label="Tableau Coworker home">
+          <div className="ds-shell-inner py-3.5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <Link to="/" className="flex items-center gap-2.5 group rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/45 focus-visible:ring-offset-2 focus-visible:ring-offset-canvas shrink-0" aria-label="Tableau Coworker home">
               <span
                 className="w-7 h-7 rounded-lg bg-gradient-to-br from-accent via-accent to-accent-ink text-white grid place-items-center text-sm font-semibold shadow-lift-sm ring-1 ring-white/15"
                 aria-hidden="true"
@@ -35,7 +35,7 @@ export default function SiteShell({ children }: Props) {
                 <span className="text-ink-400 ml-2 hidden sm:inline">Sean Lu</span>
               </span>
             </Link>
-            <nav className="flex items-center gap-0.5">
+            <nav className="flex flex-wrap items-center justify-start sm:justify-end gap-1" aria-label="Primary">
               {navItems.map(item => (
                 <NavLink
                   key={item.to}

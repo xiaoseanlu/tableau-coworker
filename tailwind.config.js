@@ -107,6 +107,10 @@ export default {
           '0%, 100%': { opacity: '0.45', transform: 'scale(1)' },
           '50%': { opacity: '1', transform: 'scale(1.12)' },
         },
+        'flow-step-in': {
+          '0%': { opacity: '0', transform: 'translateY(8px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
       },
       animation: {
         'mesh-breathe': 'mesh-breathe 14s ease-in-out infinite',
@@ -114,6 +118,7 @@ export default {
         'shimmer-border': 'shimmer-border 4s linear infinite',
         'pulse-ring': 'pulse-ring 2.2s ease-in-out infinite',
         'pulse-soft': 'pulse-soft 2.8s ease-in-out infinite',
+        'flow-step-in': 'flow-step-in 0.22s cubic-bezier(0.16, 1, 0.3, 1) both',
       },
     },
   },

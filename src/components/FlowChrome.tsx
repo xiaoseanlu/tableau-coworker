@@ -10,7 +10,8 @@ export interface FlowStep {
   surface?: string
   designStory?: string
   body: ReactNode
-  notes: ReactNode
+  /** Optional reviewer notes; omit for a narrative-only flow (no “Why this step” chrome). */
+  notes?: ReactNode
   immersive?: boolean
 }
 
@@ -20,6 +21,8 @@ interface Props {
   thesis: string
   steps: FlowStep[]
   persona?: PersonaFlowContext
+  /** One line of context for cold opens; dismissible per session (see sessionStorage `tc-flow-orient-${flowNumber}`). */
+  orientationHint?: string
 }
 
 function buildOptionLabel(steps: FlowStep[], s: FlowStep, idx: number, total: number): string {
@@ -32,10 +35,27 @@ function buildOptionLabel(steps: FlowStep[], s: FlowStep, idx: number, total: nu
   return `${n}/${String(total).padStart(2, '0')} · ${storyPrefix}${surface}${s.label}`
 }
 
-export default function FlowChrome({ flowNumber, title, thesis, steps, persona }: Props) {
+export default function FlowChrome({ flowNumber, title, thesis, steps, persona, orientationHint }: Props) {
   const [i, setI] = useState(0)
   const step = steps[i]
   const total = steps.length
+  const orientKey = `tc-flow-orient-${flowNumber}`
+  const [orientDismissed, setOrientDismissed] = useState(() => {
+    try {
+      return typeof sessionStorage !== 'undefined' && sessionStorage.getItem(orientKey) === '1'
+    } catch {
+      return false
+    }
+  })
+
+  function dismissOrientation() {
+    try {
+      sessionStorage.setItem(orientKey, '1')
+    } catch {
+      /* private mode or quota */
+    }
+    setOrientDismissed(true)
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-canvas text-ink-900">
@@ -105,6 +125,19 @@ export default function FlowChrome({ flowNumber, title, thesis, steps, persona }
             </button>
           </div>
 
+          {orientationHint && !orientDismissed ? (
+            <div className="flex items-start gap-2 rounded-md border border-ink-200/80 bg-canvas-sunken/45 px-2.5 py-2 text-2xs sm:text-xs text-ink-600 leading-snug">
+              <p className="min-w-0 flex-1 m-0">{orientationHint}</p>
+              <button
+                type="button"
+                onClick={dismissOrientation}
+                className="shrink-0 rounded px-1.5 py-0.5 text-2xs font-medium text-ink-500 hover:bg-ink-100 hover:text-ink-800"
+              >
+                Dismiss
+              </button>
+            </div>
+          ) : null}
+
           {persona ? (
             <details className="rounded-md border border-ink-200/70 bg-canvas-sunken/20 px-2 sm:px-3">
               <summary className="cursor-pointer list-none py-2 text-2xs sm:text-xs text-ink-600 flex items-center justify-between gap-2 [&::-webkit-details-marker]:hidden">
@@ -123,26 +156,51 @@ export default function FlowChrome({ flowNumber, title, thesis, steps, persona }
             </details>
           ) : null}
         </div>
+        <div
+          className="h-1 w-full bg-ink-200/50"
+          role="progressbar"
+          aria-valuenow={i + 1}
+          aria-valuemin={1}
+          aria-valuemax={total}
+          aria-label={`Step ${i + 1} of ${total}`}
+        >
+          <div
+            className="h-full bg-accent motion-safe:transition-[width] motion-safe:duration-300 motion-safe:ease-smooth"
+            style={{ width: `${((i + 1) / total) * 100}%` }}
+          />
+        </div>
       </header>
 
       <div className="flex-1 min-h-0">
         {step.immersive ? (
           <div className="flow-chrome-inner py-4 sm:py-5">
-            {step.body}
-            <details className="mt-8 rounded-xl border border-ink-200/90 bg-canvas-raised/90 p-4 sm:p-5 shadow-lift-sm">
-              <summary className="text-sm font-medium text-ink-700 cursor-pointer select-none">
-                Why we built this step
-              </summary>
-              <div className="mt-4 space-y-3 border-t border-ink-100 pt-4 text-sm text-ink-600">{step.notes}</div>
-            </details>
+            <div key={i} className="motion-safe:animate-flow-step-in motion-reduce:animate-none">
+              {step.body}
+              {step.notes != null ? (
+                <details className="mt-8 rounded-xl border border-ink-200/90 bg-canvas-raised/90 p-4 sm:p-5 shadow-lift-sm">
+                  <summary className="text-sm font-medium text-ink-700 cursor-pointer select-none">
+                    Why we built this step
+                  </summary>
+                  <div className="mt-4 space-y-3 border-t border-ink-100 pt-4 text-sm text-ink-600">{step.notes}</div>
+                </details>
+              ) : null}
+            </div>
           </div>
-        ) : (
+        ) : step.notes != null ? (
           <div className="flow-chrome-inner py-5 sm:py-7 grid lg:grid-cols-[1fr_280px] gap-6 lg:gap-8">
-            <div className="min-w-0">{step.body}</div>
+            <div key={i} className="min-w-0 motion-safe:animate-flow-step-in motion-reduce:animate-none">
+              {step.body}
+            </div>
             <aside className="space-y-3 lg:sticky lg:top-[7.5rem] lg:self-start">
               <div className="text-2xs uppercase tracking-wider text-ink-500">Why this step</div>
               {step.notes}
             </aside>
+          </div>
+        ) : (
+          <div className="flow-chrome-inner py-5 sm:py-7">
+            <div key={i} className="min-w-0 motion-safe:animate-flow-step-in motion-reduce:animate-none">
+              {step.body}
+            </div>
           </div>
         )}
       </div>

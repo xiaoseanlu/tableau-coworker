@@ -17,6 +17,14 @@ export default function Home() {
         <div className="surface-hero absolute inset-0 pointer-events-none opacity-[0.92]" aria-hidden />
         <div className="grid-backdrop absolute inset-0 opacity-40 pointer-events-none" aria-hidden />
         <div className="ds-page pt-12 md:pt-16 pb-14 md:pb-16 relative">
+          <div className="mb-8 max-w-3xl rounded-xl border border-ink-200/90 bg-canvas-raised/95 p-4 md:p-5 shadow-edge ring-1 ring-ink-900/[0.04]">
+            <p className="text-sm text-ink-700 leading-relaxed m-0">
+              <strong className="font-semibold text-ink-900">What this is.</strong> A Faros AI Head of Design take-home: a design exploration
+              of Tableau as a <strong className="font-medium text-ink-800">living surface</strong> (narration and handoff first), built as a
+              real React prototype — not a commercial product. Tableau is the pick because strong AI reads already ship in-product; the
+              default canvas still opens like 2015.
+            </p>
+          </div>
           <div className="max-w-3xl">
             <div className="h-eyebrow mb-4">Tableau Coworker · Acme SaaS</div>
             <h1 className="h-display mb-5">
@@ -45,22 +53,21 @@ export default function Home() {
             <div className="h-eyebrow mb-3">Thesis, rendered</div>
             <h2 className="h-section max-w-3xl mb-2">Same Executive Overview numbers — a different default read</h2>
             <p className="text-ink-600 max-w-3xl mb-8 leading-relaxed text-sm md:text-base">
-              Left: capture from the trial (
-              <span className="font-mono text-2xs">key/04-exec-wall-of-widgets.png</span>) — density without a single articulated read.
-              Right: the thesis layout for Maya — narrative leads; charts are evidence; Coworker copy stays a slim strip here so you
-              can see the canvas (full dock + handoffs in the flow).
+              <strong className="text-ink-800">Before</strong> — the real Executive Overview from a Tableau Cloud trial: lots of tiles and
+              charts, no single articulated read. <strong className="text-ink-800">After</strong> — the thesis layout for Maya: narrative
+              leads, charts as evidence; Coworker stays a slim strip here so the canvas is visible (full dock and handoffs live in the flow).
             </p>
             <div className="grid lg:grid-cols-2 gap-6 items-start">
-              <div>
-                <div className="text-2xs font-mono uppercase tracking-wide text-ink-500 mb-2">Today · capture</div>
+              <div className="rounded-xl border-2 border-ink-200/95 bg-canvas-sunken/30 p-2 shadow-inner">
+                <div className="text-xs font-semibold text-ink-900 uppercase tracking-wide mb-2 px-1">Tableau as shipped today</div>
                 <img
                   src={`${CAP}key/04-exec-wall-of-widgets.png`}
                   alt="Tableau Executive Overview — dense widget wall"
-                  className="w-full rounded-xl border border-ink-200/90 shadow-lift-sm ring-1 ring-ink-900/[0.04]"
+                  className="w-full rounded-lg border border-ink-200/90 shadow-lift-sm ring-1 ring-ink-900/[0.04]"
                 />
               </div>
-              <div className="min-w-0">
-                <div className="text-2xs font-mono uppercase tracking-wide text-ink-500 mb-2">Coworker · thesis layout</div>
+              <div className="rounded-xl border-2 border-accent/35 bg-accent-soft/25 p-2 shadow-inner min-w-0">
+                <div className="text-xs font-semibold text-accent-ink uppercase tracking-wide mb-2 px-1">Coworker concept</div>
                 <div className="max-h-[min(70vh,560px)] overflow-y-auto overflow-x-hidden rounded-xl border border-ink-200/90 shadow-lift ring-1 ring-ink-900/[0.045] bg-canvas">
                   <MayaInteractiveDashboard initialLayout="narrativeLeads" compactHero homeEmbed />
                 </div>

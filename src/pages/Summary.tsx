@@ -109,6 +109,45 @@ export default function Summary() {
         </p>
       </section>
 
+      <section className="mt-14 border-t border-ink-100 pt-12 not-prose">
+        <h2 className="editorial text-2xl md:text-3xl text-ink-900 m-0 mb-2">Three people. One Monday morning.</h2>
+        <p className="text-lg text-ink-600 m-0 mb-8 max-w-2xl">
+          What should load first when the org lives in data — but nobody has time to rebuild the story from a wall of widgets?
+        </p>
+        <div className="grid md:grid-cols-3 gap-4">
+          <Link
+            to="/flows/maya"
+            className="rounded-xl border border-ink-200/90 bg-canvas-raised p-4 md:p-5 shadow-lift-sm hover:border-accent/35 hover:shadow-lift transition-all duration-200 block group"
+          >
+            <div className="text-2xs font-mono text-ink-500 mb-2">Maya Chen · CRO</div>
+            <p className="text-sm text-ink-700 m-0 leading-relaxed">
+              A Monday briefing that reads before it charts — then one frozen handoff to staff, Slack, and calendar.
+            </p>
+            <span className="text-sm font-medium text-accent group-hover:underline mt-3 inline-block">Open Maya&apos;s flow</span>
+          </Link>
+          <Link
+            to="/flows/jordan"
+            className="rounded-xl border border-ink-200/90 bg-canvas-raised p-4 md:p-5 shadow-lift-sm hover:border-accent/35 hover:shadow-lift transition-all duration-200 block group"
+          >
+            <div className="text-2xs font-mono text-ink-500 mb-2">Jordan Patel · Sales Ops</div>
+            <p className="text-sm text-ink-700 m-0 leading-relaxed">
+              Sprawl and lineage into a curator queue — close the loop so exec numbers and mobile briefs stay on the same definitions.
+            </p>
+            <span className="text-sm font-medium text-accent group-hover:underline mt-3 inline-block">Open Jordan&apos;s flow</span>
+          </Link>
+          <Link
+            to="/flows/sam"
+            className="rounded-xl border border-ink-200/90 bg-canvas-raised p-4 md:p-5 shadow-lift-sm hover:border-accent/35 hover:shadow-lift transition-all duration-200 block group"
+          >
+            <div className="text-2xs font-mono text-ink-500 mb-2">Sam Reyes · West</div>
+            <p className="text-sm text-ink-700 m-0 leading-relaxed">
+              Between meetings on the phone: a West-only surface and a legal-grade receipt, not desktop chrome squeezed to thumb width.
+            </p>
+            <span className="text-sm font-medium text-accent group-hover:underline mt-3 inline-block">Open Sam&apos;s flow</span>
+          </Link>
+        </div>
+      </section>
+
       <section className="mt-16 card-raised p-8 bg-canvas-sunken">
         <Bolt className="text-accent mb-4" size={22} />
         <div className="h-eyebrow text-accent-ink mb-2">A note on the format</div>

@@ -45,6 +45,7 @@ function blob(path: string) {
 }
 
 const toc = [
+  { id: 'why-system', label: 'Why one system' },
   { id: 'quality', label: 'Quality bar' },
   { id: 'foundation', label: 'Foundation' },
   { id: 'visual-samples', label: 'Visual samples' },
@@ -173,6 +174,21 @@ export default function DesignSystem() {
             <DesignSystemHeroBento />
           </div>
         </header>
+
+        <section id="why-system" className="pt-12 md:pt-16 mt-10 md:mt-12 border-t border-ink-100 scroll-mt-28" aria-labelledby="why-system-heading">
+          <h2 id="why-system-heading" className="h-section mb-4 tracking-tight">
+            Why one system drives this prototype
+          </h2>
+          <div className="rounded-2xl border border-accent/25 bg-accent-soft/35 p-6 md:p-8 ring-1 ring-accent/10">
+            <p className="text-base md:text-lg text-ink-800 leading-relaxed m-0 max-w-3xl">
+              <strong className="font-semibold text-ink-900">Strategy first:</strong> Maya, Jordan, and Sam are three roles on{' '}
+              <strong className="font-medium text-ink-900">one Acme SaaS story</strong>. Every screen in those flows pulls color, type, spacing,
+              and chart behavior from the <strong className="font-medium text-ink-900">same token file and components</strong> documented here —
+              so the take-home isn&apos;t three visual languages, it&apos;s one IA argument with three postures. What follows is the implementation
+              proof: tokens, capture crosswalk, viz catalog, and contract boundaries for handoff.
+            </p>
+          </div>
+        </section>
 
       <section id="quality" className="pt-16 md:pt-20 scroll-mt-28" aria-labelledby="quality-heading">
         <h2 id="quality-heading" className="h-section mb-6 tracking-tight">

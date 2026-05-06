@@ -3,6 +3,60 @@ import { ArrowRight, Quote, Layers } from '../components/Icons'
 
 const CAP = `${import.meta.env.BASE_URL}captures/`
 
+const WHATS_BROKEN_TOC: Array<{ id: string; label: string }> = [
+  { id: 'gaps', label: 'Six structural gaps' },
+  { id: 'swot', label: 'SWOT' },
+  { id: 'voices', label: 'User voices' },
+  { id: 'stats', label: 'By the numbers' },
+  { id: 'impact', label: 'Downstream cost' },
+  { id: 'takeaway', label: 'Takeaway' },
+]
+
+const GAP_JUMP = ['01', '02', '03', '04', '05', '06'] as const
+
+function scrollToSection(id: string) {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
+
+function WhatsBrokenToc() {
+  return (
+    <nav
+      className="not-prose mb-10 rounded-xl border border-ink-200/85 bg-canvas-raised p-4 md:p-5 shadow-edge"
+      aria-label="On this page"
+    >
+      <div className="text-xs font-semibold text-ink-800 mb-3">On this page</div>
+      <ul className="flex flex-wrap gap-2">
+        {WHATS_BROKEN_TOC.map(item => (
+          <li key={item.id}>
+            <button
+              type="button"
+              onClick={() => scrollToSection(item.id)}
+              className="rounded-lg border border-ink-200/80 bg-canvas-sunken/30 px-3 py-1.5 text-sm text-ink-600 hover:border-accent/35 hover:bg-accent-soft/30 hover:text-ink-900 motion-safe:transition-colors"
+            >
+              {item.label}
+            </button>
+          </li>
+        ))}
+      </ul>
+      <div className="mt-3 pt-3 border-t border-ink-100/90">
+        <div className="text-2xs font-mono uppercase tracking-wide text-ink-500 mb-2">Jump to gap</div>
+        <div className="flex flex-wrap gap-1.5">
+          {GAP_JUMP.map(n => (
+            <button
+              key={n}
+              type="button"
+              onClick={() => scrollToSection(`gap-${n}`)}
+              className="rounded-md border border-ink-200/70 px-2 py-1 font-mono text-2xs text-ink-600 hover:bg-ink-50 hover:text-ink-900"
+            >
+              {n}
+            </button>
+          ))}
+        </div>
+      </div>
+    </nav>
+  )
+}
+
 export default function WhatsBroken() {
   return (
     <article className="ds-page py-14">
@@ -22,6 +76,8 @@ export default function WhatsBroken() {
         </p>
       </header>
 
+      <WhatsBrokenToc />
+
       <section className="prose-body">
         <p>
           Below is the diagnosis I&apos;d bring to an early design review on this problem. It isn&apos;t a bug
@@ -29,7 +85,9 @@ export default function WhatsBroken() {
           memory of what BI tools are &quot;usually like.&quot;
         </p>
 
-        <h3 id="root-causes">The six structural gaps</h3>
+        <h3 id="gaps" className="scroll-mt-28">
+          The six structural gaps
+        </h3>
 
         <RootCause
           number="01"
@@ -119,7 +177,7 @@ export default function WhatsBroken() {
         />
       </section>
 
-      <h3 id="swot" className="mt-16 editorial text-2xl text-ink-900">
+      <h3 id="swot" className="mt-16 editorial text-2xl text-ink-900 scroll-mt-28">
         A SWOT, condensed
       </h3>
       <p className="text-ink-600 text-sm mt-2 mb-6">
@@ -166,7 +224,7 @@ export default function WhatsBroken() {
         />
       </section>
 
-      <section className="mt-16">
+      <section id="voices" className="mt-16 scroll-mt-28">
         <div className="h-eyebrow mb-4">What users actually say</div>
         <h3 className="editorial text-2xl text-ink-900 mb-2">
           Representative complaints — cross-checked with public review themes
@@ -195,7 +253,7 @@ export default function WhatsBroken() {
         </div>
       </section>
 
-      <section className="mt-16 card-raised p-8">
+      <section id="stats" className="mt-16 card-raised p-8 scroll-mt-28">
         <div className="grid sm:grid-cols-3 gap-8">
           <Stat
             big="9"
@@ -216,7 +274,9 @@ export default function WhatsBroken() {
       </section>
 
       <section className="prose-body mt-16">
-        <h3 id="impact">What this costs an org</h3>
+        <h3 id="impact" className="scroll-mt-28">
+          What this costs an org
+        </h3>
         <p>Three downstream effects worth naming in a stakeholder review — not as universal laws for every tenant, but as predictable failure modes once Tableau is mission-critical:</p>
 
         <h4>1. Executive attention is the scarcest asset</h4>
@@ -241,7 +301,7 @@ export default function WhatsBroken() {
         </p>
       </section>
 
-      <section className="mt-16 card-raised p-8 bg-accent-soft border-accent/20">
+      <section id="takeaway" className="mt-16 card-raised p-8 bg-accent-soft border-accent/20 scroll-mt-28">
         <Layers className="text-accent mb-4" size={22} />
         <div className="h-eyebrow text-accent-ink mb-2">The takeaway</div>
         <p className="text-lg text-ink-900 leading-relaxed editorial italic">
@@ -281,7 +341,7 @@ function RootCause({
   secondaryCapture?: { path: string; alt: string; source: string }
 }) {
   return (
-    <div className="mt-12">
+    <div id={`gap-${number}`} className="mt-12 scroll-mt-28">
       <div className="flex items-baseline gap-3 mb-4">
         <span className="font-mono text-xs text-accent">{number}</span>
         <h4 className="text-xl font-semibold text-ink-900 leading-snug">{title}</h4>
