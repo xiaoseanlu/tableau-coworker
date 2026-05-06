@@ -208,7 +208,7 @@ export default function DesignSystem() {
           </div>
         </header>
 
-        <section id="why-system" className="pt-12 md:pt-16 mt-10 md:mt-12 border-t border-ink-100 scroll-mt-28" aria-labelledby="why-system-heading">
+        <section id="why-system" className="pt-12 md:pt-16 mt-10 md:mt-12 scroll-mt-28" aria-labelledby="why-system-heading">
           <h2 id="why-system-heading" className="h-section mb-4 tracking-tight">
             Why one system drives this prototype
           </h2>
