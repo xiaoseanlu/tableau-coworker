@@ -44,6 +44,33 @@ function blob(path: string) {
   return `${githubRoot}/blob/main/${path}`
 }
 
+/**
+ * With HashRouter the only URL hash is the route (`#/design-system`). A path like
+ * `/design-system#contract` does not become a document fragment; the `#contract` part is lost,
+ * so in-page targets must use scrollIntoView instead of `<Link hash>`.
+ */
+function scrollToDesignSystemSection(id: string) {
+  const el = document.getElementById(id)
+  if (!el) return
+  const reduce =
+    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  window.requestAnimationFrame(() => {
+    el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' })
+  })
+}
+
+function DesignSystemInPageJump({ id, children }: { id: string; children: ReactNode }) {
+  return (
+    <button
+      type="button"
+      className="inline text-accent font-semibold underline underline-offset-2 decoration-accent/40 hover:decoration-accent bg-transparent border-0 p-0 m-0 cursor-pointer font-inherit text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-canvas rounded-sm"
+      onClick={() => scrollToDesignSystemSection(id)}
+    >
+      {children}
+    </button>
+  )
+}
+
 const toc = [
   { id: 'why-system', label: 'Why one system' },
   { id: 'quality', label: 'Quality bar' },
@@ -140,12 +167,20 @@ export default function DesignSystem() {
 
   return (
     <div className="min-h-screen bg-canvas text-ink-900">
-      <Link to="/design-system#design-system-main" className="ds-skip-link">
+      <button
+        type="button"
+        className="ds-skip-link"
+        onClick={() => {
+          scrollToDesignSystemSection('design-system-main')
+          document.getElementById('design-system-main')?.focus({ preventScroll: true })
+        }}
+      >
         Skip to main content
-      </Link>
+      </button>
       <article
         id="design-system-main"
-        className="ds-doc max-w-[64rem] mx-auto px-6 sm:px-10 pb-32 md:pb-44"
+        tabIndex={-1}
+        className="ds-doc max-w-[64rem] mx-auto px-6 sm:px-10 pb-32 md:pb-44 outline-none"
       >
         <header className="pt-16 md:pt-20 pb-12 md:pb-16 border-b border-ink-100">
           <div className="grid lg:grid-cols-[1fr,minmax(0,28rem)] gap-10 lg:gap-14 items-start">
@@ -157,17 +192,19 @@ export default function DesignSystem() {
               </h1>
               <p className="text-base md:text-lg leading-relaxed text-ink-600 max-w-xl mb-8">
                 Everything below is runnable React in this repo — same Tailwind tokens, chart helpers, and interactive modules the flows
-                use. Demos first; contract in{' '}
-                <Link to="/design-system#contract" className="text-accent font-semibold underline underline-offset-2 decoration-accent/40 hover:decoration-accent">
-                  scope
-                </Link>
-                .
+                use. Demos first. For what ships in this prototype versus what doesn&apos;t, see{' '}
+                <DesignSystemInPageJump id="contract">Contract &amp; scope</DesignSystemInPageJump>.
               </p>
               <nav className="flex flex-wrap gap-3 pt-1" aria-label="On this page">
                 {toc.map(item => (
-                  <Link key={item.id} to={`/design-system#${item.id}`} className="ds-toc-pill">
+                  <button
+                    key={item.id}
+                    type="button"
+                    className="ds-toc-pill"
+                    onClick={() => scrollToDesignSystemSection(item.id)}
+                  >
                     {item.label}
-                  </Link>
+                  </button>
                 ))}
               </nav>
             </div>
@@ -532,7 +569,7 @@ export default function DesignSystem() {
         <h3 className="ds-subheading mt-10 mb-4">VizSpec gallery (one tile per type)</h3>
         <p className="text-sm text-ink-600 mb-6 max-w-2xl leading-relaxed">
           Each tile matches a <span className="font-mono text-2xs">VizSpec.type</span> from the catalog: real Recharts geometry, not screenshots.
-          Select a type in <Link to="/design-system#viz-pipeline" className="text-accent font-semibold underline underline-offset-2 decoration-accent/40 hover:decoration-accent">VizSpec pipeline</Link> below to see FT mapping and AI hooks.
+          Select a type in <DesignSystemInPageJump id="viz-pipeline">VizSpec pipeline</DesignSystemInPageJump> below to see FT mapping and AI hooks.
         </p>
         <DesignSystemVizTypeGallery />
 
@@ -604,7 +641,7 @@ export default function DesignSystem() {
           Layers
         </h2>
         <p className="ds-section-lede !mb-4">
-          Atoms · molecules · organisms — taxonomy as UI. Buttons and chips are in <Link to="/design-system#visual-samples" className="text-accent font-semibold underline underline-offset-2 decoration-accent/40 hover:decoration-accent">Visual samples</Link>.
+          Atoms · molecules · organisms — taxonomy as UI. Buttons and chips are in <DesignSystemInPageJump id="visual-samples">Visual samples</DesignSystemInPageJump>.
         </p>
         <p className="text-2xs font-mono text-ink-500 mb-6 max-w-prose leading-relaxed">
           Six tiles: Lucide via <span className="text-ink-700">Icons.tsx</span> — Atom, Component, LayoutTemplate, Gauge, Smartphone, Table — 24px in 12×12 wells (ring on each card). Headers: Atom / Component / LayoutTemplate.
@@ -813,9 +850,7 @@ export default function DesignSystem() {
         <h3 className="ds-subheading mt-10 mb-2">Interactions (density matrix)</h3>
         <p className="text-sm text-ink-600 mb-4 max-w-prose leading-relaxed m-0">
           The explorer below is a compact matrix of the full table — not a second live chart. For pointer and keyboard behavior, use the{' '}
-          <Link to="/design-system#interaction-playground" className="text-accent font-semibold underline underline-offset-2 decoration-accent/40 hover:decoration-accent">
-            Interaction playground
-          </Link>
+          <DesignSystemInPageJump id="interaction-playground">Interaction playground</DesignSystemInPageJump>
           .
         </p>
         <div className="mb-6">
