@@ -11,7 +11,7 @@ interface CompRow {
   notes: string
 }
 
-/** Qualitative scores: posture = AI/narration integrated in primary workflow; craft = default consumption UX. */
+/** Qualitative scores: posture = how central AI/narration is in day-to-day use; craft = quality of the default reader experience. */
 const competitors: CompRow[] = [
   {
     vendor: 'Tableau (Salesforce)',
@@ -19,9 +19,9 @@ const competitors: CompRow[] = [
     postureScore: 4,
     craftScore: 3,
     strengths:
-      'Category-defining viz and trust semantics. Agent output on Executive Overview is genuinely strong in trial — Ohio/Colorado-class insights. Pulse proves metric narration.',
-    gap: 'Narration and Agent sit beside or above a dashboard paradigm that still loads first. Exec and mobile consumers still synthesize tiles by hand unless they summon AI.',
-    notes: 'Position for this exercise: move up-right by changing first paint, not by hiding existing tech.',
+      'Still the reference for charts people trust in the room. In trial, the agent’s written take on an exec dashboard was specific and useful. Pulse shows the product already knows how to narrate a metric.',
+    gap: 'That narration still lives next to a classic dashboard that loads first. Busy readers piece the story together from tiles unless they go hunt for the AI.',
+    notes: 'This exercise: win by changing the first screen, not by pretending the underlying tech is missing.',
   },
   {
     vendor: 'Microsoft Power BI',
@@ -29,9 +29,9 @@ const competitors: CompRow[] = [
     postureScore: 5,
     craftScore: 4,
     strengths:
-            'Copilot plus Microsoft 365 distribution; natural-language questions and summaries are central in most pitch decks; hard to ignore if you already live in Teams and Excel.',
-    gap: 'Semantic and viz fidelity expectations differ from Tableau shops; migration and dual-BI politics are the battlefield, not chart novelty.',
-    notes: 'Primary distribution threat — meets users where Tableau often does not.',
+      'Copilot shows up where many companies already work: Teams, Excel, Microsoft 365. For a lot of buyers, “ask in plain language” is already the story.',
+    gap: 'Expectations for model polish and chart semantics differ from long-time Tableau shops. The fight is often migration and politics, not a missing feature on a slide.',
+    notes: 'Wins on reach: it meets people in their default apps.',
   },
   {
     vendor: 'ThoughtSpot',
@@ -39,9 +39,9 @@ const competitors: CompRow[] = [
     postureScore: 5,
     craftScore: 3,
     strengths:
-      'AI-native positioning; strong "ask" and narrative workflow for many buyers; challenges Tableau on who owns the English layer.',
-    gap: 'Enterprise BI incumbent status and embedded depth vary vs decades of Tableau footprint; implementation patterns differ by segment.',
-    notes: 'Positioning threat more than legacy dashboard replica.',
+      'Marketed as analytics you question in English first; strong “ask and explain” workflow for buyers who never loved report builders.',
+    gap: 'Not the same footprint as decades of Tableau in large enterprises; depth and buying motion vary a lot by segment.',
+    notes: 'Competes for the same story in the RFP more than it clones Tableau screen for screen.',
   },
   {
     vendor: 'Looker (Google Cloud)',
@@ -49,9 +49,9 @@ const competitors: CompRow[] = [
     postureScore: 3,
     craftScore: 3,
     strengths:
-      'Governed metrics and LookML; tight Google Cloud data story; embedded-first for product teams.',
-    gap: 'Builder-centric norms; exec consumption often still arrives as traditional dashboards or exports.',
-    notes: 'Overlap on "canonical numbers" with Jordan-shaped governance narrative.',
+      'Serious about one definition of a metric (LookML) and about putting charts inside other products.',
+    gap: 'Day-to-day use still skews toward builders; executives often consume through familiar dashboard or export patterns.',
+    notes: 'Overlaps with the “ops lead keeps numbers honest” story in this prototype.',
   },
   {
     vendor: 'Mode',
@@ -59,9 +59,9 @@ const competitors: CompRow[] = [
     postureScore: 3,
     craftScore: 4,
     strengths:
-      'Analyst-loved workflow; strong storytelling and delivery to stakeholders; hybrid code + viz.',
-    gap: 'Less often the single company-wide BI standard; different ICP than global Tableau enterprise deals.',
-    notes: 'Useful craft reference for narrative + evidence together.',
+      'Popular with analysts who want SQL, notebooks, and a clean handoff to stakeholders in one place.',
+    gap: 'Rarely the single mandated BI standard across a global org; buyer profile differs from classic Tableau enterprise.',
+    notes: 'Good reference for pairing narrative and evidence without pretending everyone is an analyst.',
   },
   {
     vendor: 'Hex',
@@ -69,9 +69,9 @@ const competitors: CompRow[] = [
     postureScore: 4,
     craftScore: 4,
     strengths:
-      'Data team collaboration; app-like sharing; modern stack buyers; strong outward narrative from notebooks.',
-    gap: 'Overlap with Tableau on exec surface is partial — often complementary or upstream.',
-    notes: 'Benchmark for "narrative out" without assuming warehouse vendor.',
+      'Built for data teams shipping collaborative work; easy to turn analysis into something app-like for readers.',
+    gap: 'Often sits upstream or beside Tableau rather than replacing the exec dashboard wholesale.',
+    notes: 'Useful benchmark for “story out” without tying the story to one warehouse vendor.',
   },
   {
     vendor: 'Sigma Computing',
@@ -79,9 +79,9 @@ const competitors: CompRow[] = [
     postureScore: 3,
     craftScore: 4,
     strengths:
-      'Rapid adoption in cloud-native firms; familiar grid metaphor; governance narrative improving.',
-    gap: 'Enterprise feature depth and historical Tableau displacement cycles still evolving.',
-    notes: 'Consumption UX reference for business authors.',
+      'Spreadsheet familiarity on top of cloud warehouses; fast adoption in cloud-native companies.',
+    gap: 'Breadth of enterprise feature set and long replacement cycles vs Tableau still play out case by case.',
+    notes: 'Good study for how business authors want to consume and explore.',
   },
   {
     vendor: 'Metabase',
@@ -89,9 +89,9 @@ const competitors: CompRow[] = [
     postureScore: 2,
     craftScore: 3,
     strengths:
-      'Fast time-to-first-dashboard; beloved for simple questions; low friction for departmental analytics.',
-    gap: 'Different enterprise motion; often adjacent to — not replacing — global BI standards.',
-    notes: 'Often embedded in engineering-facing stacks; useful comparison for “good enough” operational BI.',
+      'Quick first dashboard; friendly for simple questions; low friction inside a team.',
+    gap: 'Usually not the named global standard next to Tableau; often sits alongside it.',
+    notes: 'Helpful contrast for “good enough” operational BI, especially in engineering-heavy stacks.',
   },
 ]
 
@@ -101,51 +101,53 @@ export default function Competitive() {
       <header className="mb-10">
         <div className="h-eyebrow mb-4">Appendix · Competitive scan</div>
         <h1 className="h-display mb-6">
-          The fight is narration + trust at scale — not who has the most chart types.
+          Where analytics products lean: narration in the workflow versus the first screen readers get.
         </h1>
         <p className="text-lg text-ink-600 max-w-3xl">
-          Qualitative read — April 2026 framing for this prototype. X-axis: AI and narration integrated
-          into the primary workflow. Y-axis: craft of the default consumption experience (briefing vs
-          wall-of-widgets).{' '}
-          <strong className="text-ink-800">Not market share data.</strong>
+          Quick, opinionated map — not revenue rankings. Across: how much plain-language and AI help live in the path people already
+          use. Up: how polished the default reading experience is when you are not building the view yourself.{' '}
+          <strong className="text-ink-800">Scores and bubble spots are judgment calls, not data exports.</strong>
         </p>
       </header>
 
       <section className="card-raised p-8 mb-12">
         <h3 className="text-base font-semibold text-ink-900 mb-1">
-          The 2×2: Narration in workflow vs. consumption UX
+          Sketch: narration built-in vs. how the busy reader is treated
         </h3>
-        <p className="text-sm text-ink-500 mb-6">Bubble position is qualitative; size is not revenue.</p>
+        <p className="text-sm text-ink-500 mb-6">
+          Dot placement is directional only; bubble size is not market share.
+        </p>
         <TwoByTwo />
       </section>
 
       <section className="space-y-4">
-        <h3 className="text-base font-semibold text-ink-900 mb-2">Per-vendor read</h3>
+        <h3 className="text-base font-semibold text-ink-900 mb-2">Vendor-by-vendor</h3>
         {competitors.map((c) => (
           <Vendor key={c.vendor} c={c} />
         ))}
       </section>
 
       <section className="mt-16 card-raised p-8 bg-canvas-sunken">
-        <div className="h-eyebrow mb-3">Synthesis</div>
-        <h3 className="editorial text-2xl text-ink-900 mb-4">
-          Open space: governed semantics + narration-first landing at Fortune scale.
-        </h3>
+        <div className="h-eyebrow mb-3">What I take from this</div>
+        <h3 className="editorial text-2xl text-ink-900 mb-4">Three different ways to lose a deal</h3>
         <p className="prose-body text-base">
-          Power BI is the <strong>distribution</strong> threat — Copilot and Teams meet people where they
-          work. ThoughtSpot is the <strong>positioning</strong> threat — AI-native analytics as category
-          expectation. Tableau&apos;s verified advantage in this repo is <strong>viz depth + agent copy
-          quality</strong>; the gap is <strong>what loads first</strong> for consumers. Winning means
-          unifying Pulse-grade reads and classic dashboards into one consumption spine — not winning a
-          third SKU in the buyer&apos;s mental map.
+          Microsoft wins on showing up in the apps people already open. ThoughtSpot wins on resetting buyer expectations toward &quot;ask
+          first.&quot; Tableau&apos;s edge in this repo is depth of charts people trust and agent writing that already works — the miss is
+          what you see before you dig.
         </p>
         <p className="prose-body text-base mt-4">
-          <strong>Evidence discipline:</strong> product claims on{' '}
+          The opening for a Tableau-sized player is to make{' '}
+          <strong>one reader experience</strong> that treats Pulse-style narration and classic dashboards as the same product — briefing
+          up front, charts as proof — instead of another pane or SKU buyers have to remember. Governance (who can see what, and which
+          definition is &quot;the number&quot;) still has to hold at Fortune scale; the chart grid does not go away, it stops being the greeting.
+        </p>
+        <p className="prose-body text-base mt-4">
+          <strong>How this relates to evidence in the repo:</strong> claims on{' '}
           <Link to="/whats-broken" className="text-accent hover:underline">
             What&apos;s broken
           </Link>{' '}
-          stay tied to <span className="font-mono text-xs">public/captures/</span>. This appendix is
-          strategic framing only — moderate confidence without per-bullet screenshots.
+          tie back to screenshots under <span className="font-mono text-xs">public/captures/</span>. This page is framing only — I would
+          not defend every line here under cross-examination without fresh captures per vendor.
         </p>
       </section>
 
@@ -246,7 +248,7 @@ function TwoByTwo() {
         viewBox={`0 0 ${W} ${H}`}
         className="w-full max-w-[760px]"
         role="img"
-        aria-label="Narration in workflow versus consumption UX, qualitative vendor positions"
+        aria-label="Qualitative map: narration in daily workflow versus default reader experience"
       >
         <line x1={padX} y1={H - padY} x2={W - padX} y2={H - padY} stroke="#B4B9C6" strokeWidth="1" />
         <line x1={padX} y1={padY} x2={padX} y2={H - padY} stroke="#B4B9C6" strokeWidth="1" />
@@ -268,7 +270,7 @@ function TwoByTwo() {
         />
 
         <text x={W / 2} y={H - 14} textAnchor="middle" fontSize="11" fill="#5B6070" fontFamily="Inter, sans-serif">
-          AI &amp; narration in primary workflow →
+          AI and plain-language help in the daily path →
         </text>
         <text
           x={18}
@@ -279,7 +281,7 @@ function TwoByTwo() {
           fontFamily="Inter, sans-serif"
           transform={`rotate(-90, 18, ${H / 2})`}
         >
-          Consumption UX craft →
+          Default reader experience →
         </text>
 
         <text x={padX + 8} y={padY + 16} fontSize="10" fill="#858B9C" fontFamily="Inter, sans-serif">
@@ -293,10 +295,10 @@ function TwoByTwo() {
           fill="#858B9C"
           fontFamily="Inter, sans-serif"
         >
-          Narration-native · space to win
+          Narration-first · room to win
         </text>
         <text x={padX + 8} y={H - padY - 8} fontSize="10" fill="#858B9C" fontFamily="Inter, sans-serif">
-          Legacy dashboard-first
+          Dashboard grid loads first
         </text>
         <text
           x={W - padX - 8}
@@ -306,7 +308,7 @@ function TwoByTwo() {
           fill="#858B9C"
           fontFamily="Inter, sans-serif"
         >
-          Strong tech, weak landing
+          Strong under the hood, weak first screen
         </text>
 
         {bubbles.map((b) => {
@@ -349,7 +351,7 @@ function TwoByTwo() {
           fontFamily="Inter, sans-serif"
           fontStyle="italic"
         >
-          ↑ where Tableau should land
+          ↑ stretch goal for Tableau
         </text>
       </svg>
     </div>
