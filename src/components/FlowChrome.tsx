@@ -125,20 +125,20 @@ export default function FlowChrome({ flowNumber, title, thesis, steps, persona, 
             </button>
           </div>
 
-          {/* Orientation + persona: one card — loop on the left, identity + Dismiss on the right; expand for job/pillars */}
+          {/* Orientation + persona: one row — loop left, identity + Dismiss right (identity stays one line) */}
           {persona || (orientationHint && !orientDismissed) ? (
             <div className="rounded-md border border-ink-200/80 bg-canvas-sunken/45 overflow-hidden">
               {orientationHint && !orientDismissed ? (
-                <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-3 px-2.5 py-2 border-b border-ink-100/80">
-                  <p className="min-w-0 flex-1 m-0 text-2xs sm:text-xs text-ink-600 leading-snug order-1 sm:order-none">
+                <div className="flex items-center gap-2 px-2.5 py-1.5 min-w-0">
+                  <p className="min-w-0 flex-1 m-0 text-2xs sm:text-xs text-ink-600 leading-snug line-clamp-2 sm:line-clamp-none">
                     {orientationHint}
                   </p>
-                  <div className="flex items-start justify-end gap-2 shrink-0 order-2 sm:order-none">
+                  <div className="flex items-center gap-2 shrink-0">
                     {persona ? (
-                      <div className="text-right text-2xs sm:text-xs leading-snug max-w-[min(100%,16rem)]">
+                      <span className="whitespace-nowrap text-2xs sm:text-xs text-right leading-none">
                         <span className="font-semibold text-ink-900">{persona.name}</span>
-                        <span className="text-ink-500"> · {persona.title}</span>
-                      </div>
+                        <span className="font-normal text-ink-500"> · {persona.title}</span>
+                      </span>
                     ) : null}
                     <button
                       type="button"
@@ -155,27 +155,12 @@ export default function FlowChrome({ flowNumber, title, thesis, steps, persona, 
                 <details className="group/persona bg-canvas-sunken/20 px-2 sm:px-3 open:bg-canvas-sunken/35">
                   <summary className="cursor-pointer list-none py-2 text-2xs sm:text-xs text-ink-600 flex items-center justify-between gap-2 [&::-webkit-details-marker]:hidden">
                     <span className="shrink-0 text-ink-500">Who you&apos;re following</span>
-                    <span className="font-semibold text-ink-900 text-right min-w-0">
+                    <span className="font-semibold text-ink-900 text-right min-w-0 whitespace-nowrap">
                       {persona.name}
                       <span className="font-normal text-ink-500 hidden sm:inline"> · {persona.title}</span>
                     </span>
                   </summary>
                   <div className="pb-2.5 pt-0 text-2xs sm:text-xs text-ink-600 leading-relaxed border-t border-ink-100/70">
-                    <p className="mt-2 m-0">{persona.job}</p>
-                    {persona.pillars.length > 0 ? (
-                      <p className="mt-1.5 mb-0 text-ink-500">{persona.pillars.join(' · ')}</p>
-                    ) : null}
-                  </div>
-                </details>
-              ) : persona && orientationHint && !orientDismissed ? (
-                <details className="px-2 sm:px-3">
-                  <summary className="cursor-pointer list-none py-2 text-2xs text-ink-500 flex items-center gap-1.5 [&::-webkit-details-marker]:hidden hover:text-ink-700">
-                    <span className="underline underline-offset-2 decoration-ink-300">More about {persona.name.split(' ')[0] ?? persona.name}</span>
-                    <span className="text-ink-400 text-[0.65rem]" aria-hidden>
-                      ▾
-                    </span>
-                  </summary>
-                  <div className="pb-2.5 text-2xs sm:text-xs text-ink-600 leading-relaxed border-t border-ink-100/70">
                     <p className="mt-2 m-0">{persona.job}</p>
                     {persona.pillars.length > 0 ? (
                       <p className="mt-1.5 mb-0 text-ink-500">{persona.pillars.join(' · ')}</p>
