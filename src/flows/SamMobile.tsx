@@ -22,11 +22,11 @@ const steps: FlowStep[] = [
         <div className="max-w-3xl">
           <div className="text-2xs uppercase tracking-wider text-ink-500 font-mono mb-1">Mobile today</div>
           <h2 className="editorial text-2xl text-ink-900 leading-snug mb-2">
-            Between meetings. Tableau on his phone is Tableau on his desktop, squished.
+            Sam’s between meetings. On the phone, Tableau is still the desktop sheet — just narrower.
           </h2>
           <p className="text-sm text-ink-600 leading-relaxed">
-            Framed from a real Tableau Mobile capture — same composition as desktop, narrow width. The Brief step shows the Coworker
-            surface and presets.
+            I framed this from a real Tableau Mobile-style capture: same composition as desktop at a small width. The Brief step is where
+            I swap in the Coworker surface and presets.
           </p>
         </div>
         <Surface chrome="mobile">
@@ -46,11 +46,11 @@ const steps: FlowStep[] = [
         <div className="max-w-3xl">
           <div className="text-2xs uppercase tracking-wider text-ink-500 font-mono mb-1">Briefing</div>
           <h2 className="editorial text-2xl text-ink-900 leading-snug mb-2">
-            Same substrate. Different surface. Built for two thumbs and ninety seconds.
+            Same numbers as Maya and Jordan — different shell. I built it for two thumbs and about ninety seconds.
           </h2>
           <p className="text-sm text-ink-600 leading-relaxed">
-            Cards route to the dock — <strong className="font-semibold text-ink-800">Jump brief state</strong> scrubs the same layout
-            Maya and Jordan bind to on v2. West scope and Tuesday rhythm are inferred from role and habit, not a setup wizard.
+            Cards feed the dock; the preset strip scrubs the same layout contract as desktop v2. West scope and Tuesday rhythm come from
+            role and habit in my story — I’m not making Sam run a setup wizard before he gets value.
           </p>
         </div>
         <Surface chrome="mobile">
@@ -69,10 +69,10 @@ const steps: FlowStep[] = [
       <div className="space-y-4">
         <div className="max-w-3xl">
           <div className="text-2xs uppercase tracking-wider text-ink-500 font-mono mb-1">Drilldown</div>
-          <h2 className="editorial text-2xl text-ink-900 leading-snug mb-2">Sam tapped Acme Co. Context is already assembled.</h2>
+          <h2 className="editorial text-2xl text-ink-900 leading-snug mb-2">Sam tapped Acme Co. I’d already assembled the stall context.</h2>
           <p className="text-sm text-ink-600 leading-relaxed">
-            <strong className="font-semibold text-ink-800">Jump drill state</strong> for stall, legal check, pre-draft — Send stays one
-            thumb away. Next step is a single line of copy, not a chat thread.
+            The preset strip covers stall, legal check, pre-draft — Send stays one thumb away. I kept the next step to a single line of
+            copy; I’m not turning a field escalation into a chat thread by default.
           </p>
         </div>
         <Surface chrome="mobile">
@@ -91,10 +91,10 @@ const steps: FlowStep[] = [
       <div className="space-y-4">
         <div className="max-w-3xl">
           <div className="text-2xs uppercase tracking-wider text-ink-500 font-mono mb-1">Receipt</div>
-          <h2 className="editorial text-2xl text-ink-900 leading-snug mb-2">Sent. The brief ends as completed work.</h2>
+          <h2 className="editorial text-2xl text-ink-900 leading-snug mb-2">Sent — I want the brief to end as finished work, not a vague ping.</h2>
           <p className="text-sm text-ink-600 leading-relaxed">
-            Upstream: Maya&apos;s staff moment; Jordan&apos;s queue unchanged on this path. Presets rehearse receipt versus watcher read
-            so escalation time lines up with the exec narrative.
+            Upstream is Maya’s staff moment; Jordan’s queue is untouched on this path. The presets rehearse receipt versus watcher read so
+            escalation timing still lines up with the exec narrative — small detail, but I’ve watched those misalignments blow up deals.
           </p>
         </div>
         <Surface chrome="mobile">
@@ -114,11 +114,11 @@ const steps: FlowStep[] = [
         <div className="max-w-3xl">
           <div className="text-2xs uppercase tracking-wider text-ink-500 font-mono mb-1">Legal inbox</div>
           <h2 className="editorial text-2xl text-ink-900 leading-snug mb-2">
-            What Chen sees — notification shape, then the pre-draft body.
+            What Legal sees — notification first, then the pre-draft body with audit context.
           </h2>
           <p className="text-sm text-ink-600 leading-relaxed">
-            Same pattern as Maya&apos;s shared read and Jordan&apos;s Finance mail — recipient triage with audit context, not a paste
-            from chat. Cross-functional stalls need a legible receipt, not only a sent message.
+            Same pattern as Maya’s shared read and Jordan’s Finance mail — triage with receipts, not a paste from chat. Cross-functional
+            stalls deserve something you could defend later; I’m not trusting Slack alone for that.
           </p>
         </div>
         <SamLegalInboxBoard />
@@ -132,9 +132,9 @@ export default function SamMobile() {
     <FlowChrome
       flowNumber="03"
       title="Sam — mobile surface, then legal inbox"
-      thesis="Regional director: thumb-first West brief and drill on phone, then a legal-quality receipt — not a squeezed desktop grid."
+      thesis="I’d give a regional director a thumb-first West brief and drill, then a legal-grade receipt — not a squeezed desktop grid."
       persona={SAM_FLOW_PERSONA}
-      orientationHint="Sam on the West: thumb-first mobile brief and drill, then handoff — same Acme substrate as Maya and Jordan, different surface. Dismiss anytime."
+      orientationHint="Sam in the West on his phone — thumb brief, drill, handoff — same Acme substrate as Maya and Jordan, different surface. Dismiss anytime."
       steps={steps}
     />
   )

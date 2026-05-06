@@ -28,14 +28,13 @@ const steps: FlowStep[] = [
         <div className="max-w-3xl">
           <div className="text-2xs uppercase tracking-wider text-ink-500 font-mono mb-1">Sprawl</div>
           <h2 className="editorial text-2xl text-ink-900 leading-snug mb-2">
-            Jordan owns {JORDAN_TENANT.workbooks} dashboards across the Acme tenant. Here, sprawl stops reading like a filing problem and
-            starts reading like a <strong className="font-semibold text-ink-800">queue with a reason on every row</strong> — not another
-            workbook list sorted by name.
+            Jordan owns {JORDAN_TENANT.workbooks} dashboards in my Acme tenant. I refused to show another alphabetical list — every row
+            here is a queue item with a reason.
           </h2>
           <p className="text-sm text-ink-600 leading-relaxed">
-            One workbook, nine views on the sample — use <strong className="font-semibold text-ink-800">Jump sprawl state</strong> or tap the
-            workbook, bars, or follow-ups. The frame matches Tableau&apos;s own Superstore sample; the bars are a scripted share-of-views mix
-            for this walkthrough, not a live usage roll-up.
+            Same sample workbook with nine views you saw in capture — use the preset strip or tap the workbook, bars, follow-ups. The
+            frame matches Tableau’s Superstore; the mix bars are scripted for this walk, not a live usage roll-up. I’m illustrating the
+            shape I want, not claiming telemetry I didn’t wire.
           </p>
         </div>
         <JordanSprawlBoard presetStrip />
@@ -53,12 +52,11 @@ const steps: FlowStep[] = [
         <div className="max-w-3xl">
           <div className="text-2xs uppercase tracking-wider text-ink-500 font-mono mb-1">Queue</div>
           <h2 className="editorial text-2xl text-ink-900 leading-snug mb-2">
-            The system flagged {JORDAN_TENANT.queueThisWeek} things this week. Each has a reason.
+            The system flagged {JORDAN_TENANT.queueThisWeek} things this week — each line says why it’s there.
           </h2>
           <p className="text-sm text-ink-600 leading-relaxed">
-            <strong className="font-semibold text-ink-800">Jump queue state</strong> scrubs selection; portfolio segments, tiles,
-            rows, and ordering rationale all bind to the same dock contract as Maya. Risk is surfaced from usage and lineage — not
-            from alert rules Jordan had to configure by hand.
+            The preset strip scrubs selection. Portfolio segments, tiles, rows, and the ordering rationale share the same dock contract as
+            Maya — I wanted ops and execs to feel like one product. Risk comes from usage and lineage, not from alert rules Jordan hand-tuned.
           </p>
         </div>
         <JordanQueueBoard presetStrip />
@@ -76,12 +74,11 @@ const steps: FlowStep[] = [
         <div className="max-w-3xl">
           <div className="text-2xs uppercase tracking-wider text-ink-500 font-mono mb-1">Diagnosis</div>
           <h2 className="editorial text-2xl text-ink-900 leading-snug mb-2">
-            One flagged dashboard. The agent&apos;s read takes 30 seconds; the fix takes 3 minutes.
+            One flagged dashboard. I’ll give Jordan a 30-second agent read; the fix still takes three minutes of human judgment.
           </h2>
           <p className="text-sm text-ink-600 leading-relaxed">
-            Drift bars, lineage chips, and the web authoring context from the trial — use{' '}
-            <strong className="font-semibold text-ink-800">Jump diagnose state</strong> to move through triage moments on one surface.
-            Agent-assisted authoring is already shipping; the argument here is how it sits inside governance, not whether it exists.
+            Drift bars, lineage chips, web authoring context from trial — the preset strip walks triage on one surface. Agent-assisted
+            authoring already ships; I’m arguing for where it lives inside governance, not whether Salesforce can build it.
           </p>
         </div>
         <JordanDiagnoseBoard presetStrip />
@@ -99,12 +96,11 @@ const steps: FlowStep[] = [
         <div className="max-w-3xl">
           <div className="text-2xs uppercase tracking-wider text-ink-500 font-mono mb-1">Closure</div>
           <h2 className="editorial text-2xl text-ink-900 leading-snug mb-2">
-            Jordan accepts the fix. Maya&apos;s Monday briefing updates. Sam&apos;s next mobile check-in is correct.
+            Jordan accepts the fix — Maya’s Monday brief and Sam’s next phone check-in inherit the same corrected definition.
           </h2>
           <p className="text-sm text-ink-600 leading-relaxed">
-            Receipt, subscribers, queue, and pulse share one audit id —{' '}
-            <strong className="font-semibold text-ink-800">Jump resolve state</strong> walks the same shell. What closes here is what
-            makes the revenue surfaces trustworthy on the latest definitions.
+            Receipt, subscribers, queue, and pulse share one audit id; the preset strip runs through the same shell. What closes here is what
+            keeps revenue surfaces honest on the latest numbers — I’m tired of silent forked definitions.
           </p>
         </div>
         <JordanResolveBoard presetStrip />
@@ -122,11 +118,11 @@ const steps: FlowStep[] = [
         <div className="max-w-3xl">
           <div className="text-2xs uppercase tracking-wider text-ink-500 font-mono mb-1">Broadcast</div>
           <h2 className="editorial text-2xl text-ink-900 leading-snug mb-2">
-            Same audit id — notify surfaces, then what Finance opens.
+            Same audit id — broadcast surfaces on the left, Finance’s inbox on the right.
           </h2>
           <p className="text-sm text-ink-600 leading-relaxed">
-            Payload preview and destinations on the left; R. Okonkwo&apos;s inbox on the right — one governance object, two moments in
-            the loop. Permissions and unfurl metadata stay explicit.
+            Payload preview and destinations face R. Okonkwo’s read-only inbox — one governance object, two beats in the loop. I keep
+            permissions and unfurl metadata explicit because cross-functional stalls need receipts, not vibes.
           </p>
         </div>
         <div className="grid xl:grid-cols-2 gap-6 items-start">
@@ -143,9 +139,9 @@ export default function JordanCuration() {
     <FlowChrome
       flowNumber="02"
       title="Jordan — tenant loop, then broadcast"
-      thesis="Curator loop: observed sprawl and lineage into a triage queue, then publish with one audit id to Slack, mail, and Finance."
+      thesis="I turn sprawl into a triage queue from real signals, then publish once with an audit id to Slack, mail, and Finance."
       persona={JORDAN_FLOW_PERSONA}
-      orientationHint="Jordan’s VP Sales Ops loop: from sprawl and queue through diagnosis to a single audited publish out to the org. Dismiss anytime."
+      orientationHint="Jordan’s VP Sales Ops loop: sprawl to queue, diagnose, resolve, then one audited publish — dismiss anytime."
       steps={steps}
     />
   )

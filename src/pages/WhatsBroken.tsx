@@ -4,7 +4,7 @@ import { ArrowRight, Quote, Layers } from '../components/Icons'
 const CAP = `${import.meta.env.BASE_URL}captures/`
 
 const WHATS_BROKEN_TOC: Array<{ id: string; label: string }> = [
-  { id: 'gaps', label: 'Six structural gaps' },
+  { id: 'gaps', label: 'Six gaps' },
   { id: 'swot', label: 'SWOT' },
   { id: 'voices', label: 'User voices' },
   { id: 'stats', label: 'By the numbers' },
@@ -61,18 +61,16 @@ export default function WhatsBroken() {
   return (
     <article className="ds-page py-14">
       <header className="mb-12">
-        <div className="h-eyebrow mb-4">01 · What&apos;s broken today</div>
+        <div className="h-eyebrow mb-4">01 · What I think is broken today</div>
         <h1 className="h-display mb-6">
-          Tableau isn&apos;t failing on vision. It&apos;s failing on{' '}
-          <span className="italic">surface hierarchy</span> — the dashboard still behaves like a
-          printed report in a world where the data moved on Tuesday.
+          I don&apos;t think Tableau is blind to AI. I think it still optimizes for the builder — and forgets the reader when the tab
+          first opens.
         </h1>
         <p className="text-lg text-ink-600 max-w-3xl">
-          The complaints read like feature bullets: slow loads, license cost, &quot;sprawl.&quot; Those
-          are symptoms. The structural issue is that the primary canvas still asks every human to
-          behave like an analyst — synthesize tiles, maps, and trend strips — while the best
-          machine-read narratives live in panels and side products you have to summon. The evidence
-          below is from a Tableau Cloud trial walk captured in this repo; every frame cites a file.
+          People complain about load time, price, sprawl. Fair. But I keep seeing the same structural miss: the main canvas still expects
+          every human to knit tiles, maps, and trend strips into a story, while the best machine-written reads sit in panels and side
+          tracks you have to hunt down. The screenshots below are from my Tableau Cloud trial walk; every frame names the file so you can
+          verify I didn&apos;t invent the UI.
         </p>
       </header>
 
@@ -80,48 +78,48 @@ export default function WhatsBroken() {
 
       <section className="prose-body">
         <p>
-          Below is the diagnosis I&apos;d bring to an early design review on this problem. It isn&apos;t a bug
-          list. It&apos;s six structural gaps verified in screenshots — not reconstructed from
-          memory of what BI tools are &quot;usually like.&quot;
+          What follows is how I&apos;d open a critique — not a bug log. I stuck to six gaps I can show
+          in pixels. If it isn&apos;t in a capture, I didn&apos;t lean on muscle memory about how BI
+          &quot;usually&quot; feels.
         </p>
 
         <h3 id="gaps" className="scroll-mt-28">
-          The six structural gaps
+          Six gaps I keep hitting
         </h3>
 
         <RootCause
           number="01"
-          title="The default surface is still a wall of widgets."
+          title="The default exec screen is still a wall of widgets."
           capturePath="key/04-exec-wall-of-widgets.png"
           captureAlt="Tableau Executive Overview — KPI tiles, map, trend charts, no narrative layer"
           captureSource="flow-d-explore-superstore/06-overview-exec-dashboard.png"
           body={[
-            'The Superstore Executive Overview is Tableau\'s canonical sample for a sales leadership view: seven KPI tiles, a color-encoded map, two stacked trend blocks, filters on the right, toolbar across the top. Nothing on the canvas answers "what changed since Friday" or "what needs a decision before staff."',
-            'For a CRO-shaped persona, the gap isn\'t missing data — it\'s missing synthesis. The product assumes the viewer will knit the wall into a story. That was a reasonable bet when dashboards were scarce; it\'s a weak default when plain-language reads are already technically possible in the same product.',
+            'I took the Superstore Executive Overview as the stock revenue-lead view: seven KPI tiles, a color map, two stacked trends, filters on the right, the chrome across the top. Nothing on the canvas answers “what changed since Friday” or “what needs a decision before staff.”',
+            'For a Maya-shaped reader the problem isn’t missing data — it’s that Tableau makes her assemble the story. That was fine when dashboards were scarce; it feels like the wrong default now that plain-language reads already exist in the same product.',
           ]}
         />
 
         <RootCause
           number="02"
-          title="Sprawl ships as normal; curation doesn&apos;t exist on the path."
+          title="Sprawl feels normal — curation never meets you at the door."
           capturePath="key/03-dashboard-sprawl.png"
           captureAlt="Superstore workbook — nine published views in one workbook"
           captureSource="flow-d-explore-superstore/02-superstore-views-list.png"
           body={[
-            'One sample workbook publishes nine alternate views. Enterprise tenants multiply that pattern across hundreds of workbooks. Industry write-ups (Atlan, Zenoptics) cite thirty to forty percent redundancy at scale — I\'m citing the pattern visible in the trial, not the industry percentage, as primary evidence. Confidence: high for the sample; moderate for extrapolation to your tenant.',
-            'Admin Settings → Users (`flow-c-admin-settings/01-settings-users.png`) shows people and roles, not which dashboards are canonical, stale, or drifting. The product empowers publishing; it doesn\'t yet own governance as a first-class surface.',
+            'One sample workbook publishes nine alternate views. Real tenants multiply that across hundreds of workbooks. I’ve read industry write-ups quoting huge redundancy rates — I’m not quoting those here. I’m showing the pattern in trial: many views, no obvious “canonical versus cruft” story on the path.',
+            'Admin, then Users (`flow-c-admin-settings/01-settings-users.png`), lists people and roles — not which dashboards are canonical, stale, or drifting. I think Tableau is great at empowering publishing; I don’t yet see governance as a first-class reader surface.',
           ]}
         />
 
         <RootCause
           number="03"
-          title="Authoring power still rents headspace — shelves, marks, and expressions."
+          title="Authoring still steals your attention — shelves, marks, LOD."
           capturePath="key/01-chart-builder-shelves.png"
           captureAlt="Web authoring — data pane, shelves, Show Me"
           captureSource="flow-b-first-authoring/07-chart-builder-shelves.png"
           body={[
-            'Building from blank canvas means learning the Tableau model: dimensions, measures, shelves, marks. G2-style reviews repeatedly cite multi-week ramps for analysts and longer for business authors — third-party pain, not re-proven pixel by pixel in one capture.',
-            'Serious work still runs through calculated fields and LOD syntax (`key/07-lod-formula-editor.png`, `flow-g-edit-with-lod/03-lod-formula-editor.png`). That power is why professionals tolerate Tableau; it is also why "everyone can self-serve" oversells the real cost.',
+            'Building from a blank sheet means learning Tableau’s model: dimensions, measures, shelves, marks. G2-style reviews talk about multi-week ramps — that’s third-party pain; I’m not re-proving it pixel by pixel. My point is simpler: “everyone self-serves” oversells the tax.',
+            'Hard work still routes through calculated fields and LOD syntax (`key/07-lod-formula-editor.png`, `flow-g-edit-with-lod/03-lod-formula-editor.png`). I respect that power; it’s also why casual business readers bounce. The product isn’t lazy — it’s optimized for people paid to climb the cliff.',
           ]}
           secondaryCapture={{
             path: 'key/07-lod-formula-editor.png',
@@ -132,25 +130,25 @@ export default function WhatsBroken() {
 
         <RootCause
           number="04"
-          title="Mobile inherits desktop layout; thumb-first consumption loses."
+          title="On the phone, you get the desktop layout — just narrower."
           capturePath="key/05-mobile-squished.png"
           captureAlt="Executive overview at mobile viewport — dense, scroll-heavy"
           captureSource="flow-e-mobile/01-overview-mobile-top.png"
           body={[
-            'The same Executive Overview at phone width is not a different information architecture — it\'s the desktop sheet squeezed. Filters, legends, and multi-pane grids assume precision pointing. A regional director between meetings doesn\'t get a briefing; they get homework.',
-            'Tableau Mobile the product exists; this capture stack documents the browser-width pain in the trial. Confidence: high for "desktop metaphors dominate small screens" on this path.',
+            'The Executive Overview at phone width isn’t a different IA — it’s the same sheet squeezed. Filters and small legends assume precise taps. A Sam-shaped reader between meetings isn’t getting a briefing; he’s getting homework.',
+            'Tableau Mobile exists as a product; this stack is the browser-width pain I saw in trial. I’m confident about “desktop metaphors won” on this path; I’m less sure how native app compares across every tenant.',
           ]}
         />
 
         <RootCause
           number="05"
-          title="Pulse and Agent are real — and structurally sidebar."
+          title="Pulse and Agent are real — and they still feel like side tracks."
           capturePath="key/06-pulse-home.png"
           captureAlt="Tableau Pulse empty / get started state"
           captureSource="flow-f-pulse/01-pulse-empty-state.png"
           body={[
-            'Pulse opens as its own track: empty state, metric setup, narrated metric detail (`key/06b-pulse-metric-detail.png`). That validates AI in the ecosystem; it also leaves the classic dashboard paradigm untouched for the user who never opts into Pulse.',
-            'In web authoring, Tableau Agent appears as a tooltip affordance on the existing shell (`key/02-web-authoring.png`). The strategic read is not "no AI" — it\'s "AI compensates for complexity instead of replacing the default canvas."',
+            'Pulse opens as its own thread: empty state, metric setup, then narrated metric detail (`key/06b-pulse-metric-detail.png`). That proves the org can ship reads; it also leaves the classic dashboard world untouched if you never opt in.',
+            'In web authoring the Agent shows up as a tooltip on the existing shell (`key/02-web-authoring.png`). My read isn’t “no AI” — it’s that AI is compensating for complexity instead of replacing what first loads for the reader.',
           ]}
           secondaryCapture={{
             path: 'key/02-web-authoring.png',
@@ -161,13 +159,13 @@ export default function WhatsBroken() {
 
         <RootCause
           number="06"
-          title="The good output is already there — behind activation, disclaimers, and panels."
+          title="The good paragraph already exists — it’s gated, disclaimered, and off to the side."
           capturePath="key/10-tableau-agent-with-insights.png"
           captureAlt="Tableau Agent — Insights summary for Executive Overview (Ohio, Colorado profit ratios)"
           captureSource="flow-h-ai-agent/22-overview-dashboard-agent-with-insights.png"
           body={[
-            'On the same Executive Overview, the agent produces a concise read — e.g. Ohio and Colorado called out with specific profit ratios and a sensible "what this implies" sentence. That sentence is the class of content a sales ops lead would paste into email for their CRO.',
-            'Getting there in the trial required toggling multiple AI features in settings (`key/09-settings-ai-activation.png`) and stepping through guided overlays — not a single "make it smart" switch. Disclaimers appear even after activation (`key/11-tableau-agent-disclaimer.png`). The machine read exists; the trust and packaging friction train users to treat it as exceptional, not default.',
+            'On the same Executive Overview the agent produced a tight read — Ohio and Colorado with specific profit ratios plus a sensible “what this implies” line. That’s the class of sentence an ops lead would paste into email for their CRO.',
+            'Getting there meant flipping multiple AI toggles in settings (`key/09-settings-ai-activation.png`) and stepping through guided overlays — not one obvious “turn it on” switch. Disclaimers still show after activation (`key/11-tableau-agent-disclaimer.png`). I think the copy exists; I think the packaging trains people to treat it as exceptional, not everyday.',
           ]}
           secondaryCapture={{
             path: 'key/09-settings-ai-activation.png',
@@ -178,10 +176,10 @@ export default function WhatsBroken() {
       </section>
 
       <h3 id="swot" className="mt-16 editorial text-2xl text-ink-900 scroll-mt-28">
-        A SWOT, condensed
+        SWOT, compressed
       </h3>
       <p className="text-ink-600 text-sm mt-2 mb-6">
-        The matrix is for orientation; the captures above carry the burden of proof.
+        I use this for orientation. The captures above are what I’d actually defend in a room.
       </p>
 
       <section className="mt-2 grid sm:grid-cols-2 gap-4">
@@ -189,66 +187,66 @@ export default function WhatsBroken() {
           color="success"
           title="Strengths"
           items={[
-            'Visual grammar and interactivity remain category-defining for exploratory analysis.',
-            'Salesforce distribution and services footprint; Tableau Cloud lowers operational friction for many buyers.',
-            'Pulse + Agent prove the org can ship narrated reads and structured AI — the work is integration, not invention from zero.',
+            'I still think Tableau owns exploratory chart grammar and interaction depth.',
+            'Salesforce’s footprint and Cloud Tableau lower ops friction for a lot of buyers.',
+            'Pulse plus Agent proved the org can ship narrated reads; my argument is about placement, not capability from zero.',
           ]}
         />
         <SwotCell
           color="danger"
           title="Weaknesses"
           items={[
-            'Default dashboard experience is still 2015-shaped — widgets first, meaning second.',
-            'Sprawl and trust debt scale faster than headcount in mature deployments.',
-            'Mobile and executive consumption modes lag a generation behind desktop authoring.',
-            'AI is administratively and spatially gated — strong output, wrong default placement.',
+            'The default dashboard experience still opens like it’s 2015 — tiles first, meaning second.',
+            'Sprawl and trust debt outrun headcount in mature installs.',
+            'Mobile and exec reading modes lag a generation behind desktop authoring.',
+            'AI is strong but administratively and spatially fenced — great output, wrong front door.',
           ]}
         />
         <SwotCell
           color="accent"
           title="Opportunities"
           items={[
-            'Make narrated briefings the landing state; keep charts as drill-in evidence.',
-            'Observed usage drives curation queues — retire stale and duplicated surfaces without a manual audit industry.',
-            'Unify Pulse-like reads and classic dashboards so executives don\'t pick a product sub-brand to get English.',
+            'I’d open on a narrated Monday briefing and keep charts as drill-in proof.',
+            'I’d rank cleanup work from real opens and lineage so Jordan isn’t running a manual audit industry.',
+            'I’d melt Pulse-style reads into the same shell as classic dashboards so execs don’t pick a sub-brand to get English.',
           ]}
         />
         <SwotCell
           color="warning"
           title="Threats"
           items={[
-            'Power BI living inside Microsoft 365; Looker on the warehouse; Sigma and Hex on the modern data stack.',
-            'Buyers renegotiating cloud seat economics; shelfware dashboards inflate both cost and cynicism.',
-            'Every quarter, LLMs make "ask the data in language" cheaper —Tableau\'s moat shifts from viz novelty to trust and workflow.',
+            'Power BI lives inside Microsoft 365; Looker hugs the warehouse; Sigma and Hex pitch the modern stack.',
+            'Buyers haggle cloud seat economics; shelfware dashboards inflate cost and cynicism together.',
+            'Every quarter, “ask in plain language” gets cheaper somewhere else — Tableau’s moat shifts toward trust and workflow, not chart novelty.',
           ]}
         />
       </section>
 
       <section id="voices" className="mt-16 scroll-mt-28">
-        <div className="h-eyebrow mb-4">What users actually say</div>
+        <div className="h-eyebrow mb-4">What I hear in the market</div>
         <h3 className="editorial text-2xl text-ink-900 mb-2">
-          Representative complaints — cross-checked with public review themes
+          Patterns from reviews and practitioner writing — not quotes from my trial account
         </h3>
         <p className="text-sm text-ink-500 mb-6">
-          Paraphrases of patterns that show up across G2, Mode&apos;s Tableau roundup, and similar
-          sources; not verbatim quotes from your trial account.
+          I paraphrased recurring themes from G2, Mode’s Tableau roundup, and similar sources. Treat these as temperature checks, not
+          court evidence.
         </p>
         <div className="grid sm:grid-cols-2 gap-4">
           <Voice
             src="G2-style analyst reviews (compiled)"
-            body="Basic charts come fast; serious modeling still means calculated fields, LOD expressions, and weeks of ramp for business users who were sold self-serve."
+            body="Basic charts come fast; serious modeling still means calculated fields, LOD, and weeks of ramp for business users who were sold self-serve."
           />
           <Voice
             src="Enterprise commentary on dashboard inventory"
-            body="At scale, a large share of dashboards are redundant or unused — they keep driving cloud cost and eroding trust in which number is canonical."
+            body="At scale a large share of dashboards sit unused or duplicated — they keep driving cloud cost and eroding trust about which number is real."
           />
           <Voice
             src="Mobile / consumer persona reviews"
-            body="Dashboards built for desktop don’t translate to phone; the team checks on a laptop or gives up until later."
+            body="Dashboards built for desktop don’t translate to the phone; people wait for a laptop or punt until later."
           />
           <Voice
             src="Practitioner blogs (web vs Desktop)"
-            body="Web authoring improved but still trails Desktop for heavy work; analysts keep two contexts in their head."
+            body="Web authoring improved but still trails Desktop for heavy work; analysts keep two contexts loaded in their heads."
           />
         </div>
       </section>
@@ -275,39 +273,39 @@ export default function WhatsBroken() {
 
       <section className="prose-body mt-16">
         <h3 id="impact" className="scroll-mt-28">
-          What this costs an org
+          What I think this costs in the wild
         </h3>
-        <p>Three downstream effects worth naming in a stakeholder review — not as universal laws for every tenant, but as predictable failure modes once Tableau is mission-critical:</p>
-
-        <h4>1. Executive attention is the scarcest asset</h4>
         <p>
-          Every minute a CRO spends decoding tiles is a minute not spent on customers and people.
-          When the same product can generate Ohio-and-Colorado-grade copy in a side flow but not on
-          the default surface, the bottleneck is IA — not model quality.
+          Three failure modes I’d name in a stakeholder conversation — not universal laws, but patterns I’ve seen once Tableau becomes
+          load-bearing:
         </p>
 
-        <h4>2. Governance debt compounds as headcount compounds</h4>
+        <h4>1. Executive attention is the scarcest thing in the building</h4>
         <p>
-          Workbooks multiply faster than anyone retires them. Without an observed-usage curation
-          layer, Jordan-shaped owners become human garbage collectors — or the org stops trusting
-          any single dashboard.
+          Every minute a CRO spends decoding tiles is a minute not spent with customers or her team. When the product can already write
+          Ohio-and-Colorado-grade copy in a side flow but won’t put that on the default surface, I blame information architecture — not
+          model quality.
         </p>
 
-        <h4>3. The agentic era rewards the system of action, not the system of charts</h4>
+        <h4>2. Governance debt compounds faster than hiring</h4>
         <p>
-          Competitors are not standing still on natural language and embedded analytics. Tableau
-          wins when trust, drill-down, and narration ship as one loop — not when narration is a
-          product line you find if you know where to click.
+          Workbooks multiply faster than anyone retires them. Without a curation layer grounded in what people actually open, a
+          Jordan-shaped owner becomes human landfill — or the org stops trusting any single dashboard.
+        </p>
+
+        <h4>3. Competitors sell the loop, not the screenshot</h4>
+        <p>
+          Natural language and embedded analytics aren’t standing still. I think Tableau keeps its seat when trust, drill-down, and
+          narration ride together — not when narration is a product line you discover if you already know where to click.
         </p>
       </section>
 
       <section id="takeaway" className="mt-16 card-raised p-8 bg-accent-soft border-accent/20 scroll-mt-28">
         <Layers className="text-accent mb-4" size={22} />
-        <div className="h-eyebrow text-accent-ink mb-2">The takeaway</div>
+        <div className="h-eyebrow text-accent-ink mb-2">What I’d leave you with</div>
         <p className="text-lg text-ink-900 leading-relaxed editorial italic">
-          The widgets aren&apos;t the disease. Hiding meaning behind widgets while the same vendor
-          ships good machine reads elsewhere is. The redesign bet is surface hierarchy — not another
-          chart type.
+          The widgets aren’t the disease — hiding the story behind widgets while the same vendor ships good machine reads elsewhere is.
+          I’m betting on what loads first, not on inventing another chart species.
         </p>
       </section>
 

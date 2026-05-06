@@ -30,11 +30,11 @@ const steps: FlowStep[] = [
         <div className="max-w-3xl">
           <div className="text-2xs uppercase tracking-wider text-ink-500 font-mono mb-1">Before</div>
           <h2 className="editorial text-2xl text-ink-900 leading-snug mb-2">
-            The wall Tableau ships today — widgets first, narrative absent.
+            This is the wall Tableau still opens on — charts first, no story on the glass.
           </h2>
           <p className="text-sm text-ink-600 leading-relaxed">
-            This is the Sales Executive Overview from a Tableau Cloud trial — the closest thing to a revenue lead&apos;s home page.
-            Tap the highlighted zones to see what the chrome cannot answer when you only have a few minutes before staff.
+            I pulled this from the Sales Executive Overview in my Cloud trial; it’s the closest thing to a revenue lead’s home page.
+            Tap the highlighted zones if you want to see what the chrome won’t answer when you only have a few minutes before staff.
           </p>
         </div>
         <MayaOpenBoard />
@@ -52,21 +52,20 @@ const steps: FlowStep[] = [
         <div className="max-w-3xl">
           <div className="text-2xs uppercase tracking-wider text-ink-500 font-mono mb-1">Living surface</div>
           <h2 className="editorial text-2xl text-ink-900 leading-snug mb-2">
-            Thesis at first paint — language leads; the grid is evidence underneath.
+            I’d open on language — same Acme numbers — and tuck the grid under it as proof.
           </h2>
           <p className="text-sm text-ink-600 leading-relaxed">
-            Default is <strong className="font-semibold text-ink-800">narrative leads</strong> (same Acme numbers as always). Use{' '}
-            <strong className="font-semibold text-ink-800">Jump UI state</strong> to compare classic grid, selections, and dock reads.
-            Scroll for the drill layer and a side-by-side with Tableau Agent output on the same executive wall — the analysis class is
-            already there; this step is about placement and trust.
+            The short read leads here by default. Use the preset strip to flip between the classic grid, selections, and dock reads — I
+            wanted one surface you could argue in. Scroll for drill; I parked a side-by-side with Tableau Agent language on the same exec
+            wall because the quality is already real in capture — I’m fighting placement and trust, not wishing for a smarter model.
           </p>
         </div>
         <MayaInteractiveDashboard presetStrip initialLayout="narrativeLeads" />
         <div className="max-w-3xl pt-6 border-t border-ink-200 space-y-3">
           <h3 className="editorial text-xl text-ink-900 m-0">Drill and receipt</h3>
           <p className="text-sm text-ink-600 leading-relaxed m-0">
-            One design language: chart clicks still drive the dock. Tableau Agent already produces reads like this on the real Executive
-            Overview; here they sit where a CRO can use them before 9:00.
+            I kept one language for interaction: clicking a chart still drives the dock. Tableau Agent already writes reads like this on the
+            real Executive Overview — I’m just refusing to hide them until after the tiles load.
           </p>
         </div>
         <MayaDrillBoard />
@@ -84,12 +83,12 @@ const steps: FlowStep[] = [
         <div className="max-w-3xl">
           <div className="text-2xs uppercase tracking-wider text-ink-500 font-mono mb-1">Share</div>
           <h2 className="editorial text-2xl text-ink-900 leading-snug mb-2">
-            Where the briefing goes — folder, Slack, Calendar, mail, link.
+            Where the brief leaves Tableau — folder, Slack, Calendar, mail, link.
           </h2>
           <p className="text-sm text-ink-600 leading-relaxed">
-            Maya checks <strong className="font-semibold text-ink-800">payload freeze</strong>, optional pinned drill and
-            &quot;ruled out&quot; lines for Legal or Finance, and a live preview before anything leaves Tableau. Coworker spells out what
-            recipients inherit.
+            I made Maya check a <strong className="font-semibold text-ink-800">payload freeze</strong>, optional pinned drill and
+            &quot;ruled out&quot; lines if Legal or Finance care, and a live preview before anything ships. Coworker spells out what
+            recipients actually inherit — I’m allergic to mysterious forwards.
           </p>
         </div>
         <MayaShareSheetBoard />
@@ -107,11 +106,11 @@ const steps: FlowStep[] = [
         <div className="max-w-3xl">
           <div className="text-2xs uppercase tracking-wider text-ink-500 font-mono mb-1">Channels and inbox</div>
           <h2 className="editorial text-2xl text-ink-900 leading-snug mb-2">
-            One payload — channel shape, then recipient read.
+            One frozen payload — Slack unfurl first, then the recipient read.
           </h2>
           <p className="text-sm text-ink-600 leading-relaxed">
-            Slack shows the unfurl and triage copy; Jordan opens the same frozen brief in a read-only shell. Same version, scoped dock,
-            pinned evidence.
+            Slack gets the unfurl and triage copy; Jordan opens the same frozen brief in a read-only shell. Same version, scoped dock,
+            pinned evidence — I’m trying to kill “which link was canon?”
           </p>
         </div>
         <div className="grid xl:grid-cols-2 gap-6 items-start">
@@ -132,10 +131,11 @@ const steps: FlowStep[] = [
         <div className="max-w-3xl">
           <div className="text-2xs uppercase tracking-wider text-ink-500 font-mono mb-1">Staff meeting</div>
           <h2 className="editorial text-2xl text-ink-900 leading-snug mb-2">
-            The 9:00 invite carries the live link — staff opens Coworker, not a PDF.
+            The 9:00 invite carries the live link — I want staff in Coworker, not a dead PDF.
           </h2>
           <p className="text-sm text-ink-600 leading-relaxed">
-            Calendar layout is illustrative — the point is the meeting inherits the same canonical link and permissions as Tableau Cloud.
+            The calendar mock is illustrative. The point I care about is the meeting inherits the same canonical link and permissions as
+            Cloud — no parallel deck that quietly diverges.
           </p>
         </div>
         <MayaGoogleCalendarHandoffBoard />
@@ -149,9 +149,9 @@ export default function MayaCroMonday() {
     <FlowChrome
       flowNumber="01"
       title="Maya — living surface, then handoff"
-      thesis="CRO briefing: narrative-first Monday canvas, then handoff — same frozen v18 to staff, Slack, and calendar."
+      thesis="I start Maya on a Monday read that leads, not a grid — then I freeze one v18 packet for staff, Slack, and the calendar."
       persona={MAYA_FLOW_PERSONA}
-      orientationHint="You’re walking Maya’s Monday before staff: a real Tableau Executive Overview first, then the narrative-first Coworker canvas and handoff. Dismiss anytime."
+      orientationHint="You’re walking Maya’s Monday before staff: real Exec Overview first, then my Coworker canvas and handoff. Dismiss anytime."
       steps={steps}
     />
   )
