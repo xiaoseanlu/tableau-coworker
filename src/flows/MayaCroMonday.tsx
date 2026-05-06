@@ -151,7 +151,7 @@ export default function MayaCroMonday() {
       title="Maya — living surface, then handoff"
       thesis="I start Maya on a Monday read that leads, not a grid — then I freeze one v18 packet for staff, Slack, and the calendar."
       persona={MAYA_FLOW_PERSONA}
-      orientationHint="You’re walking Maya’s Monday before staff: real Exec Overview first, then my Coworker canvas and handoff. Dismiss anytime."
+      orientationHint="Monday before staff: trial Exec Overview, then Coworker read and handoff."
       steps={steps}
     />
   )

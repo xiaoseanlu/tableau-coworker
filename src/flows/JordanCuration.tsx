@@ -141,7 +141,7 @@ export default function JordanCuration() {
       title="Jordan — tenant loop, then broadcast"
       thesis="I turn sprawl into a triage queue from real signals, then publish once with an audit id to Slack, mail, and Finance."
       persona={JORDAN_FLOW_PERSONA}
-      orientationHint="Jordan’s VP Sales Ops loop: sprawl to queue, diagnose, resolve, then one audited publish — dismiss anytime."
+      orientationHint="VP Sales Ops: sprawl, queue, diagnose, then one audited publish to the org."
       steps={steps}
     />
   )

@@ -134,7 +134,7 @@ export default function SamMobile() {
       title="Sam — mobile surface, then legal inbox"
       thesis="I’d give a regional director a thumb-first West brief and drill, then a legal-grade receipt — not a squeezed desktop grid."
       persona={SAM_FLOW_PERSONA}
-      orientationHint="Sam in the West on his phone — thumb brief, drill, handoff — same Acme substrate as Maya and Jordan, different surface. Dismiss anytime."
+      orientationHint="West RSD on the phone: brief, drill, handoff — same data as the other flows, thumb-first layout."
       steps={steps}
     />
   )
