@@ -3,12 +3,11 @@ import { ArrowRight, Quote, Layers } from '../components/Icons'
 
 const CAP = `${import.meta.env.BASE_URL}captures/`
 
-const WHATS_BROKEN_TOC: Array<{ id: string; label: string }> = [
-  { id: 'gaps', label: 'Six gaps' },
+const WHATS_BROKEN_MAIN_TOC: Array<{ id: string; label: string }> = [
   { id: 'swot', label: 'SWOT' },
-  { id: 'voices', label: 'User voices' },
+  { id: 'voices', label: 'What people say' },
   { id: 'stats', label: 'By the numbers' },
-  { id: 'impact', label: 'Downstream cost' },
+  { id: 'impact', label: 'What it costs' },
   { id: 'takeaway', label: 'Takeaway' },
 ]
 
@@ -18,15 +17,24 @@ function scrollToSection(id: string) {
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
 }
 
-function WhatsBrokenToc() {
+function WhatsBrokenMainToc() {
   return (
     <nav
-      className="not-prose mb-10 rounded-xl border border-ink-200/85 bg-canvas-raised p-4 md:p-5 shadow-edge"
-      aria-label="On this page"
+      className="not-prose mb-8 rounded-xl border border-ink-200/85 bg-canvas-raised p-4 md:p-5 shadow-edge"
+      aria-label="Jump to sections on this page"
     >
-      <div className="text-xs font-semibold text-ink-800 mb-3">On this page</div>
+      <div className="text-xs font-semibold text-ink-800 mb-3">Jump to a section</div>
       <ul className="flex flex-wrap gap-2">
-        {WHATS_BROKEN_TOC.map(item => (
+        <li>
+          <button
+            type="button"
+            onClick={() => scrollToSection('gaps')}
+            className="rounded-lg border border-ink-200/80 bg-canvas-sunken/30 px-3 py-1.5 text-sm text-ink-600 hover:border-accent/35 hover:bg-accent-soft/30 hover:text-ink-900 motion-safe:transition-colors"
+          >
+            Six gaps
+          </button>
+        </li>
+        {WHATS_BROKEN_MAIN_TOC.map(item => (
           <li key={item.id}>
             <button
               type="button"
@@ -38,22 +46,27 @@ function WhatsBrokenToc() {
           </li>
         ))}
       </ul>
-      <div className="mt-3 pt-3 border-t border-ink-100/90">
-        <div className="text-2xs font-mono uppercase tracking-wide text-ink-500 mb-2">Jump to gap</div>
-        <div className="flex flex-wrap gap-1.5">
-          {GAP_JUMP.map(n => (
-            <button
-              key={n}
-              type="button"
-              onClick={() => scrollToSection(`gap-${n}`)}
-              className="rounded-md border border-ink-200/70 px-2 py-1 font-mono text-2xs text-ink-600 hover:bg-ink-50 hover:text-ink-900"
-            >
-              {n}
-            </button>
-          ))}
-        </div>
-      </div>
     </nav>
+  )
+}
+
+function WhatsBrokenGapJumpRow() {
+  return (
+    <div className="not-prose mb-8">
+      <div className="text-xs font-semibold text-ink-700 mb-2">Jump to a gap</div>
+      <div className="flex flex-wrap gap-1.5">
+        {GAP_JUMP.map(n => (
+          <button
+            key={n}
+            type="button"
+            onClick={() => scrollToSection(`gap-${n}`)}
+            className="rounded-md border border-ink-200/70 px-2.5 py-1.5 font-mono text-sm text-ink-600 hover:bg-ink-50 hover:text-ink-900"
+          >
+            Gap {n}
+          </button>
+        ))}
+      </div>
+    </div>
   )
 }
 
@@ -67,25 +80,23 @@ export default function WhatsBroken() {
           first opens.
         </h1>
         <p className="text-lg text-ink-600 max-w-3xl">
-          People complain about load time, price, sprawl. Fair. But I keep seeing the same structural miss: the main canvas still expects
-          every human to knit tiles, maps, and trend strips into a story, while the best machine-written reads sit in panels and side
-          tracks you have to hunt down. The screenshots below are from my Tableau Cloud trial walk; every frame names the file so you can
-          verify I didn&apos;t invent the UI.
+          Slow loads, price, sprawl — people say all of that. The pattern I care about is simpler: the main view still expects you to
+          turn charts into a story yourself, while the best machine-written summaries sit off in panels you have to go find. Everything
+          below is from my Tableau Cloud trial; filenames are on the figures so you can check I didn&apos;t fake the UI.
         </p>
       </header>
 
-      <WhatsBrokenToc />
+      <WhatsBrokenMainToc />
 
       <section className="prose-body">
-        <p>
-          What follows is how I&apos;d open a critique — not a bug log. I stuck to six gaps I can show
-          in pixels. If it isn&apos;t in a capture, I didn&apos;t lean on muscle memory about how BI
-          &quot;usually&quot; feels.
-        </p>
-
         <h3 id="gaps" className="scroll-mt-28">
           Six gaps I keep hitting
         </h3>
+        <p>
+          Six problems I can show in screenshots. If it isn&apos;t in this repo&apos;s captures, I don&apos;t claim it here.
+        </p>
+
+        <WhatsBrokenGapJumpRow />
 
         <RootCause
           number="01"

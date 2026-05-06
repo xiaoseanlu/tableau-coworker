@@ -17,14 +17,6 @@ export default function Home() {
         <div className="surface-hero absolute inset-0 pointer-events-none opacity-[0.92]" aria-hidden />
         <div className="grid-backdrop absolute inset-0 opacity-40 pointer-events-none" aria-hidden />
         <div className="ds-page pt-12 md:pt-16 pb-14 md:pb-16 relative">
-          <div className="mb-8 max-w-3xl rounded-xl border border-ink-200/90 bg-canvas-raised/95 p-4 md:p-5 shadow-edge ring-1 ring-ink-900/[0.04]">
-            <p className="text-sm text-ink-700 leading-relaxed m-0">
-              <strong className="font-semibold text-ink-900">What this is.</strong> A Faros AI Head of Design take-home: a design exploration
-              of Tableau as a <strong className="font-medium text-ink-800">living surface</strong> (narration and handoff first), built as a
-              real React prototype — not a commercial product. Tableau is the pick because strong AI reads already ship in-product; the
-              default canvas still opens like 2015.
-            </p>
-          </div>
           <div className="max-w-3xl">
             <div className="h-eyebrow mb-4">Tableau Coworker · Acme SaaS</div>
             <h1 className="h-display mb-5">
@@ -33,8 +25,9 @@ export default function Home() {
               <span className="text-accent italic">The next Tableau is a living surface.</span>
             </h1>
             <p className="text-base md:text-lg text-ink-600 max-w-2xl mb-6 leading-relaxed">
-              Real trial capture on the left; the same Monday brief as an interactive Coworker canvas on the right —{' '}
-              <strong className="text-ink-800">Maya, Jordan, Sam</strong> flows carry one v18 narrative through handoff and mobile.
+              I’m arguing the product already knows how to write a useful read — it just doesn’t put that read first. Below you’ll see the
+              real Executive Overview from my trial, then the same numbers in a Coworker layout where words lead and charts back them up. The{' '}
+              <strong className="text-ink-800">Maya, Jordan, Sam</strong> flows thread one narrative through handoffs and mobile.
             </p>
             <div className="flex flex-wrap gap-3 mb-10">
               <Link to="/whats-broken" className="btn-primary">
@@ -53,22 +46,22 @@ export default function Home() {
             <div className="h-eyebrow mb-3">Thesis, rendered</div>
             <h2 className="h-section max-w-3xl mb-2">Same Executive Overview numbers — a different default read</h2>
             <p className="text-ink-600 max-w-3xl mb-8 leading-relaxed text-sm md:text-base">
-              <strong className="text-ink-800">Before</strong> — the real Executive Overview from a Tableau Cloud trial: lots of tiles and
-              charts, no single articulated read. <strong className="text-ink-800">After</strong> — the thesis layout for Maya: narrative
-              leads, charts as evidence; Coworker stays a slim strip here so the canvas is visible (full dock and handoffs live in the flow).
+              <strong className="text-ink-800">Before</strong> is the capture: KPIs, map, trends, no one sentence that tells Maya what to do
+              Monday morning. <strong className="text-ink-800">After</strong> is my Coworker layout on the same demo data — copy first, grid
+              for proof. The slim strip under the grid on this page is a hint of the dock; the full walk with handoff is in the Maya flow.
             </p>
-            <div className="grid lg:grid-cols-2 gap-6 items-start">
-              <div className="rounded-xl border-2 border-ink-200/95 bg-canvas-sunken/30 p-2 shadow-inner">
-                <div className="text-xs font-semibold text-ink-900 uppercase tracking-wide mb-2 px-1">Tableau as shipped today</div>
+            <div className="flex flex-col gap-10 items-stretch">
+              <div className="rounded-xl border-2 border-ink-200/95 bg-canvas-sunken/30 p-3 md:p-4 shadow-inner w-full">
+                <div className="text-xs font-semibold text-ink-900 uppercase tracking-wide mb-3 px-1">Tableau as shipped today</div>
                 <img
                   src={`${CAP}key/04-exec-wall-of-widgets.png`}
                   alt="Tableau Executive Overview — dense widget wall"
                   className="w-full rounded-lg border border-ink-200/90 shadow-lift-sm ring-1 ring-ink-900/[0.04]"
                 />
               </div>
-              <div className="rounded-xl border-2 border-accent/35 bg-accent-soft/25 p-2 shadow-inner min-w-0">
-                <div className="text-xs font-semibold text-accent-ink uppercase tracking-wide mb-2 px-1">Coworker concept</div>
-                <div className="max-h-[min(70vh,560px)] overflow-y-auto overflow-x-hidden rounded-xl border border-ink-200/90 shadow-lift ring-1 ring-ink-900/[0.045] bg-canvas">
+              <div className="rounded-xl border-2 border-accent/35 bg-accent-soft/25 p-3 md:p-4 shadow-inner w-full min-w-0">
+                <div className="text-xs font-semibold text-accent-ink uppercase tracking-wide mb-3 px-1">Coworker concept</div>
+                <div className="rounded-xl border border-ink-200/90 shadow-lift ring-1 ring-ink-900/[0.045] bg-canvas overflow-hidden">
                   <MayaInteractiveDashboard initialLayout="narrativeLeads" compactHero homeEmbed />
                 </div>
               </div>
@@ -91,32 +84,32 @@ export default function Home() {
       {/* Three pillars TL;DR */}
       <section className="border-t border-ink-100/90 bg-canvas-sunken/35">
         <div className="ds-page py-16">
-          <div className="h-eyebrow mb-3">Four strategic bets</div>
+          <div className="h-eyebrow mb-3">Four bets</div>
           <h2 className="h-section max-w-3xl mb-12">
-            Tableau already ships strong AI. The shell still treats the 2015
-            dashboard as the default state. These pillars invert that hierarchy.
+            I think Tableau already ships strong AI reads. The shell still treats the 2015-style dashboard as the default. I&apos;d flip
+            that order.
           </h2>
 
           <div className="grid md:grid-cols-2 gap-8">
             <Pillar
               num="01"
-              title="The default dashboard is generated, not configured."
-              body="Composed for role, recency, and what changed — not empty home cards and a hunt through Explore. The tradeoff is honest: we demote the blank-slate builder fantasy for consumers who never wanted it."
+              title="I’d compose Monday’s landing view — not ask every reader to build it."
+              body="Role, recency, and what changed should drive first paint for most people. I’d give pin-and-escape-hatches to the power users; I wouldn’t optimize the whole company for them."
             />
             <Pillar
               num="02"
-              title="Every chart explains itself."
-              body="The narrative is the surface; the viz is evidence. Anomalies and reads show up with the metric, not after someone finds Tableau Agent in the toolbar."
+              title="I’d put language with the metric — chart as backup."
+              body="The read lives next to the number; the viz is where you go when you don’t buy the sentence or you need to fork the question. I’m not hiding Tableau Agent in the chrome."
             />
             <Pillar
               num="03"
-              title="Three modes, all first-class."
-              body="Mouse drill, mobile briefing, inline next-question prompts — conversation is a modality, not a chatbot that replaces the canvas."
+              title="Mouse, thumb, short prompts — three peers."
+              body="Drill on desktop, briefing cards on the phone, small suggested next questions under a chart. Chat-as-the-whole-product is the thing I’m saying no to."
             />
             <Pillar
               num="04"
-              title="Personalization is observed, not configured."
-              body="No admin-built dashboard cascade. The system learns what people open, skip, and return to; every adaptive choice exposes a &quot;why am I seeing this?&quot; line."
+              title="I’d learn from what people actually open — not from admin wizards."
+              body="Every adaptive choice gets a one-tap ‘why am I seeing this?’ I’d spend governance time on lineage and policy, not eighteen-click dashboard assignment trees."
             />
           </div>
 
@@ -128,9 +121,8 @@ export default function Home() {
               <div>
                 <div className="text-sm font-semibold text-ink-900 mb-1">Evidence, not vibes</div>
                 <p className="text-sm text-ink-600 max-w-2xl">
-                  The critique on <Link to="/whats-broken" className="text-accent hover:underline">What&apos;s broken</Link>{' '}
-                  cites real captures from a Tableau Cloud trial (<span className="font-mono text-2xs">public/captures/</span>).
-                  If a claim isn&apos;t tied to a file, we don&apos;t ship the claim.
+                  I tied the critique on <Link to="/whats-broken" className="text-accent hover:underline">What&apos;s broken</Link>{' '}
+                  to captures in <span className="font-mono text-2xs">public/captures/</span>. No screenshot in the folder, no bold claim from me in the UI.
                 </p>
               </div>
             </div>

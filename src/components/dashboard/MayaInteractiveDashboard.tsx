@@ -143,7 +143,6 @@ function NarrativeLeadBlock({ compact = false }: { compact?: boolean }) {
   return (
     <div className="border-l-[3px] border-signal bg-signal-soft/20 px-4 py-4 md:px-5 md:py-5 space-y-3">
       <div className="flex flex-wrap items-center gap-2">
-        <span className="pill bg-signal-soft text-signal-ink text-2xs font-mono">Confidence: high · same numbers as the grid</span>
         <span className="text-2xs font-mono text-ink-500">{MAYA_BRIEF.dateLabel}</span>
       </div>
       <p className={`editorial ${compact ? 'text-base' : 'text-base md:text-lg'} text-ink-900 leading-snug m-0`}>
@@ -596,8 +595,7 @@ export default function MayaInteractiveDashboard({
               to="/flows/maya"
               className="inline-flex items-center gap-1 mt-2.5 text-xs font-medium text-accent hover:underline underline-offset-2"
             >
-              Full Maya walkthrough with dock + handoff
-              <span aria-hidden> →</span>
+              Open the full Maya walkthrough (dock and handoff)
             </Link>
           </div>
         ) : (

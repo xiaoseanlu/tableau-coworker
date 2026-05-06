@@ -15,7 +15,6 @@ import {
   DesignSystemCrossChartInteractionExplorer,
   DesignSystemFtStoryExplorer,
   DesignSystemFTStoryLensStrip,
-  DesignSystemHeroBento,
   DesignSystemAccessibilityBento,
   DesignSystemLayersIconStrip,
   DesignSystemLayoutModePlayground,
@@ -183,32 +182,29 @@ export default function DesignSystem() {
         className="ds-doc max-w-[64rem] mx-auto px-6 sm:px-10 pb-32 md:pb-44 outline-none"
       >
         <header className="pt-16 md:pt-20 pb-12 md:pb-16 border-b border-ink-100">
-          <div className="grid lg:grid-cols-[1fr,minmax(0,28rem)] gap-10 lg:gap-14 items-start">
-            <div>
-              <div className="h-eyebrow mb-4">Craft reference · shipped in this prototype</div>
-              <h1 className="h-display mb-6 max-w-4xl tracking-tight">
-                Design system:{' '}
-                <span className="italic text-accent">tokens, viz, AI hooks, layout</span>
-              </h1>
-              <p className="text-base md:text-lg leading-relaxed text-ink-600 max-w-xl mb-8">
-                Everything below is runnable React in this repo — same Tailwind tokens, chart helpers, and interactive modules the flows
-                use. Demos first. For what ships in this prototype versus what doesn&apos;t, see{' '}
-                <DesignSystemInPageJump id="contract">Contract &amp; scope</DesignSystemInPageJump>.
-              </p>
-              <nav className="flex flex-wrap gap-3 pt-1" aria-label="On this page">
-                {toc.map(item => (
-                  <button
-                    key={item.id}
-                    type="button"
-                    className="ds-toc-pill"
-                    onClick={() => scrollToDesignSystemSection(item.id)}
-                  >
-                    {item.label}
-                  </button>
-                ))}
-              </nav>
-            </div>
-            <DesignSystemHeroBento />
+          <div>
+            <div className="h-eyebrow mb-4">Craft reference · shipped in this prototype</div>
+            <h1 className="h-display mb-6 max-w-4xl tracking-tight">
+              Design system:{' '}
+              <span className="italic text-accent">tokens, viz, AI hooks, layout</span>
+            </h1>
+            <p className="text-base md:text-lg leading-relaxed text-ink-600 max-w-xl mb-8">
+              Everything below is runnable React in this repo — same Tailwind tokens, chart helpers, and interactive modules the flows
+              use. Demos first. For what ships in this prototype versus what doesn&apos;t, see{' '}
+              <DesignSystemInPageJump id="contract">Contract &amp; scope</DesignSystemInPageJump>.
+            </p>
+            <nav className="flex flex-wrap gap-3 pt-1" aria-label="On this page">
+              {toc.map(item => (
+                <button
+                  key={item.id}
+                  type="button"
+                  className="ds-toc-pill"
+                  onClick={() => scrollToDesignSystemSection(item.id)}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </nav>
           </div>
         </header>
 

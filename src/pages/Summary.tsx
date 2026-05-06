@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { ArrowRight, Bolt } from '../components/Icons'
+import { ArrowRight } from '../components/Icons'
 
 export default function Summary() {
   return (
@@ -91,17 +91,11 @@ export default function Summary() {
             <strong>A11y and i18n.</strong> Narration-heavy layouts need a real audit pass; I didn’t pretend that’s done.
           </li>
           <li>
-            <strong>Cutover.</strong> Thousands of workbooks don’t teleport; I’d want a phased story that doesn’t torch trust in the
-            numbers.
+            <strong>Moving a real company off thousands of old dashboards.</strong> Big customers can&apos;t flip a switch. I&apos;d want
+            a phased plan (what ships when, how you prove numbers still match, how you retire duplicates) so nobody wakes up one day and
+            stops trusting the org&apos;s figures.
           </li>
         </ul>
-
-        <h3>How I’d spend an onsite</h3>
-        <p>
-          I’d open with the non-author reader. What do they see first on a Monday, and what happens when the briefing is wrong? Animation
-          can wait. I care who owns bad copy, how merges hit exec numbers, and what we’d measure in phase one — and I’d expect pushback on
-          all three.
-        </p>
       </section>
 
       <section className="mt-14 border-t border-ink-100 pt-12 not-prose">
@@ -145,15 +139,6 @@ export default function Summary() {
             <span className="text-sm font-medium text-accent group-hover:underline mt-3 inline-block">Open Sam&apos;s flow</span>
           </Link>
         </div>
-      </section>
-
-      <section className="mt-16 card-raised p-8 bg-canvas-sunken">
-        <Bolt className="text-accent mb-4" size={22} />
-        <div className="h-eyebrow text-accent-ink mb-2">Format</div>
-        <p className="text-base text-ink-800 leading-relaxed">
-          I kept the spec markdown in-repo next to the app. Deploy is <span className="font-mono text-xs">npm run deploy</span> to GitHub
-          Pages — one artifact for writing, pixels, and engineering taste.
-        </p>
       </section>
 
       <nav className="mt-16 pt-8 border-t border-ink-100 flex items-center justify-between">
